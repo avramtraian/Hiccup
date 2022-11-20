@@ -1,0 +1,14 @@
+# Visual Studio Project Files
+.vs/
+*.sln
+*.vcxproj
+*.vcxproj.filters
+*.vcxproj.user
+
+# Binaries
+Binaries/Win64/Debug/
+Binaries/Win64/Shipping/
+Binaries/Win64/Release/
+
+# Intermediate
+Intermediate/
