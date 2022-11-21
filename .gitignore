@@ -6,9 +6,9 @@
 *.vcxproj.user
 
 # Binaries
-Binaries/Win64/Debug/
-Binaries/Win64/Shipping/
-Binaries/Win64/Release/
+Binaries/Win64-Debug/
+Binaries/Win64-Shipping/
+Binaries/Win64-Release/
 
 # Intermediate
 Intermediate/

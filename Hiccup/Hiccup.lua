@@ -12,7 +12,7 @@ project "Hiccup-Core"
 	characterset "Unicode"
 
 	targetname "Hiccup-Core"
-	targetdir "%{wks.location}/Binaries/%{cfg.platform}/%{cfg.buildcfg}"
+	targetdir "%{wks.location}/Binaries/%{cfg.platform}-%{cfg.buildcfg}"
 	objdir "%{wks.location}/Intermediate/Build/%{prj.name}/%{cfg.buildcfg}"
 
 	files

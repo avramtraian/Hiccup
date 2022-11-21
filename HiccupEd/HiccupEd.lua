@@ -10,7 +10,7 @@ project "Hiccup-Editor"
 	characterset "Unicode"
 
 	targetname "Hiccup-Editor"
-	targetdir "%{wks.location}/Binaries/%{cfg.platform}/%{cfg.buildcfg}"
+	targetdir "%{wks.location}/Binaries/%{cfg.platform}-%{cfg.buildcfg}"
 	objdir "%{wks.location}/Intermediate/Build/%{prj.name}/%{cfg.buildcfg}"
 
 	files
