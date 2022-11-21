@@ -4,26 +4,213 @@
 
 #include "CoreMinimal.h"
 
-#define HcNew new(HC_FILE, HC_FUNCTION, HC_LINE)
+// Whether or not the Memory Tracking Tool is included in the binaries (and, thus, can be used).
+#define HC_ENABLE_MEMORY_TRACKING           1
 
-#define HcDelete delete
+#if HC_ENABLE_MEMORY_TRACKING
+	// New operator that provides memory tracking functionality. This should be used for most allocations.
+	#define HcNew                           new(HC_FILE, HC_FUNCTION, HC_LINE)
 
-#define AllocateTaggedI(BYTES_COUNT) AllocateTagged((BYTES_COUNT), HC_FILE, HC_FUNCTION, HC_LINE)
+	// Delete operator that provides memory tracking functionality. This should be used for most deallocations.
+	#define HcDelete                        delete
+
+	// Helper macro, used for automatically filling the 'AllocateTagged' tracking information.
+	#define AllocateTaggedI(BYTES_COUNT)    AllocateTagged((BYTES_COUNT), HC_FILE, HC_FUNCTION, HC_LINE)
+#else
+	// If the Memory Tracking Tool is not present in the binaries, there is no gain/need to use the tagged functions.
+	#define HcNew                           new
+	#define HcDelete                        delete
+	#define AllocateTaggedI(BYTES_COUNT)    Allocate(BYTES_COUNT)
+#endif // HC_ENABLE_MEMORY_TRACKING
 
 namespace HC
 {
 
+/**
+ *----------------------------------------------------------------
+ * Memory System Specification.
+ *----------------------------------------------------------------
+*/
+struct MemorySpecification
+{
+	// Whether or not to initialize the tracker. This flag is ignored when
+	//   'HC_ENABLE_MEMORY_TRACKING' is set to 0.
+	bool ShouldInitializeTracker;
+};
 
+/**
+ *----------------------------------------------------------------
+ * Hiccup Memory System.
+ *----------------------------------------------------------------
+ * This class holds all the functionality that the Hiccup Memory API provides.
+*/
+class Memory
+{
+public:
+	static bool Initialize(const MemorySpecification& specification);
+	static void Shutdown();
+
+public:
+	/**
+	 * Copies a block of memory.
+	 * Both detination and source memory buffers must be at least bytesCount long.
+	 * 
+	 * @param destination Where the memory will be copied to.
+	 * @param source Where the memory will be copied from.
+	 * @param bytesCount The number of bytes to copy.
+	 */
+	// TODO(Traian): Maybe inline this function?
+	HC_API static void Copy(void* detination, const void* source, usize bytesCount);
+
+	/**
+	 * Sets a block of memory to a given value.
+	 * The destination memory buffer must be at least bytesCount long.
+	 *
+	 * @param destination The address of the memory block to set.
+	 * @param value The value for each byte.
+	 * @param bytesCount The number of bytes to set.
+	 */
+	 // TODO(Traian): Maybe inline this function?
+	HC_API static void Set(void* detination, uint8 value, usize bytesCount);
+
+	/**
+	 * Zeros a block of memory.
+	 * The destination memory buffer must be at least bytesCount long.
+	 *
+	 * @param destination The address of the memory block to zero.
+	 * @param bytesCount The number of bytes to zero.
+	 */
+	 // TODO(Traian): Maybe inline this function?
+	HC_API static void Zero(void* detination, usize bytesCount);
+
+public:
+	/**
+	 * Allocates a block of memory.
+	 * The memory block allocated must only be freed by the 'FreeRaw' function.
+	 * This function doesn't use any kind of memory tracking. If you want that functionality,
+	 *   use 'Allocate' or 'AllocateTagged'.
+	 * 
+	 * @param bytesCount The number of bytes the memory block will have.
+	 * 
+	 * @return The address of the allocated memory block.
+	*/
+	HC_API static void* AllocateRaw(usize bytesCount);
+
+	/**
+	 * Allocates a block of memory.
+	 * The memory block allocated must only be freed by the 'Free' function.
+	 * 
+	 * @param bytesCount The number of bytes the memory block will have.
+	 *
+	 * @return The address of the allocated memory block.
+	*/
+	HC_API static void* Allocate(usize bytesCount);
+
+	/**
+	 * Allocates a block of memory.
+	 * The memory block allocated must only be freed by the 'Free' function.
+	 * This function does a more extensive (and thus more performance expensive) form of
+	 *   memory tracking. All the allocations performed by this function are registered
+	 *   and stored along the file where the allocations happen, the function signature and the line number.
+	 *
+	 * @param bytesCount The number of bytes the memory block will have.
+	 * @param fileName The file where the allocation was requested/performed.
+	 * @param functionName The function where the allocation was requested/performed.
+	 * @param lineNumber The line number where the allocation was requested/performed.
+	 *
+	 * @return The address of the allocated memory block.
+	*/
+	HC_API static void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber);
+
+	/**
+	 * Frees a memory block.
+	 * Can only free blocks allocated by the 'AllocateRaw' function.
+	 * 
+	 * @param memoryBlock The address of the memory block to free.
+	*/
+	HC_API static void FreeRaw(void* memoryBlock);
+
+	/**
+	 * Frees a memory block.
+	 * It can't free blocks allocated by the 'AllocateRaw' function, due to memory tracking.
+	 *   Use 'FreeRaw' instead.
+	 *
+	 * @param memoryBlock The address of the memory block to free.
+	*/
+	HC_API static void Free(void* memoryBlock);
+
+#if HC_ENABLE_MEMORY_TRACKING
+
+public:
+	/**
+	 *----------------------------------------------------------------------
+	 * Memory Tracking/Debugging Tool.
+	 *----------------------------------------------------------------------
+	 * This class holds all the functionality that the Hiccup Memory Debugger provides.
+	 * This tool has one chance to be initialized, during the Memory System initialization.
+	 *   Also, if 'HC_ENABLE_MEMORY_TRACKING' is defined as 0, this system will be completely
+	 *   removed from the binaries.
+	 * This tool can only be used IF it was initialized. This can be checked by using 'IsActive'.
+	*/
+	class Tracker
+	{
+	public:
+		/**
+		 * Checks if the Memory Tracking Tools are available.
+		 * 
+		 * @return True if the system is active; False otherwise.
+		*/
+		HC_API static bool IsActive();
+
+	public:
+		/** @return The total number of bytes allocated (from the global heap) during the application's lifetime. */
+		HC_API static usize GetTotalAllocated();
+
+		/** @return The total number of allocations (from the global heap, of any size) during the application's lifetime. */
+		HC_API static usize GetTotalAllocationsCount();
+
+		/** @return The total number of bytes deallocated (from the global heap) during the application's lifetime. */
+		HC_API static usize GetTotalDeallocated();
+
+		/** @return The total number of deallocations (from the global heap, of any size) during the application's lifetime. */
+		HC_API static usize GetTotalDeallocationsCount();
+
+		/** @return The number of bytes that are currently allocated (from the global heap). */
+		HC_API static usize GetCurrentAllocated();
+
+		/** @return The number of allocations (from the global heap, of any size) that are currently alive. */
+		HC_API static usize GetCurrentAllocationsCount();
+
+	private:
+		HC_API static void RegisterAllocation(void* memoryBlock, usize bytesCount);
+		HC_API static void RegisterTaggedAllocation(void* memoryBlock, usize bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber);
+
+		HC_API static void RegisterDeallocation(void* memoryBlock);
+
+	private:
+		static bool Initialize();
+		static void Shutdown();
+
+	private:
+		friend class Memory;
+	};
+
+private:
+	friend class Memory::Tracker;
+
+#endif // HC_ENABLE_MEMORY_TRACKING
+};
 
 } // namespace HC
 
-inline void* operator new(size_t bytesCount, void* memoryBlock)
-{
-	return memoryBlock;
-}
+// Placement new operator.
+inline void* operator new(size_t bytesCount, void* memoryBlock) { return memoryBlock; }
 
+// New operator, providing only basic memory tracking functionality.
 void* operator new(size_t bytesCount);
 
+// New operator, providing full memory tracking functionality.
 void* operator new(size_t bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber);
 
+// Delete operator.
 void operator delete(void* memoryBlock);

@@ -5,10 +5,17 @@
 namespace HC
 {
 
+static bool s_RestartApplication = false;
+
+bool ShouldRestartApplication()
+{
+	return s_RestartApplication;
+}
+
 Application* Application::s_Instance = nullptr;
 
-Application::Application(const ApplicationSpecification& appSpec)
-	: m_Specification(appSpec)
+Application::Application(const ApplicationSpecification& specification)
+	: m_Specification(specification)
 {
 	s_Instance = this;
 }

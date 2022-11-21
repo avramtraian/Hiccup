@@ -7,6 +7,7 @@
 #include "Core/CoreMinimal.h"
 #include "Core/CoreDefines.h"
 #include "Core/CoreTypes.h"
+#include "Core/Assert.h"
 
 #include "Core/Memory.h"
 

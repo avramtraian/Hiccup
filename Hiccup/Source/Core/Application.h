@@ -7,6 +7,8 @@
 namespace HC
 {
 
+HC_API bool ShouldRestartApplication();
+
 struct ApplicationSpecification
 {
 
@@ -18,7 +20,7 @@ public:
 	HC_API static Application* Get() { return s_Instance; }
 
 public:
-	Application(const ApplicationSpecification& appSpec);
+	Application(const ApplicationSpecification& specification);
 	~Application();
 
 	void Run();
