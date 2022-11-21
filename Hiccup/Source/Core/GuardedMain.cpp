@@ -50,8 +50,8 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 	while (ShouldRestartApplication());
 
 	// Shutting down the core systems.
-	Platform::Shutdown();
 	Memory::Shutdown();
+	Platform::Shutdown();
 
 	return 0;
 }
