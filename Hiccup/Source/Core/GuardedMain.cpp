@@ -5,6 +5,7 @@
 
 #include "Core/Platform/Platform.h"
 #include "Core/Memory.h"
+#include "Core/Logger.h"
 
 namespace HC
 {
@@ -32,12 +33,22 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 		return -2;
 	}
 
+	// Initializing the Logging system.
+	LoggerSpecification loggerSpec = {};
+	if (!Logger::Initialize(loggerSpec))
+	{
+		Platform::Shutdown();
+		Memory::Shutdown();
+		return -2;
+	}
+
 	do
 	{
 		// Creating the application.
 		Application* application = HcNew Application(appSpec);
 		if (!application)
 		{
+			HC_LOG_FATAL("Failed to create the application instance! Aborting...");
 			return -2;
 		}
 
@@ -50,6 +61,7 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 	while (ShouldRestartApplication());
 
 	// Shutting down the core systems.
+	Logger::Shutdown();
 	Memory::Shutdown();
 	Platform::Shutdown();
 

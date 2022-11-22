@@ -4,4 +4,5 @@
 
 #include "Core/CoreDefines.h"
 #include "Core/CoreTypes.h"
+#include "Core/Logger.h"
 #include "Core/Assert.h"

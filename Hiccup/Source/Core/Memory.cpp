@@ -17,7 +17,7 @@ internal MemoryData* s_MemoryData = nullptr;
 
 bool Memory::Initialize(const MemorySpecification& specification)
 {
-	s_MemoryData = (MemoryData*)Platform::Allocate(sizeof(MemoryData));
+	s_MemoryData = (MemoryData*)Platform::AllocateMemory(sizeof(MemoryData));
 	new (s_MemoryData) MemoryData();
 
 	s_MemoryData->Specification = specification;
@@ -42,7 +42,7 @@ void Memory::Shutdown()
 #endif // HC_ENABLE_MEMORY_TRACKING
 
 	s_MemoryData->~MemoryData();
-	Platform::Free(s_MemoryData);
+	Platform::FreeMemory(s_MemoryData);
 	s_MemoryData = nullptr;
 }
 
@@ -68,7 +68,7 @@ void* Memory::AllocateRaw(usize bytesCount)
 		return nullptr;
 	}
 
-	return Platform::Allocate(bytesCount);
+	return Platform::AllocateMemory(bytesCount);
 }
 
 void* Memory::Allocate(usize bytesCount)
@@ -107,7 +107,7 @@ void* Memory::AllocateTagged(usize bytesCount, const char* fileName, const char*
 
 void Memory::FreeRaw(void* memoryBlock)
 {
-	Platform::Free(memoryBlock);
+	Platform::FreeMemory(memoryBlock);
 }
 
 void Memory::Free(void* memoryBlock)

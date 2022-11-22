@@ -114,7 +114,7 @@
 
 #define Bit(X)                          (1 << (X))
 
-#define HC_LINE                         __LINE__
+#define HC_LINE                         (::HC::uint32)(__LINE__)
 #define HC_FILE                         __FILE__
 #define HC_DATE                         __DATE__
 
