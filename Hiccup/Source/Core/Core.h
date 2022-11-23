@@ -16,8 +16,7 @@
 #include "Core/Performance.h"
 
 //////// CONTAINERS ////////
-
-
+#include "Core/Containers/Array.h"
 
 //////// MATH ////////
 #include "Core/Math/MathUtilities.h"

@@ -26,4 +26,77 @@ using bool32    = int32;
 using usize     = size_t;
 using uptr      = uintptr_t;
 
+/**
+ *----------------------------------------------------------------
+ * Hiccup Types Utilities.
+ *----------------------------------------------------------------
+*/
+struct Types
+{
+public:
+	template<typename T>
+	struct RemoveReference
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	struct RemoveReference<T&>
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	struct RemoveReference<T&&>
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	using RemoveReferenceType = typename RemoveReference<T>::Type;
+
+	template<typename T>
+	struct RemoveConst
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	struct RemoveConst<const T>
+	{
+		using Type = T;
+	};
+
+	template<typename T>
+	using RemoveConstType = typename RemoveConst<T>::Type;
+
+	template<typename T>
+	struct ArrayToPointerDecay
+	{
+		using Type = T;
+	};
+
+	template<typename T, usize N>
+	struct ArrayToPointerDecay<T[N]>
+	{
+		using Type = T*;
+	};
+
+	template<typename T>
+	using ArrayToPointerDecayType = typename ArrayToPointerDecay<T>::Type;
+
+public:
+	template<typename T>
+	FORCEINLINE static constexpr RemoveReferenceType<T>&& Move(T&& object) noexcept
+	{
+		return static_cast<RemoveReferenceType<T>&&>(object);
+	}
+
+	template<typename T>
+	FORCEINLINE static constexpr T&& Forward(RemoveReferenceType<T>& object) noexcept
+	{
+		return static_cast<T&&>(object);
+	}
+};
+
 } // namespace HC

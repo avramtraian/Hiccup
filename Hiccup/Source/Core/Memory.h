@@ -214,3 +214,37 @@ void* operator new(size_t bytesCount, const char* fileName, const char* function
 
 // Delete operator.
 void operator delete(void* memoryBlock);
+
+namespace HC
+{
+
+class HeapAllocator
+{
+public:
+	FORCEINLINE void* AllocateRaw(usize bytesCount)
+	{
+		return Memory::Allocate(bytesCount);
+	}
+
+	FORCEINLINE void* Allocate(usize bytesCount)
+	{
+		return Memory::Allocate(bytesCount);
+	}
+
+	FORCEINLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
+	{
+		return Memory::AllocateTagged(bytesCount, fileName, functionName, lineNumber);
+	}
+
+	FORCEINLINE void FreeRaw(void* memoryBlock, usize bytesCount)
+	{
+		Memory::FreeRaw(memoryBlock);
+	}
+
+	FORCEINLINE void Free(void* memoryBlock, usize bytesCount)
+	{
+		Memory::Free(memoryBlock);
+	}
+};
+
+} // namespace HC
