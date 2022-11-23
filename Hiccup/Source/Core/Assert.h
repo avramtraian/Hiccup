@@ -30,26 +30,26 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 } // namespace HC
 
 #if HC_ENABLE_ASSERTS
-	#define HC_ASSERT(EXPRESSION)               \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "ASSERT",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				nullptr                         \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_ASSERT(EXPRESSION)                   \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "ASSERT",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				nullptr                             \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 
-	#define HC_ASSERTF(EXPRESSION, ...)         \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "ASSERT",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				__VA_ARGS__                     \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_ASSERTF(EXPRESSION, ...)             \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "ASSERT",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				__VA_ARGS__                         \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 #else
 	#define HC_ASSERT(EXPRESSION)
@@ -57,26 +57,26 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 #endif // HC_ENABLE_ASSERTS
 
 #if HC_ENABLE_DEBUG_ASSERTS
-	#define HC_DASSERT(EXPRESSION)              \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "ASSERT",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				nullptr                         \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_DASSERT(EXPRESSION)                  \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "ASSERT",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				nullptr                             \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 
-	#define HC_DASSERTF(EXPRESSION, ...)        \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "ASSERT",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				__VA_ARGS__                     \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_DASSERTF(EXPRESSION, ...)            \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "ASSERT",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				__VA_ARGS__                         \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 #else
 	#define HC_DASSERT(EXPRESSION)
@@ -84,26 +84,26 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 #endif // HC_ENABLE_DEBUG_ASSERTS
 
 #if HC_ENABLE_VERIFIES
-	#define HC_VERIFY(EXPRESSION)               \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "VERIFY",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				nullptr                         \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_VERIFY(EXPRESSION)                   \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "VERIFY",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				nullptr                             \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 
-	#define HC_VERIFYF(EXPRESSION, ...)         \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "VERIFY",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				__VA_ARGS__                     \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_VERIFYF(EXPRESSION, ...)             \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "VERIFY",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				__VA_ARGS__                         \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 #else
 	#define HC_VERIFY(EXPRESSION) EXPRESSION
@@ -111,26 +111,26 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 #endif // HC_ENABLE_VERIFIES
 
 #if HC_ENABLE_DEBUG_VERIFIES
-	#define HC_DVERIFY(EXPRESSION)              \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "VERIFY",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				nullptr                         \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_DVERIFY(EXPRESSION)                  \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "VERIFY",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				nullptr                             \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 
-	#define HC_DVERIFYF(EXPRESSION, ...)        \
-		if (!(EXPRESSION))                      \
-		{                                       \
-			::HC::OnAssertFailed(               \
-				#EXPRESSION, "VERIFY",          \
-				HC_FILE, HC_FUNCTION, HC_LINE,  \
-				__VA_ARGS__                     \
-			);                                  \
-			HC_DEBUGBREAK;                      \
+	#define HC_DVERIFYF(EXPRESSION, ...)            \
+		if (!(EXPRESSION))                          \
+		{                                           \
+			::HC::OnAssertFailed(                   \
+				#EXPRESSION, "VERIFY",              \
+				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
+				__VA_ARGS__                         \
+			);                                      \
+			HC_DEBUGBREAK;                          \
 		}
 #else
 	#define HC_DVERIFY(EXPRESSION) EXPRESSION

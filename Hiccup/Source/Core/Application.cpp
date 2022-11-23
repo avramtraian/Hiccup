@@ -31,7 +31,11 @@ void Application::Run()
 
 	while (m_IsRunning)
 	{
+		HC_PROFILE_BEGIN_FRAME;
 
+
+
+		HC_PROFILE_END_FRAME;
 	}
 
 	m_IsRunning = false;

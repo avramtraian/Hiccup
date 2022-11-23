@@ -85,6 +85,13 @@ public:
 	static void FreeMemory(void* memoryBlock);
 
 public:
+	static uint64 GetPerformanceTickCount();
+	static uint64 GetPerformanceTickFrequency();
+
+	static uint64 GetNanoseconds();
+	static uint64 GetNanosecondsSinceInitialization();
+
+public:
 	static void SetConsoleColor(ConsoleColor foreground, ConsoleColor background);
 
 	static void WriteToConsole(const char* message, usize messageLength);

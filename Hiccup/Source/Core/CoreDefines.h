@@ -98,11 +98,13 @@
 #if HC_COMPILER_MSVC
 	#define HC_DEBUGBREAK               __debugbreak()
 	#define FORCEINLINE                 __forceinline
-	#define HC_FUNCTION                 __FUNCSIG__
+	#define HC_FUNCTION_SIG             __FUNCSIG__
+	#define HC_FUNCTION_NAME            __FUNCTION__
 #elif HC_COMPILER_GCC_CLANG
 	#define HC_DEBUGBREAK               __builtin_trap()
 	#define FORCEINLINE                 inline
-	#define HC_FUNCTION                 __PRETTY_FUNCTION__
+	#define HC_FUNCTION_SIG             __PRETTY_FUNCTION__
+	#define HC_FUNCTION_NAME            __func__
 #endif // Compiler switch.
 
 //////////////// UTILITIES ////////////////
@@ -114,7 +116,7 @@
 
 #define Bit(X)                          (1 << (X))
 
-#define HC_LINE                         (::HC::uint32)(__LINE__)
+#define HC_LINE                         __LINE__
 #define HC_FILE                         __FILE__
 #define HC_DATE                         __DATE__
 

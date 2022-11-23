@@ -14,6 +14,9 @@ struct WindowsPlatformData
 {
 	PlatformSpecification Specification;
 
+	uint64 PerformanceTickFrequency;
+	uint64 InitializationNanoseconds;
+
 	HANDLE ConsoleHandle;
 	Platform::ConsoleColor ConsoleForeground;
 	Platform::ConsoleColor ConsoleBackground;
@@ -31,6 +34,15 @@ bool Platform::Initialize(const PlatformSpecification& specification)
 	new (s_PlatformData) WindowsPlatformData();
 
 	s_PlatformData->Specification = specification;
+
+	LARGE_INTEGER performanceTickFrequency;
+	if (!QueryPerformanceFrequency(&performanceTickFrequency))
+	{
+		return false;
+	}
+	s_PlatformData->PerformanceTickFrequency = performanceTickFrequency.QuadPart;
+
+	s_PlatformData->InitializationNanoseconds = GetNanoseconds();
 
 	if (s_PlatformData->Specification.IsConsoleAttached)
 	{
@@ -65,13 +77,39 @@ void Platform::FreeMemory(void* memoryBlock)
 	std::free(memoryBlock);
 }
 
+uint64 Platform::GetPerformanceTickCount()
+{
+	LARGE_INTEGER performanceCounter;
+	QueryPerformanceCounter(&performanceCounter);
+	return performanceCounter.QuadPart;
+}
+
+uint64 Platform::GetPerformanceTickFrequency()
+{
+	return s_PlatformData->PerformanceTickFrequency;
+}
+
+uint64 Platform::GetNanoseconds()
+{
+	const uint64 ticks = GetPerformanceTickCount();
+	const uint64 ticksFreq = s_PlatformData->PerformanceTickFrequency;
+
+	float64 nanoseconds = ((float64)ticks * 1e9) / (float64)ticksFreq;
+	return (uint64)nanoseconds;
+}
+
+uint64 Platform::GetNanosecondsSinceInitialization()
+{
+	return GetNanoseconds() - s_PlatformData->InitializationNanoseconds;
+}
+
 void Platform::SetConsoleColor(ConsoleColor foreground, ConsoleColor background)
 {
 	if (!s_PlatformData->Specification.IsConsoleAttached)
 	{
 		return;
 	}
-
+	 
 	if (s_PlatformData->ConsoleForeground == foreground && s_PlatformData->ConsoleBackground == background)
 	{
 		return;

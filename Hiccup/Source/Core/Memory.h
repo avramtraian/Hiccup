@@ -9,13 +9,13 @@
 
 #if HC_ENABLE_MEMORY_TRACKING
 	// New operator that provides memory tracking functionality. This should be used for most allocations.
-	#define HcNew                           new(HC_FILE, HC_FUNCTION, HC_LINE)
+	#define HcNew                           new(HC_FILE, HC_FUNCTION_SIG, HC_LINE)
 
 	// Delete operator that provides memory tracking functionality. This should be used for most deallocations.
 	#define HcDelete                        delete
 
 	// Helper macro, used for automatically filling the 'AllocateTagged' tracking information.
-	#define AllocateTaggedI(BYTES_COUNT)    AllocateTagged((BYTES_COUNT), HC_FILE, HC_FUNCTION, HC_LINE)
+	#define AllocateTaggedI(BYTES_COUNT)    AllocateTagged((BYTES_COUNT), HC_FILE, HC_FUNCTION_SIG, HC_LINE)
 #else
 	// If the Memory Tracking Tool is not present in the binaries, there is no gain/need to use the tagged functions.
 	#define HcNew                           new

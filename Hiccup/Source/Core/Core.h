@@ -13,6 +13,8 @@
 #include "Core/Memory.h"
 #include "Core/Buffer.h"
 
+#include "Core/Performance.h"
+
 //////// CONTAINERS ////////
 
 
