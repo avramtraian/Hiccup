@@ -305,6 +305,8 @@ private:
 	AllocatorType m_AllocatorInstance;
 };
 
+//////////////// ARRAY IMPLEMENTATION ////////////////
+
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>::Array()
 	: m_Data(nullptr)
