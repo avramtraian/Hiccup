@@ -3,6 +3,7 @@
 #include "Memory.h"
 
 #include "Platform/Platform.h"
+#include "Containers/HashTable.h"
 
 #include <cstring>
 
@@ -127,12 +128,26 @@ void Memory::Free(void* memoryBlock)
 }
 
 #if HC_ENABLE_MEMORY_TRACKING
+
+template<typename KeyType, typename ValueType>
+using UntrackedHashTable = HashTable<KeyType, ValueType, UntrackedAllocator>;
+
+struct AllocationInfo
+{
+	usize       BytesCount;
+	const char* FileName;
+	const char* FunctionName;
+	uint32      LineNumber;
+};
+
 struct MemoryTrackerData
 {
 	usize Allocated             = 0;
 	usize AllocationsCount      = 0;
 	usize Deallocated           = 0;
 	usize DeallocationsCount    = 0;
+
+	UntrackedHashTable<void*, AllocationInfo> AllocationsTable;
 };
 internal MemoryTrackerData* s_TrackerData = nullptr;
 
@@ -191,23 +206,48 @@ usize Memory::Tracker::GetCurrentAllocationsCount()
 	return s_TrackerData->AllocationsCount - s_TrackerData->DeallocationsCount;
 }
 
+void Memory::Tracker::LogMemoryUsage()
+{
+	s_TrackerData->AllocationsTable.ForEach([](void* memoryBlock, const AllocationInfo& allocation) -> bool
+		{
+			HC_LOG_DEBUG("Allocation [%p]:", memoryBlock);
+			HC_LOG_DEBUG("    BytesCount:   %u", allocation.BytesCount);
+			HC_LOG_DEBUG("    FileName:     %s", allocation.FileName);
+			HC_LOG_DEBUG("    FunctionName: %s", allocation.FunctionName);
+			HC_LOG_DEBUG("    LineNumber:   %u", allocation.LineNumber);
+			return true;
+		});
+}
+
 void Memory::Tracker::RegisterAllocation(void* memoryBlock, usize bytesCount)
 {
 	s_TrackerData->Allocated += bytesCount;
 	s_TrackerData->AllocationsCount++;
 }
 
-void Memory::Tracker::RegisterTaggedAllocation(void* memoryBlock, usize bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber)
+void Memory::Tracker::RegisterTaggedAllocation(void* memoryBlock, usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
 {
+	AllocationInfo allocation = {};
+	allocation.BytesCount = bytesCount;
+	allocation.FileName = fileName;
+	allocation.FunctionName = functionName;
+	allocation.LineNumber = lineNumber;
+
 	s_TrackerData->Allocated += bytesCount;
 	s_TrackerData->AllocationsCount++;
+
+	s_TrackerData->AllocationsTable.Insert(memoryBlock, Types::Move(allocation));
 }
 
 void Memory::Tracker::RegisterDeallocation(void* memoryBlock)
 {
-	// TODO(Traian): Retrieve this information from the allocations table.
-	s_TrackerData->Deallocated += 0;
+	const usize allocationIndex = s_TrackerData->AllocationsTable.FindExistingIndex(memoryBlock);
+	const AllocationInfo& allocation = s_TrackerData->AllocationsTable.AtIndex(allocationIndex);
+
+	s_TrackerData->Deallocated += allocation.BytesCount;
 	s_TrackerData->DeallocationsCount++;
+
+	s_TrackerData->AllocationsTable.RemoveIndex(allocationIndex);
 }
 #endif // HC_ENABLE_MEMORY_TRACKING
 

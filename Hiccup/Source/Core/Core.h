@@ -17,6 +17,7 @@
 
 //////// CONTAINERS ////////
 #include "Core/Containers/Array.h"
+#include "Core/Containers/HashTable.h"
 #include "Core/Containers/SharedPtr.h"
 
 //////// MATH ////////

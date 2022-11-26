@@ -181,6 +181,8 @@ public:
 		/** @return The number of allocations (from the global heap, of any size) that are currently alive. */
 		HC_API static usize GetCurrentAllocationsCount();
 
+		HC_API static void LogMemoryUsage();
+
 	private:
 		HC_API static void RegisterAllocation(void* memoryBlock, usize bytesCount);
 		HC_API static void RegisterTaggedAllocation(void* memoryBlock, usize bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber);
@@ -218,33 +220,95 @@ void operator delete(void* memoryBlock);
 namespace HC
 {
 
+/**
+ *----------------------------------------------------------------------
+ * Hiccup Heap Allocator.
+ *----------------------------------------------------------------------
+ * Most common allocator you can use. It directly allocates the memory from the heap,
+ *   using the 'Memory' calls. It provides the full range of memory tracking tools.
+ * It is the default allocator used by the majority of the containers.
+ */
 class HeapAllocator
 {
 public:
+	/** @see 'Memory::AllocateRaw'. */
 	FORCEINLINE void* AllocateRaw(usize bytesCount)
 	{
 		return Memory::Allocate(bytesCount);
 	}
 
+	/** @see 'Memory::Allocate'. */
 	FORCEINLINE void* Allocate(usize bytesCount)
 	{
 		return Memory::Allocate(bytesCount);
 	}
 
+	/** @see 'Memory::AllocateTagged'. */
 	FORCEINLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
 	{
 		return Memory::AllocateTagged(bytesCount, fileName, functionName, lineNumber);
 	}
 
+	/** @see 'Memory::FreeRaw'. */
 	FORCEINLINE void FreeRaw(void* memoryBlock, usize bytesCount)
 	{
 		Memory::FreeRaw(memoryBlock);
 	}
 
+	/** @see 'Memory::Free'. */
 	FORCEINLINE void Free(void* memoryBlock, usize bytesCount)
 	{
 		Memory::Free(memoryBlock);
 	}
+
+public:
+	/** @returns Always true, because the memory is allocated directly from the global heap. */
+	FORCEINLINE constexpr bool operator==(const HeapAllocator&) const { return true; }
+};
+
+/**
+ *----------------------------------------------------------------------
+ * Hiccup Untracked Allocator.
+ *----------------------------------------------------------------------
+ * The most basic allocator you can use. It directly allocates the memory from the heap,
+ *   using the 'Memory' calls, without performing any kind of memory tracking/debugging.
+ */
+class UntrackedAllocator
+{
+public:
+	/** @see 'Memory::AllocateRaw'. */
+	FORCEINLINE void* AllocateRaw(usize bytesCount)
+	{
+		return Memory::AllocateRaw(bytesCount);
+	}
+
+	/** @see 'Memory::AllocateRaw'. */
+	FORCEINLINE void* Allocate(usize bytesCount)
+	{
+		return Memory::AllocateRaw(bytesCount);
+	}
+
+	/** @see 'Memory::AllocateRaw'. */
+	FORCEINLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
+	{
+		return Memory::AllocateRaw(bytesCount);
+	}
+
+	/** @see 'Memory::FreeRaw'. */
+	FORCEINLINE void FreeRaw(void* memoryBlock, usize bytesCount)
+	{
+		Memory::FreeRaw(memoryBlock);
+	}
+
+	/** @see 'Memory::FreeRaw'. */
+	FORCEINLINE void Free(void* memoryBlock, usize bytesCount)
+	{
+		Memory::FreeRaw(memoryBlock);
+	}
+
+public:
+	/** @returns Always true, because the memory is allocated directly from the global heap. */
+	FORCEINLINE constexpr bool operator==(const UntrackedAllocator&) const { return true; }
 };
 
 } // namespace HC
