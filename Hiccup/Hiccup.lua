@@ -15,6 +15,9 @@ project "Hiccup-Core"
 	targetdir "%{wks.location}/Binaries/%{cfg.platform}-%{cfg.buildcfg}"
 	objdir "%{wks.location}/Intermediate/Build/%{prj.name}/%{cfg.buildcfg}"
 
+	pchheader "HiccupPCH.h"
+	pchsource "Source/Core/HiccupPCH.cpp"
+
 	files
 	{
 		"%{prj.location}/Source/**.h",
@@ -26,6 +29,11 @@ project "Hiccup-Core"
 	includedirs
 	{
 		"%{prj.location}/Source"
+	}
+
+	forceincludes
+	{
+		"HiccupPCH.h"
 	}
 
 	defines

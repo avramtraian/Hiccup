@@ -4,6 +4,8 @@
 
 #include "CoreMinimal.h"
 
+#include <new>
+
 // Whether or not the Memory Tracking Tool is included in the binaries (and, thus, can be used).
 #define HC_ENABLE_MEMORY_TRACKING           1
 
@@ -205,9 +207,6 @@ private:
 
 } // namespace HC
 
-// Placement new operator.
-inline void* operator new(size_t bytesCount, void* memoryBlock) { return memoryBlock; }
-
 // New operator, providing only basic memory tracking functionality.
 void* operator new(size_t bytesCount);
 
@@ -215,7 +214,7 @@ void* operator new(size_t bytesCount);
 void* operator new(size_t bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber);
 
 // Delete operator.
-void operator delete(void* memoryBlock);
+void operator delete(void* memoryBlock) noexcept;
 
 namespace HC
 {
