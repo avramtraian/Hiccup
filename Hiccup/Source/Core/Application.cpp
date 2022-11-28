@@ -33,7 +33,7 @@ void Application::Run()
 	{
 		HC_PROFILE_BEGIN_FRAME;
 
-		
+
 
 		HC_PROFILE_END_FRAME;
 	}

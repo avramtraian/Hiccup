@@ -16,9 +16,16 @@
 #include "Core/Performance.h"
 
 //////// CONTAINERS ////////
+
 #include "Core/Containers/Array.h"
+#include "Core/Containers/Hash.h"
 #include "Core/Containers/HashTable.h"
 #include "Core/Containers/SharedPtr.h"
 
 //////// MATH ////////
+
 #include "Core/Math/MathUtilities.h"
+#include "Core/Math/Geometry.h"
+#include "Core/Math/Transform.h"
+#include "Core/Math/Intersection.h"
+#include "Core/Math/Random.h"
