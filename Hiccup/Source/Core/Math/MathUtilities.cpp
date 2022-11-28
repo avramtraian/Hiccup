@@ -3,7 +3,6 @@
 #include "MathUtilities.h"
 
 #include <cmath>
-#include <cstdlib>
 
 namespace HC
 {
