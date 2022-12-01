@@ -25,7 +25,7 @@ internal WindowsPlatformData* s_PlatformData = nullptr;
 
 bool Platform::Initialize(const PlatformSpecification& specification)
 {
-	s_PlatformData = (WindowsPlatformData*)malloc(sizeof(WindowsPlatformData));
+	s_PlatformData = (WindowsPlatformData*)std::malloc(sizeof(WindowsPlatformData));
 	if (!s_PlatformData)
 	{
 		return false;
@@ -63,7 +63,7 @@ void Platform::Shutdown()
 	}
 
 	s_PlatformData->~WindowsPlatformData();
-	free(s_PlatformData);
+	std::free(s_PlatformData);
 	s_PlatformData = nullptr;
 }
 
