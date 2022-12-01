@@ -97,12 +97,12 @@
 
 #if HC_COMPILER_MSVC
 	#define HC_DEBUGBREAK               __debugbreak()
-	#define FORCEINLINE                 __forceinline
+	#define ALWAYS_INLINE               __forceinline
 	#define HC_FUNCTION_SIG             __FUNCSIG__
 	#define HC_FUNCTION_NAME            __FUNCTION__
 #elif HC_COMPILER_GCC_CLANG
 	#define HC_DEBUGBREAK               __builtin_trap()
-	#define FORCEINLINE                 inline
+	#define ALWAYS_INLINE               inline
 	#define HC_FUNCTION_SIG             __PRETTY_FUNCTION__
 	#define HC_FUNCTION_NAME            __func__
 #endif // Compiler switch.

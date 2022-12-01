@@ -105,20 +105,20 @@ public:
 
 public:
 	/** @return The held object. */
-	FORCEINLINE T* operator->();
+	ALWAYS_INLINE T* operator->();
 
 	/** @return The held object. */
-	FORCEINLINE const T* operator->() const;
+	ALWAYS_INLINE const T* operator->() const;
 
 public:
 	/** @return The held object. */
-	FORCEINLINE T* Get();
+	ALWAYS_INLINE T* Get();
 
 	/** @return The held object. */
-	FORCEINLINE const T* Get() const;
+	ALWAYS_INLINE const T* Get() const;
 
 	/** @return True if the pointer is valid (not nullptr); False otherwise. */
-	FORCEINLINE bool IsValid() const;
+	ALWAYS_INLINE bool IsValid() const;
 
 public:
 	/**
@@ -229,33 +229,33 @@ SharedPtr<T>& SharedPtr<T>::operator=(std::nullptr_t)
 }
 
 template<typename T>
-FORCEINLINE T* SharedPtr<T>::operator->()
+ALWAYS_INLINE T* SharedPtr<T>::operator->()
 {
 	return Get();
 }
 
 template<typename T>
-FORCEINLINE const T* SharedPtr<T>::operator->() const
+ALWAYS_INLINE const T* SharedPtr<T>::operator->() const
 {
 	return Get();
 }
 
 template<typename T>
-FORCEINLINE T* SharedPtr<T>::Get()
+ALWAYS_INLINE T* SharedPtr<T>::Get()
 {
 	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference nullptr!
 	return m_Pointer;
 }
 
 template<typename T>
-FORCEINLINE const T* SharedPtr<T>::Get() const
+ALWAYS_INLINE const T* SharedPtr<T>::Get() const
 {
 	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference nullptr!
 	return m_Pointer;
 }
 
 template<typename T>
-FORCEINLINE bool SharedPtr<T>::IsValid() const
+ALWAYS_INLINE bool SharedPtr<T>::IsValid() const
 {
 	return (m_Pointer != nullptr);
 }

@@ -27,7 +27,7 @@ struct HC_API LinearMemoryArena
 {
 public:
 	// Default constructor.
-	FORCEINLINE LinearMemoryArena()
+	ALWAYS_INLINE LinearMemoryArena()
 		: m_Buffer()
 		, m_Allocated(0)
 	{}
@@ -37,13 +37,13 @@ public:
 	 * 
 	 * @param size The number of bytes the arena can store.
 	 */
-	FORCEINLINE LinearMemoryArena(usize size)
+	ALWAYS_INLINE LinearMemoryArena(usize size)
 		: m_Buffer(size)
 		, m_Allocated(0)
 	{}
 
 	// Destructor.
-	FORCEINLINE ~LinearMemoryArena()
+	ALWAYS_INLINE ~LinearMemoryArena()
 	{
 		ReleaseMemory();
 	}
@@ -54,15 +54,15 @@ public:
 
 public:
 	/** @return Pointer to the arena's memory block. */
-	FORCEINLINE uint8* Data() const { return m_Buffer.Data; }
+	ALWAYS_INLINE uint8* Data() const { return m_Buffer.Data; }
 
 	/** @return The number of bytes the arena can store. */
-	FORCEINLINE usize Size() const { return m_Buffer.Size; }
+	ALWAYS_INLINE usize Size() const { return m_Buffer.Size; }
 
 	/** @return The number of currently allocated bytes. */
-	FORCEINLINE usize Allocated() const { return m_Allocated; }
+	ALWAYS_INLINE usize Allocated() const { return m_Allocated; }
 
-	FORCEINLINE bool IsValid() const { return (m_Buffer.Data != nullptr); }
+	ALWAYS_INLINE bool IsValid() const { return (m_Buffer.Data != nullptr); }
 
 public:
 	/**
@@ -86,7 +86,7 @@ public:
 	}
 
 	template<typename T>
-	FORCEINLINE T* AllocateAs(usize bytesCount)
+	ALWAYS_INLINE T* AllocateAs(usize bytesCount)
 	{
 		return (T*)Allocate(bytesCount);
 	}
@@ -98,7 +98,7 @@ public:
 	 * @return Pointer to the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	FORCEINLINE T* AllocateType()
+	ALWAYS_INLINE T* AllocateType()
 	{
 		return (T*)Allocate(sizeof(T));
 	}
@@ -112,7 +112,7 @@ public:
 	 * @retirm Pointer the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	FORCEINLINE T* AllocateArray(usize count)
+	ALWAYS_INLINE T* AllocateArray(usize count)
 	{
 		return (T*)Allocate(count * sizeof(T));
 	}
@@ -127,21 +127,21 @@ public:
 	}
 
 	/** @return True if the arena can store the given number of bytes; False otherwise. */
-	FORCEINLINE bool IsAbleToStore(usize bytesCount)
+	ALWAYS_INLINE bool IsAbleToStore(usize bytesCount)
 	{
 		return (m_Allocated + bytesCount <= m_Buffer.Size);
 	}
 
 	/** @return True if the arena can store an instance of the given type; False otherwise. */
 	template<typename T>
-	FORCEINLINE bool IsAbleToStoreType()
+	ALWAYS_INLINE bool IsAbleToStoreType()
 	{
 		return IsAbleToStore(sizeof(T));
 	}
 
 	/** @return True if the arena can store an array of the given type; False otherwise. */
 	template<typename T>
-	FORCEINLINE bool IsAbleToStoreArray(usize count)
+	ALWAYS_INLINE bool IsAbleToStoreArray(usize count)
 	{
 		return IsAbleToStore(count * sizeof(T));
 	}

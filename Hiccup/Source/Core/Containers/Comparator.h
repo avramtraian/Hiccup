@@ -17,7 +17,7 @@ class DefaultComparator
 {
 public:
 	template<typename T>
-	FORCEINLINE static uint64 Compare(const T& a, const T& b)
+	ALWAYS_INLINE static uint64 Compare(const T& a, const T& b)
 	{
 		return (a == b);
 	}

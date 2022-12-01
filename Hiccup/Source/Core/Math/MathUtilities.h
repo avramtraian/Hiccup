@@ -65,49 +65,49 @@ struct Math
 public:
 	// Calculates the absolute value.
 	template<typename T>
-	FORCEINLINE static T Abs(T x)
+	ALWAYS_INLINE static T Abs(T x)
 	{
 		return (x < 0) ? -x : x;
 	}
 
 	// Gets the maximum value between two numbers.
 	template<typename T>
-	FORCEINLINE static T Max(T a, T b)
+	ALWAYS_INLINE static T Max(T a, T b)
 	{
 		return (a > b) ? a : b;
 	}
 
 	// Gets the maximum absolute value between two numbers.
 	template<typename T>
-	FORCEINLINE static T AbsMax(T a, T b)
+	ALWAYS_INLINE static T AbsMax(T a, T b)
 	{
 		return Max<T>(Abs<T>(a), Abs<T>(b));
 	}
 
 	// Gets the minimum value between two numbers.
 	template<typename T>
-	FORCEINLINE static T Min(T a, T b)
+	ALWAYS_INLINE static T Min(T a, T b)
 	{
 		return (a < b) ? a : b;
 	}
 
 	// Gets the minimum absolute value between two numbers.
 	template<typename T>
-	FORCEINLINE static T AbsMin(T a, T b)
+	ALWAYS_INLINE static T AbsMin(T a, T b)
 	{
 		return Min<T>(Abs<T>(a), Abs<T>(b));
 	}
 
 	// Clamps a value between two numbers.
 	template<typename T>
-	FORCEINLINE static T Clamp(T x, T min, T max)
+	ALWAYS_INLINE static T Clamp(T x, T min, T max)
 	{
 		return Min<T>(Max<T>(x, min), max);
 	}
 
 	// Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
 	template<typename T>
-	FORCEINLINE static bool AreNearlyEqual(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
+	ALWAYS_INLINE static bool AreNearlyEqual(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
 	{
 		return Abs<T>(a - b) <= tolerance;
 	}
@@ -115,14 +115,14 @@ public:
 public:
 	// Converts from degrees to radians.
 	template<typename T>
-	FORCEINLINE static T ToRad(T degrees)
+	ALWAYS_INLINE static T ToRad(T degrees)
 	{
 		return degrees / T(180) * T(DOUBLE_PI);
 	}
 
 	// Converts from radians to degrees.
 	template<typename T>
-	FORCEINLINE static T ToDeg(T radians)
+	ALWAYS_INLINE static T ToDeg(T radians)
 	{
 		return radians / T(DOUBLE_PI) * T(180);
 	}

@@ -32,11 +32,11 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE Matrix3T();
+	ALWAYS_INLINE Matrix3T();
 
 public:
 	/** @return An identity matrix. */
-	FORCEINLINE static Matrix3T<T> Identity();
+	ALWAYS_INLINE static Matrix3T<T> Identity();
 };
 
 using Matrix3f  = Matrix3T<float32>;
@@ -71,11 +71,11 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE Matrix4T();
+	ALWAYS_INLINE Matrix4T();
 
 public:
 	/** @return An identity matrix. */
-	FORCEINLINE static Matrix4T<T> Identity();
+	ALWAYS_INLINE static Matrix4T<T> Identity();
 };
 
 using Matrix4f  = Matrix4T<float32>;
@@ -91,12 +91,12 @@ using Matrix4   = Matrix4f;
 #pragma region Matrix3 Implementation
 
 template<typename T>
-FORCEINLINE Matrix3T<T>::Matrix3T()
+ALWAYS_INLINE Matrix3T<T>::Matrix3T()
 	: Data{}
 {}
 
 template<typename T>
-FORCEINLINE Matrix3T<T> Matrix3T<T>::Identity()
+ALWAYS_INLINE Matrix3T<T> Matrix3T<T>::Identity()
 {
 	return Matrix3T<T>
 	(
@@ -112,12 +112,12 @@ FORCEINLINE Matrix3T<T> Matrix3T<T>::Identity()
 #pragma region Matrix4 Implementation
 
 template<typename T>
-FORCEINLINE Matrix4T<T>::Matrix4T()
+ALWAYS_INLINE Matrix4T<T>::Matrix4T()
 	: Data{}
 {}
 
 template<typename T>
-FORCEINLINE Matrix4T<T> Matrix4T<T>::Identity()
+ALWAYS_INLINE Matrix4T<T> Matrix4T<T>::Identity()
 {
 	return Matrix4T<T>
 	(

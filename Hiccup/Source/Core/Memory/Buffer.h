@@ -28,7 +28,7 @@ public:
 
 public:
 	// Default constructor.
-	FORCEINLINE Buffer()
+	ALWAYS_INLINE Buffer()
 		: Data(nullptr)
 		, Size(0)
 	{}
@@ -38,7 +38,7 @@ public:
 	 *
 	 * @param size The number of bytes the buffer can store.
 	 */
-	FORCEINLINE Buffer(usize size)
+	ALWAYS_INLINE Buffer(usize size)
 		: Data(nullptr)
 		, Size(0)
 	{
@@ -49,16 +49,16 @@ public:
 	* Destructor. It performs a shallow copy. For a deep copy, use
 	*   'Buffer::Copy'.
 	*/
-	FORCEINLINE Buffer(const Buffer& other) = default;
+	ALWAYS_INLINE Buffer(const Buffer& other) = default;
 
 public:
 	/** @return Pointer to the buffer's memory block, casted to the given type. */
 	template<typename T>
-	FORCEINLINE T* As() { return (T*)Data; }
+	ALWAYS_INLINE T* As() { return (T*)Data; }
 
 	/** @return Pointer to the buffer's memory block, casted to the given type. */
 	template<typename T>
-	FORCEINLINE const T* As() const { return (const T*)Data; }
+	ALWAYS_INLINE const T* As() const { return (const T*)Data; }
 
 	/**
 	 * Copies a buffer, performing a deep copy.
@@ -67,7 +67,7 @@ public:
 	 * 
 	 * @return The newly created buffer.
 	 */
-	FORCEINLINE static Buffer Copy(Buffer source)
+	ALWAYS_INLINE static Buffer Copy(Buffer source)
 	{
 		Buffer destination = Buffer(source.Size);
 		Memory::Copy(destination.Data, source.Data, source.Size);
@@ -80,7 +80,7 @@ public:
 	 * 
 	 * @param size The number of bytes the buffer can store.
 	 */
-	FORCEINLINE void Allocate(usize size)
+	ALWAYS_INLINE void Allocate(usize size)
 	{
 		if (Data)
 		{
@@ -94,7 +94,7 @@ public:
 	/**
 	 * Releases the buffer's memory block.
 	 */
-	FORCEINLINE void Release()
+	ALWAYS_INLINE void Release()
 	{
 		HcDelete[] Data;
 		Data = nullptr;

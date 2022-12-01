@@ -52,14 +52,14 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE Vector2T();
+	ALWAYS_INLINE Vector2T();
 
 	/**
 	 * Copy constructor.
 	 *
 	 * @param other The vector to copy.
 	 */
-	FORCEINLINE Vector2T(const Vector2T<T>& other);
+	ALWAYS_INLINE Vector2T(const Vector2T<T>& other);
 
 	/**
 	 * Component constructor.
@@ -67,28 +67,28 @@ public:
 	 * @param x The component on the X-axis.
 	 * @param y The component on the Y-axis.
 	 */
-	FORCEINLINE Vector2T(T x, T y);
+	ALWAYS_INLINE Vector2T(T x, T y);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
 	 *
 	 * @param scalar The value to initialize the components with.
 	 */
-	FORCEINLINE explicit Vector2T(T scalar);
+	ALWAYS_INLINE explicit Vector2T(T scalar);
 
 	/**
 	 * Constructor using a 3-component vector.
 	 * 
 	 * @param vector3 The 3-component vector.
 	 */
-	FORCEINLINE explicit Vector2T(const Vector3T<T>& vector3);
+	ALWAYS_INLINE explicit Vector2T(const Vector3T<T>& vector3);
 
 	/**
 	 * Constructor using a 4-component vector.
 	 * 
 	 * @param vector4 The 4-component vector.
 	 */
-	FORCEINLINE explicit Vector2T(const Vector4T<T>& vector4);
+	ALWAYS_INLINE explicit Vector2T(const Vector4T<T>& vector4);
 
 	/**
 	 * Copy assignment operator.
@@ -97,7 +97,7 @@ public:
 	 *
 	 * @return Reference to this, after the copy.
 	 */
-	FORCEINLINE Vector2T<T>& operator=(const Vector2T<T>& other);
+	ALWAYS_INLINE Vector2T<T>& operator=(const Vector2T<T>& other);
 
 public:
 	/**
@@ -107,7 +107,7 @@ public:
 	 *
 	 * @return The vector created by adding a vector to this.
 	 */
-	FORCEINLINE Vector2T<T> operator+(const Vector2T<T>& other) const;
+	ALWAYS_INLINE Vector2T<T> operator+(const Vector2T<T>& other) const;
 
 	/**
 	 * Addition operator. Adds a vector to this.
@@ -116,7 +116,7 @@ public:
 	 *
 	 * @return Reference to this, after the addition.
 	 */
-	FORCEINLINE Vector2T<T>& operator+=(const Vector2T<T>& other);
+	ALWAYS_INLINE Vector2T<T>& operator+=(const Vector2T<T>& other);
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -125,7 +125,7 @@ public:
 	 *
 	 * @return The vector created by subtracting a vector from this.
 	 */
-	FORCEINLINE Vector2T<T> operator-(const Vector2T<T>& other) const;
+	ALWAYS_INLINE Vector2T<T> operator-(const Vector2T<T>& other) const;
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -134,7 +134,7 @@ public:
 	 *
 	 * @return Reference to this, after the subtraction.
 	 */
-	FORCEINLINE Vector2T<T>& operator-=(const Vector2T<T>& other);
+	ALWAYS_INLINE Vector2T<T>& operator-=(const Vector2T<T>& other);
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -143,7 +143,7 @@ public:
 	 *
 	 * @return The vector created by multiplying this with the given scalar.
 	 */
-	FORCEINLINE Vector2T<T> operator*(T scalar) const;
+	ALWAYS_INLINE Vector2T<T> operator*(T scalar) const;
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -152,7 +152,7 @@ public:
 	 *
 	 * @return Reference to this, after the multiplication.
 	 */
-	FORCEINLINE Vector2T<T>& operator*=(T scalar);
+	ALWAYS_INLINE Vector2T<T>& operator*=(T scalar);
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -161,7 +161,7 @@ public:
 	 *
 	 * @return The vector created by dividing this by the given scalar.
 	 */
-	FORCEINLINE Vector2T<T> operator/(T scalar) const;
+	ALWAYS_INLINE Vector2T<T> operator/(T scalar) const;
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -170,21 +170,21 @@ public:
 	 *
 	 * @return Reference to this, after the division.
 	 */
-	FORCEINLINE Vector2T<T>& operator/=(T scalar);
+	ALWAYS_INLINE Vector2T<T>& operator/=(T scalar);
 
 public:
 	/** @return The squared magnitude of the vector. */
-	FORCEINLINE T MagnitudeSquared() const;
+	ALWAYS_INLINE T MagnitudeSquared() const;
 
 	/** @return The magnitude of the vector. */
-	FORCEINLINE T Magnitude() const;
+	ALWAYS_INLINE T Magnitude() const;
 
 	/**
 	 * Normalizes this vector.
 	 *
 	 * @return The vector's normal.
 	 */
-	FORCEINLINE Vector2T<T> Normalize() const;
+	ALWAYS_INLINE Vector2T<T> Normalize() const;
 
 	/**
 	 * Normalizes this vector, the calculation being made only if the vector is not already normalized.
@@ -194,7 +194,7 @@ public:
 	 *
 	 * @return The vector's normal.
 	 */
-	FORCEINLINE Vector2T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
@@ -205,7 +205,7 @@ public:
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	FORCEINLINE Vector2T<T> NormalizeSafe(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeSafe(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
@@ -219,7 +219,7 @@ public:
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	FORCEINLINE Vector2T<T> NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
@@ -229,7 +229,7 @@ public:
 	 *
 	 * @return The dot product.
 	 */
-	FORCEINLINE static T Dot(const Vector2T<T>& a, const Vector2T<T>& b);
+	ALWAYS_INLINE static T Dot(const Vector2T<T>& a, const Vector2T<T>& b);
 
 public:
 	/**
@@ -240,7 +240,7 @@ public:
 	 *
 	 * @return The reflected direction.
 	 */
-	FORCEINLINE static Vector2T<T> Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal);
+	ALWAYS_INLINE static Vector2T<T> Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal);
 };
 
 // 2-Component vector, with 32-bit floating point precision.
@@ -285,14 +285,14 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE Vector3T();
+	ALWAYS_INLINE Vector3T();
 
 	/**
 	 * Copy constructor.
 	 * 
 	 * @param other The vector to copy.
 	 */
-	FORCEINLINE Vector3T(const Vector3T<T>& other);
+	ALWAYS_INLINE Vector3T(const Vector3T<T>& other);
 
 	/**
 	 * Component constructor.
@@ -301,14 +301,14 @@ public:
 	 * @param y The component on the Y-axis.
 	 * @param z The component on the Z-axis.
 	 */
-	FORCEINLINE Vector3T(T x, T y, T z);
+	ALWAYS_INLINE Vector3T(T x, T y, T z);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
 	 * 
 	 * @param scalar The value to initialize the components with.
 	 */
-	FORCEINLINE explicit Vector3T(T scalar);
+	ALWAYS_INLINE explicit Vector3T(T scalar);
 
 	/**
 	 * Constructor using a 2-component vector, for initializing the X and Y components.
@@ -316,7 +316,7 @@ public:
 	 * 
 	 * @param vector2 The 2-component vector.
 	 */
-	FORCEINLINE explicit Vector3T(const Vector2T<T>& vector2);
+	ALWAYS_INLINE explicit Vector3T(const Vector2T<T>& vector2);
 
 	/**
 	 * Constructor using a 2-component vector, for initializing the X and Y components.
@@ -325,14 +325,14 @@ public:
 	 * @param vector2 The 2-component vector.
 	 * @param z The value to initialize the vector's Z component with.
 	 */
-	FORCEINLINE Vector3T(const Vector2T<T>& vector2, T z);
+	ALWAYS_INLINE Vector3T(const Vector2T<T>& vector2, T z);
 	
 	/**
 	 * Constructor using a 4-component vector.
 	 * 
 	 * @param vector4 The 4-component vector.
 	 */
-	FORCEINLINE explicit Vector3T(const Vector4T<T>& vector4);
+	ALWAYS_INLINE explicit Vector3T(const Vector4T<T>& vector4);
 
 	/**
 	 * Copy assignment operator.
@@ -341,7 +341,7 @@ public:
 	 * 
 	 * @return Reference to this, after the copy.
 	 */
-	FORCEINLINE Vector3T<T>& operator=(const Vector3T<T>& other);
+	ALWAYS_INLINE Vector3T<T>& operator=(const Vector3T<T>& other);
 
 public:
 	/**
@@ -351,7 +351,7 @@ public:
 	 * 
 	 * @return The vector created by adding a vector to this.
 	 */
-	FORCEINLINE Vector3T<T> operator+(const Vector3T<T>& other) const;
+	ALWAYS_INLINE Vector3T<T> operator+(const Vector3T<T>& other) const;
 
 	/**
 	 * Addition operator. Adds a vector to this.
@@ -360,7 +360,7 @@ public:
 	 *
 	 * @return Reference to this, after the addition.
 	 */
-	FORCEINLINE Vector3T<T>& operator+=(const Vector3T<T>& other);
+	ALWAYS_INLINE Vector3T<T>& operator+=(const Vector3T<T>& other);
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -369,7 +369,7 @@ public:
 	 *
 	 * @return The vector created by subtracting a vector from this.
 	 */
-	FORCEINLINE Vector3T<T> operator-(const Vector3T<T>& other) const;
+	ALWAYS_INLINE Vector3T<T> operator-(const Vector3T<T>& other) const;
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -378,7 +378,7 @@ public:
 	 *
 	 * @return Reference to this, after the subtraction.
 	 */
-	FORCEINLINE Vector3T<T>& operator-=(const Vector3T<T>& other);
+	ALWAYS_INLINE Vector3T<T>& operator-=(const Vector3T<T>& other);
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -387,7 +387,7 @@ public:
 	 * 
 	 * @return The vector created by multiplying this with the given scalar.
 	 */
-	FORCEINLINE Vector3T<T> operator*(T scalar) const;
+	ALWAYS_INLINE Vector3T<T> operator*(T scalar) const;
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -396,7 +396,7 @@ public:
 	 *
 	 * @return Reference to this, after the multiplication.
 	 */
-	FORCEINLINE Vector3T<T>& operator*=(T scalar);
+	ALWAYS_INLINE Vector3T<T>& operator*=(T scalar);
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -405,7 +405,7 @@ public:
 	 *
 	 * @return The vector created by dividing this by the given scalar.
 	 */
-	FORCEINLINE Vector3T<T> operator/(T scalar) const;
+	ALWAYS_INLINE Vector3T<T> operator/(T scalar) const;
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -414,21 +414,21 @@ public:
 	 *
 	 * @return Reference to this, after the division.
 	 */
-	FORCEINLINE Vector3T<T>& operator/=(T scalar);
+	ALWAYS_INLINE Vector3T<T>& operator/=(T scalar);
 
 public:
 	/** @return The squared magnitude of the vector. */
-	FORCEINLINE T MagnitudeSquared() const;
+	ALWAYS_INLINE T MagnitudeSquared() const;
 
 	/** @return The magnitude of the vector. */
-	FORCEINLINE T Magnitude() const;
+	ALWAYS_INLINE T Magnitude() const;
 
 	/**
 	 * Normalizes this vector.
 	 * 
 	 * @return The vector's normal.
 	 */
-	FORCEINLINE Vector3T<T> Normalize() const;
+	ALWAYS_INLINE Vector3T<T> Normalize() const;
 
 	/**
 	 * Normalizes this vector, the calculation being made only if the vector is not already normalized.
@@ -438,7 +438,7 @@ public:
 	 * 
 	 * @return The vector's normal.
 	 */
-	FORCEINLINE Vector3T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
@@ -449,7 +449,7 @@ public:
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	FORCEINLINE Vector3T<T> NormalizeSafe(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeSafe(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
@@ -463,7 +463,7 @@ public:
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	FORCEINLINE Vector3T<T> NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
@@ -473,7 +473,7 @@ public:
 	 * 
 	 * @return The dot product.
 	 */
-	FORCEINLINE static T Dot(const Vector3T<T>& a, const Vector3T<T>& b);
+	ALWAYS_INLINE static T Dot(const Vector3T<T>& a, const Vector3T<T>& b);
 
 	/**
 	 * Calculates the cross product between two vectors.
@@ -483,7 +483,7 @@ public:
 	 * 
 	 * @return The cross product.
 	 */
-	FORCEINLINE static Vector3T<T> Cross(const Vector3T<T>& a, const Vector3T<T>& b);
+	ALWAYS_INLINE static Vector3T<T> Cross(const Vector3T<T>& a, const Vector3T<T>& b);
 
 public:
 	/**
@@ -494,7 +494,7 @@ public:
 	 * 
 	 * @return The reflected direction.
 	 */
-	FORCEINLINE static Vector3T<T> Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal);
+	ALWAYS_INLINE static Vector3T<T> Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal);
 };
 
 // 3-Component vector, with 32-bit floating point precision.
@@ -542,14 +542,14 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE Vector4T();
+	ALWAYS_INLINE Vector4T();
 
 	/**
 	 * Copy constructor.
 	 *
 	 * @param other The vector to copy.
 	 */
-	FORCEINLINE Vector4T(const Vector4T<T>& other);
+	ALWAYS_INLINE Vector4T(const Vector4T<T>& other);
 
 	/**
 	 * Component constructor.
@@ -559,14 +559,14 @@ public:
 	 * @param z The component on the Z-axis.
 	 * @param w The component on the W-axis.
 	 */
-	FORCEINLINE Vector4T(T x, T y, T z, T w);
+	ALWAYS_INLINE Vector4T(T x, T y, T z, T w);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
 	 *
 	 * @param scalar The value to initialize the components with.
 	 */
-	FORCEINLINE explicit Vector4T(T scalar);
+	ALWAYS_INLINE explicit Vector4T(T scalar);
 
 	/**
 	 * Constructor using a 2-component vector, for the X and Y components. The
@@ -574,7 +574,7 @@ public:
 	 * 
 	 * @param vector2 The 2-component vector.
 	 */
-	FORCEINLINE explicit Vector4T(const Vector2T<T>& vector2);
+	ALWAYS_INLINE explicit Vector4T(const Vector2T<T>& vector2);
 
 	/**
 	 * Constructor using a 2-component vector, for the X and Y components. The
@@ -584,7 +584,7 @@ public:
 	 * @param z The value to initialize the vector's Z component with.
 	 * @param w The value to initialize the vector's W component with.
 	 */
-	FORCEINLINE Vector4T(const Vector2T<T>& vector2, T z, T w);
+	ALWAYS_INLINE Vector4T(const Vector2T<T>& vector2, T z, T w);
 
 	/**
 	 * Constructor using a 3-component vector, for the X, Y and Z components. The
@@ -592,7 +592,7 @@ public:
 	 *
 	 * @param vector3 The 3-component vector.
 	 */
-	FORCEINLINE explicit Vector4T(const Vector3T<T>& vector3);
+	ALWAYS_INLINE explicit Vector4T(const Vector3T<T>& vector3);
 
 	/**
 	 * Constructor using a 3-component vector, for the X, Y and Z components. The
@@ -601,7 +601,7 @@ public:
 	 * @param vector3 The 3-component vector.
 	 * @param w The value to initialize the vector's W component with.
 	 */
-	FORCEINLINE Vector4T(const Vector3T<T>& vector3, T w);
+	ALWAYS_INLINE Vector4T(const Vector3T<T>& vector3, T w);
 
 	/**
 	 * Copy assignment operator.
@@ -610,7 +610,7 @@ public:
 	 *
 	 * @return Reference to this, after the copy.
 	 */
-	FORCEINLINE Vector4T<T>& operator=(const Vector4T<T>& other);
+	ALWAYS_INLINE Vector4T<T>& operator=(const Vector4T<T>& other);
 
 public:
 	/**
@@ -620,7 +620,7 @@ public:
 	 *
 	 * @return The vector created by adding a vector to this.
 	 */
-	FORCEINLINE Vector4T<T> operator+(const Vector4T<T>& other) const;
+	ALWAYS_INLINE Vector4T<T> operator+(const Vector4T<T>& other) const;
 
 	/**
 	 * Addition operator. Adds a vector to this.
@@ -629,7 +629,7 @@ public:
 	 *
 	 * @return Reference to this, after the addition.
 	 */
-	FORCEINLINE Vector4T<T>& operator+=(const Vector4T<T>& other);
+	ALWAYS_INLINE Vector4T<T>& operator+=(const Vector4T<T>& other);
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -638,7 +638,7 @@ public:
 	 *
 	 * @return The vector created by subtracting a vector from this.
 	 */
-	FORCEINLINE Vector4T<T> operator-(const Vector4T<T>& other) const;
+	ALWAYS_INLINE Vector4T<T> operator-(const Vector4T<T>& other) const;
 
 	/**
 	 * Subtraction operator. Subtracts a vector from this.
@@ -647,7 +647,7 @@ public:
 	 *
 	 * @return Reference to this, after the subtraction.
 	 */
-	FORCEINLINE Vector4T<T>& operator-=(const Vector4T<T>& other);
+	ALWAYS_INLINE Vector4T<T>& operator-=(const Vector4T<T>& other);
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -656,7 +656,7 @@ public:
 	 *
 	 * @return The vector created by multiplying this with the given scalar.
 	 */
-	FORCEINLINE Vector4T<T> operator*(T scalar) const;
+	ALWAYS_INLINE Vector4T<T> operator*(T scalar) const;
 
 	/**
 	 * Multiplication operator. Multiplies this with a scalar.
@@ -665,7 +665,7 @@ public:
 	 *
 	 * @return Reference to this, after the multiplication.
 	 */
-	FORCEINLINE Vector4T<T>& operator*=(T scalar);
+	ALWAYS_INLINE Vector4T<T>& operator*=(T scalar);
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -674,7 +674,7 @@ public:
 	 *
 	 * @return The vector created by dividing this by the given scalar.
 	 */
-	FORCEINLINE Vector4T<T> operator/(T scalar) const;
+	ALWAYS_INLINE Vector4T<T> operator/(T scalar) const;
 
 	/**
 	 * Division operator. Divides this by a scalar.
@@ -683,7 +683,7 @@ public:
 	 *
 	 * @return Reference to this, after the division.
 	 */
-	FORCEINLINE Vector4T<T>& operator/=(T scalar);
+	ALWAYS_INLINE Vector4T<T>& operator/=(T scalar);
 };
 
 // 4-Component vector, with 32-bit floating point precision.
@@ -709,43 +709,43 @@ using Vector4   = Vector4f;
 //////////////// VECTOR2 IMPLEMENTATION ////////////////
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T()
+ALWAYS_INLINE Vector2T<T>::Vector2T()
 	: X(T(0))
 	, Y(T(0))
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T(const Vector2T<T>& other)
+ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector2T<T>& other)
 	: X(other.X)
 	, Y(other.Y)
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T(T x, T y)
+ALWAYS_INLINE Vector2T<T>::Vector2T(T x, T y)
 	: X(x)
 	, Y(y)
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T(T scalar)
+ALWAYS_INLINE Vector2T<T>::Vector2T(T scalar)
 	: X(scalar)
 	, Y(scalar)
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T(const Vector3T<T>& vector3)
+ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector3T<T>& vector3)
 	: X(vector3.X)
 	, Y(vector3.Y)
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>::Vector2T(const Vector4T<T>& vector4)
+ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector4T<T>& vector4)
 	: X(vector4.X)
 	, Y(vector4.Y)
 {}
 
 template<typename T>
-FORCEINLINE Vector2T<T>& Vector2T<T>::operator=(const Vector2T<T>& other)
+ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator=(const Vector2T<T>& other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -753,13 +753,13 @@ FORCEINLINE Vector2T<T>& Vector2T<T>::operator=(const Vector2T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::operator+(const Vector2T<T>& other) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator+(const Vector2T<T>& other) const
 {
 	return Vector2T<T>(X + other.X, Y + other.Y);
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T>& Vector2T<T>::operator+=(const Vector2T<T>& other)
+ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator+=(const Vector2T<T>& other)
 {
 	X += other.X;
 	Y += other.Y;
@@ -767,13 +767,13 @@ FORCEINLINE Vector2T<T>& Vector2T<T>::operator+=(const Vector2T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::operator-(const Vector2T<T>& other) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator-(const Vector2T<T>& other) const
 {
 	return Vector2T<T>(X - other.X, Y - other.Y);
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T>& Vector2T<T>::operator-=(const Vector2T<T>& other)
+ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator-=(const Vector2T<T>& other)
 {
 	X -= other.X;
 	Y -= other.Y;
@@ -781,19 +781,19 @@ FORCEINLINE Vector2T<T>& Vector2T<T>::operator-=(const Vector2T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::operator*(T scalar) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator*(T scalar) const
 {
 	return Vector2T<T>(X * scalar, Y * scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> operator*(T scalar, const Vector2T<T>& vector)
+ALWAYS_INLINE Vector2T<T> operator*(T scalar, const Vector2T<T>& vector)
 {
 	return vector * scalar;
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T>& Vector2T<T>::operator*=(T scalar)
+ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator*=(T scalar)
 {
 	X *= scalar;
 	Y *= scalar;
@@ -801,37 +801,37 @@ FORCEINLINE Vector2T<T>& Vector2T<T>::operator*=(T scalar)
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::operator/(T scalar) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator/(T scalar) const
 {
 	return (*this) * (T(1) / scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T>& Vector2T<T>::operator/=(T scalar)
+ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator/=(T scalar)
 {
 	return ((*this) *= (T(1) / scalar));
 }
 
 template<typename T>
-FORCEINLINE T Vector2T<T>::MagnitudeSquared() const
+ALWAYS_INLINE T Vector2T<T>::MagnitudeSquared() const
 {
 	return (X * X) + (Y * Y);
 }
 
 template<typename T>
-FORCEINLINE T Vector2T<T>::Magnitude() const
+ALWAYS_INLINE T Vector2T<T>::Magnitude() const
 {
 	return Math::Sqrt(MagnitudeSquared());
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::Normalize() const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::Normalize() const
 {
 	return (*this) / Magnitude();
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeIf(T tolerance) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeIf(T tolerance) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -844,7 +844,7 @@ FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeIf(T tolerance) const
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeSafe(const Vector2T<T>& errorResult, T threshold) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeSafe(const Vector2T<T>& errorResult, T threshold) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -857,7 +857,7 @@ FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeSafe(const Vector2T<T>& errorResul
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold, T tolerance) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold, T tolerance) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -875,13 +875,13 @@ FORCEINLINE Vector2T<T> Vector2T<T>::NormalizeSafeIf(const Vector2T<T>& errorRes
 }
 
 template<typename T>
-FORCEINLINE T Vector2T<T>::Dot(const Vector2T<T>& a, const Vector2T<T>& b)
+ALWAYS_INLINE T Vector2T<T>::Dot(const Vector2T<T>& a, const Vector2T<T>& b)
 {
 	return (a.X * b.X) + (a.Y * b.Y);
 }
 
 template<typename T>
-FORCEINLINE Vector2T<T> Vector2T<T>::Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal)
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal)
 {
 	return direction - 2 * Dot(direction, normal) * normal;
 }
@@ -894,49 +894,49 @@ FORCEINLINE Vector2T<T> Vector2T<T>::Reflect(const Vector2T<T>& direction, const
 //////////////// VECTOR3 IMPLEMENTATION ////////////////
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T()
+ALWAYS_INLINE Vector3T<T>::Vector3T()
 	: X(T(0))
 	, Y(T(0))
 	, Z(T(0))
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(const Vector3T<T>& other)
+ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector3T<T>& other)
 	: X(other.X)
 	, Y(other.Y)
 	, Z(other.Z)
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(T x, T y, T z)
+ALWAYS_INLINE Vector3T<T>::Vector3T(T x, T y, T z)
 	: X(x)
 	, Y(y)
 	, Z(z)
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(T scalar)
+ALWAYS_INLINE Vector3T<T>::Vector3T(T scalar)
 	: X(scalar)
 	, Y(scalar)
 	, Z(scalar)
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2)
+ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2)
 	: X(vector2.X)
 	, Y(vector2.Y)
 	, Z(T(0))
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2, T z)
+ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2, T z)
 	: X(vector2.X)
 	, Y(vector2.Y)
 	, Z(z)
 {}
 
 template<typename T>
-FORCEINLINE Vector3T<T>::Vector3T(const Vector4T<T>& vector4)
+ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector4T<T>& vector4)
 	: X(vector4.X)
 	, Y(vector4.Y)
 	, Z(vector4.Z)
@@ -952,13 +952,13 @@ Vector3T<T>& Vector3T<T>::operator=(const Vector3T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::operator+(const Vector3T<T>& other) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator+(const Vector3T<T>& other) const
 {
 	return Vector3T<T>(X + other.X, Y + other.Y, Z + other.Z);
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T>& Vector3T<T>::operator+=(const Vector3T<T>& other)
+ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator+=(const Vector3T<T>& other)
 {
 	X += other.X;
 	Y += other.Y;
@@ -967,13 +967,13 @@ FORCEINLINE Vector3T<T>& Vector3T<T>::operator+=(const Vector3T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::operator-(const Vector3T<T>& other) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator-(const Vector3T<T>& other) const
 {
 	return Vector3T<T>(X - other.X, Y - other.Y, Z - other.Z);
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T>& Vector3T<T>::operator-=(const Vector3T<T>& other)
+ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator-=(const Vector3T<T>& other)
 {
 	X -= other.X;
 	Y -= other.Y;
@@ -982,19 +982,19 @@ FORCEINLINE Vector3T<T>& Vector3T<T>::operator-=(const Vector3T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::operator*(T scalar) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator*(T scalar) const
 {
 	return Vector3T<T>(X * scalar, Y * scalar, Z * scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> operator*(T scalar, const Vector3T<T>& vector)
+ALWAYS_INLINE Vector3T<T> operator*(T scalar, const Vector3T<T>& vector)
 {
 	return vector * scalar;
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T>& Vector3T<T>::operator*=(T scalar)
+ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator*=(T scalar)
 {
 	X *= scalar;
 	Y *= scalar;
@@ -1003,37 +1003,37 @@ FORCEINLINE Vector3T<T>& Vector3T<T>::operator*=(T scalar)
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::operator/(T scalar) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator/(T scalar) const
 {
 	return (*this) * (T(1) / scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T>& Vector3T<T>::operator/=(T scalar)
+ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator/=(T scalar)
 {
 	return ((*this) *= (T(1) / scalar));
 }
 
 template<typename T>
-FORCEINLINE T Vector3T<T>::MagnitudeSquared() const
+ALWAYS_INLINE T Vector3T<T>::MagnitudeSquared() const
 {
 	return (X * X) + (Y * Y) + (Z * Z);
 }
 
 template<typename T>
-FORCEINLINE T Vector3T<T>::Magnitude() const
+ALWAYS_INLINE T Vector3T<T>::Magnitude() const
 {
 	return Math::Sqrt(MagnitudeSquared());
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::Normalize() const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::Normalize() const
 {
 	return (*this) / Magnitude();
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeIf(T tolerance) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeIf(T tolerance) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -1046,7 +1046,7 @@ FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeIf(T tolerance) const
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeSafe(const Vector3T<T>& errorResult, T threshold) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeSafe(const Vector3T<T>& errorResult, T threshold) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -1059,7 +1059,7 @@ FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeSafe(const Vector3T<T>& errorResul
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold, T tolerance) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold, T tolerance) const
 {
 	const T squaredMag = MagnitudeSquared();
 
@@ -1077,13 +1077,13 @@ FORCEINLINE Vector3T<T> Vector3T<T>::NormalizeSafeIf(const Vector3T<T>& errorRes
 }
 
 template<typename T>
-FORCEINLINE T Vector3T<T>::Dot(const Vector3T<T>& a, const Vector3T<T>& b)
+ALWAYS_INLINE T Vector3T<T>::Dot(const Vector3T<T>& a, const Vector3T<T>& b)
 {
 	return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::Cross(const Vector3T<T>& a, const Vector3T<T>& b)
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::Cross(const Vector3T<T>& a, const Vector3T<T>& b)
 {
 	return Vector3T<T>
 	(
@@ -1094,7 +1094,7 @@ FORCEINLINE Vector3T<T> Vector3T<T>::Cross(const Vector3T<T>& a, const Vector3T<
 }
 
 template<typename T>
-FORCEINLINE Vector3T<T> Vector3T<T>::Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal)
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal)
 {
 	return direction - 2 * Dot(direction, normal) * normal;
 }
@@ -1107,7 +1107,7 @@ FORCEINLINE Vector3T<T> Vector3T<T>::Reflect(const Vector3T<T>& direction, const
 //////////////// VECTOR4 IMPLEMENTATION ////////////////
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T()
+ALWAYS_INLINE Vector4T<T>::Vector4T()
 	: X(T(0))
 	, Y(T(0))
 	, Z(T(0))
@@ -1115,7 +1115,7 @@ FORCEINLINE Vector4T<T>::Vector4T()
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(const Vector4T<T>& other)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector4T<T>& other)
 	: X(other.X)
 	, Y(other.Y)
 	, Z(other.Z)
@@ -1123,7 +1123,7 @@ FORCEINLINE Vector4T<T>::Vector4T(const Vector4T<T>& other)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(T x, T y, T z, T w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(T x, T y, T z, T w)
 	: X(x)
 	, Y(y)
 	, Z(z)
@@ -1131,7 +1131,7 @@ FORCEINLINE Vector4T<T>::Vector4T(T x, T y, T z, T w)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(T scalar)
+ALWAYS_INLINE Vector4T<T>::Vector4T(T scalar)
 	: X(scalar)
 	, Y(scalar)
 	, Z(scalar)
@@ -1139,7 +1139,7 @@ FORCEINLINE Vector4T<T>::Vector4T(T scalar)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2)
 	: X(vector2.X)
 	, Y(vector2.Y)
 	, Z(T(0))
@@ -1147,7 +1147,7 @@ FORCEINLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2, T z, T w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2, T z, T w)
 	: X(vector2.X)
 	, Y(vector2.Y)
 	, Z(z)
@@ -1155,7 +1155,7 @@ FORCEINLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2, T z, T w)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3)
 	: X(vector3.X)
 	, Y(vector3.Y)
 	, Z(vector3.Z)
@@ -1163,7 +1163,7 @@ FORCEINLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3, T w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3, T w)
 	: X(vector3.X)
 	, Y(vector3.Y)
 	, Z(vector3.Z)
@@ -1171,7 +1171,7 @@ FORCEINLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3, T w)
 {}
 
 template<typename T>
-FORCEINLINE Vector4T<T>& Vector4T<T>::operator=(const Vector4T<T>& other)
+ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator=(const Vector4T<T>& other)
 {
 	X = other.X;
 	Y = other.Y;
@@ -1181,13 +1181,13 @@ FORCEINLINE Vector4T<T>& Vector4T<T>::operator=(const Vector4T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T> Vector4T<T>::operator+(const Vector4T<T>& other) const
+ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator+(const Vector4T<T>& other) const
 {
 	return Vector4T<T>(X + other.X, Y + other.Y, Z + other.Z, W + other.W);
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T>& Vector4T<T>::operator+=(const Vector4T<T>& other)
+ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator+=(const Vector4T<T>& other)
 {
 	X += other.X;
 	Y += other.Y;
@@ -1197,13 +1197,13 @@ FORCEINLINE Vector4T<T>& Vector4T<T>::operator+=(const Vector4T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T> Vector4T<T>::operator-(const Vector4T<T>& other) const
+ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator-(const Vector4T<T>& other) const
 {
 	return Vector4T<T>(X - other.X, Y - other.Y, Z - other.Z, W - other.W);
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T>& Vector4T<T>::operator-=(const Vector4T<T>& other)
+ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator-=(const Vector4T<T>& other)
 {
 	X -= other.X;
 	Y -= other.Y;
@@ -1213,19 +1213,19 @@ FORCEINLINE Vector4T<T>& Vector4T<T>::operator-=(const Vector4T<T>& other)
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T> Vector4T<T>::operator*(T scalar) const
+ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator*(T scalar) const
 {
 	return Vector4T<T>(X * scalar, Y * scalar, Z * scalar, W * scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T> operator*(T scalar, const Vector4T<T>& vector)
+ALWAYS_INLINE Vector4T<T> operator*(T scalar, const Vector4T<T>& vector)
 {
 	return vector * scalar;
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T>& Vector4T<T>::operator*=(T scalar)
+ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator*=(T scalar)
 {
 	X *= scalar;
 	Y *= scalar;
@@ -1235,13 +1235,13 @@ FORCEINLINE Vector4T<T>& Vector4T<T>::operator*=(T scalar)
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T> Vector4T<T>::operator/(T scalar) const
+ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator/(T scalar) const
 {
 	return (*this) * (T(1) / scalar);
 }
 
 template<typename T>
-FORCEINLINE Vector4T<T>& Vector4T<T>::operator/=(T scalar)
+ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator/=(T scalar)
 {
 	return ((*this) *= (T(1) / scalar));
 }
@@ -1270,7 +1270,7 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE RayT();
+	ALWAYS_INLINE RayT();
 };
 
 // Ray, with 32-bit floating point precision.
@@ -1294,7 +1294,7 @@ using Ray = Rayf;
 #pragma region Ray Implementation
 
 template<typename T>
-FORCEINLINE RayT<T>::RayT()
+ALWAYS_INLINE RayT<T>::RayT()
 	: Origin()
 	, Direction()
 {}
@@ -1323,10 +1323,10 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE AABB2T();
+	ALWAYS_INLINE AABB2T();
 
 public:
-	FORCEINLINE bool ContainsPoint(const Vector2T<T>& point) const;
+	ALWAYS_INLINE bool ContainsPoint(const Vector2T<T>& point) const;
 };
 
 using AABB2f = AABB2T<float32>;
@@ -1360,10 +1360,10 @@ public:
 	/**
 	 * Default constructor.
 	 */
-	FORCEINLINE AABB3T();
+	ALWAYS_INLINE AABB3T();
 
 public:
-	FORCEINLINE bool ContainsPoint(const Vector3T<T>& point) const;
+	ALWAYS_INLINE bool ContainsPoint(const Vector3T<T>& point) const;
 };
 
 using AABB3f    = AABB3T<float32>;
@@ -1379,13 +1379,13 @@ using AABB3     = AABB3f;
 #pragma region AABB2 Implementation
 
 template<typename T>
-FORCEINLINE AABB2T<T>::AABB2T()
+ALWAYS_INLINE AABB2T<T>::AABB2T()
 	: MinBound(T(+1))
 	, MaxBound(T(-1))
 {}
 
 template<typename T>
-FORCEINLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
+ALWAYS_INLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
 {
 	return
 		MinBound.X <= point.X && point.X <= MaxBound.X &&
@@ -1398,13 +1398,13 @@ FORCEINLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
 #pragma region AABB3 Implementation
 
 template<typename T>
-FORCEINLINE AABB3T<T>::AABB3T()
+ALWAYS_INLINE AABB3T<T>::AABB3T()
 	: MinBound(T(+1))
 	, MaxBound(T(-1))
 {}
 
 template<typename T>
-FORCEINLINE bool AABB3T<T>::ContainsPoint(const Vector3T<T>& point) const
+ALWAYS_INLINE bool AABB3T<T>::ContainsPoint(const Vector3T<T>& point) const
 {
 	return
 		MinBound.X <= point.X && point.X <= MaxBound.X &&

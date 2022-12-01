@@ -231,38 +231,38 @@ class HeapAllocator
 {
 public:
 	/** @see 'Memory::AllocateRaw'. */
-	FORCEINLINE void* AllocateRaw(usize bytesCount)
+	ALWAYS_INLINE void* AllocateRaw(usize bytesCount)
 	{
 		return Memory::Allocate(bytesCount);
 	}
 
 	/** @see 'Memory::Allocate'. */
-	FORCEINLINE void* Allocate(usize bytesCount)
+	ALWAYS_INLINE void* Allocate(usize bytesCount)
 	{
 		return Memory::Allocate(bytesCount);
 	}
 
 	/** @see 'Memory::AllocateTagged'. */
-	FORCEINLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
+	ALWAYS_INLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
 	{
 		return Memory::AllocateTagged(bytesCount, fileName, functionName, lineNumber);
 	}
 
 	/** @see 'Memory::FreeRaw'. */
-	FORCEINLINE void FreeRaw(void* memoryBlock, usize bytesCount)
+	ALWAYS_INLINE void FreeRaw(void* memoryBlock, usize bytesCount)
 	{
 		Memory::FreeRaw(memoryBlock);
 	}
 
 	/** @see 'Memory::Free'. */
-	FORCEINLINE void Free(void* memoryBlock, usize bytesCount)
+	ALWAYS_INLINE void Free(void* memoryBlock, usize bytesCount)
 	{
 		Memory::Free(memoryBlock);
 	}
 
 public:
 	/** @returns Always true, because the memory is allocated directly from the global heap. */
-	FORCEINLINE constexpr bool operator==(const HeapAllocator&) const { return true; }
+	ALWAYS_INLINE constexpr bool operator==(const HeapAllocator&) const { return true; }
 };
 
 /**
@@ -276,38 +276,38 @@ class UntrackedAllocator
 {
 public:
 	/** @see 'Memory::AllocateRaw'. */
-	FORCEINLINE void* AllocateRaw(usize bytesCount)
+	ALWAYS_INLINE void* AllocateRaw(usize bytesCount)
 	{
 		return Memory::AllocateRaw(bytesCount);
 	}
 
 	/** @see 'Memory::AllocateRaw'. */
-	FORCEINLINE void* Allocate(usize bytesCount)
+	ALWAYS_INLINE void* Allocate(usize bytesCount)
 	{
 		return Memory::AllocateRaw(bytesCount);
 	}
 
 	/** @see 'Memory::AllocateRaw'. */
-	FORCEINLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
+	ALWAYS_INLINE void* AllocateTagged(usize bytesCount, const char* fileName, const char* functionName, uint32 lineNumber)
 	{
 		return Memory::AllocateRaw(bytesCount);
 	}
 
 	/** @see 'Memory::FreeRaw'. */
-	FORCEINLINE void FreeRaw(void* memoryBlock, usize bytesCount)
+	ALWAYS_INLINE void FreeRaw(void* memoryBlock, usize bytesCount)
 	{
 		Memory::FreeRaw(memoryBlock);
 	}
 
 	/** @see 'Memory::FreeRaw'. */
-	FORCEINLINE void Free(void* memoryBlock, usize bytesCount)
+	ALWAYS_INLINE void Free(void* memoryBlock, usize bytesCount)
 	{
 		Memory::FreeRaw(memoryBlock);
 	}
 
 public:
 	/** @returns Always true, because the memory is allocated directly from the global heap. */
-	FORCEINLINE constexpr bool operator==(const UntrackedAllocator&) const { return true; }
+	ALWAYS_INLINE constexpr bool operator==(const UntrackedAllocator&) const { return true; }
 };
 
 } // namespace HC

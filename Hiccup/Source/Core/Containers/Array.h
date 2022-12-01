@@ -64,16 +64,16 @@ public:
 
 public:
 	/** @return Pointer to the array's memory block. */
-	FORCEINLINE T* Data() const;
+	ALWAYS_INLINE T* Data() const;
 
 	/** @return The number of elements that are currently stored in the container. */
-	FORCEINLINE usize Size() const;
+	ALWAYS_INLINE usize Size() const;
 
 	/** @return The capacity (in elements) of the array's memory block. */
-	FORCEINLINE usize Capacity() const;
+	ALWAYS_INLINE usize Capacity() const;
 
 	/** @return True if the container has no elements stored; False otherwise. */
-	FORCEINLINE bool IsEmpty() const;
+	ALWAYS_INLINE bool IsEmpty() const;
 
 public:
 	/**
@@ -83,7 +83,7 @@ public:
 	 * 
 	 * @return Reference to the element stored at the specified index.
 	 */
-	FORCEINLINE T& operator[](usize index);
+	ALWAYS_INLINE T& operator[](usize index);
 
 	/**
 	 * Index operator. Gets the element stored at the specified index.
@@ -93,7 +93,7 @@ public:
 	 *
 	 * @return Reference to the element stored at the specified index.
 	 */
-	FORCEINLINE const T& operator[](usize index) const;
+	ALWAYS_INLINE const T& operator[](usize index) const;
 
 	/**
 	 * Gets the element stored at the specified index.
@@ -102,7 +102,7 @@ public:
 	 * 
 	 * @return Reference to the element stored at the specified index.
 	 */
-	FORCEINLINE T& At(usize index);
+	ALWAYS_INLINE T& At(usize index);
 
 	/**
 	 * Gets the element stored at the specified index.
@@ -112,19 +112,19 @@ public:
 	 *
 	 * @return Reference to the element stored at the specified index.
 	 */
-	FORCEINLINE const T& At(usize index) const;
+	ALWAYS_INLINE const T& At(usize index) const;
 
 	/** @return The first element in the array. */
-	FORCEINLINE T& Front();
+	ALWAYS_INLINE T& Front();
 
 	/** @return The first element in the array. */
-	FORCEINLINE const T& Front() const;
+	ALWAYS_INLINE const T& Front() const;
 
 	/** @return The last element in the array. */
-	FORCEINLINE T& Back();
+	ALWAYS_INLINE T& Back();
 
 	/** @return The last element in the array. */
-	FORCEINLINE const T& Back() const;
+	ALWAYS_INLINE const T& Back() const;
 
 public:
 	/**
@@ -262,13 +262,13 @@ public:
 	void Clear();
 
 private:
-	FORCEINLINE bool ShouldGrow(usize requiredAdditionalSize);
+	ALWAYS_INLINE bool ShouldGrow(usize requiredAdditionalSize);
 
 	/** @return The array's natural growth. */
-	FORCEINLINE usize NextCapacity() const;
+	ALWAYS_INLINE usize NextCapacity() const;
 
 	/** @return Whether the array's natural growth, or the minimum required size. */
-	FORCEINLINE usize NextCapacity(usize requiredAdditionalSize) const;
+	ALWAYS_INLINE usize NextCapacity(usize requiredAdditionalSize) const;
 
 	/**
 	 * ReAllocates the memory block. The new block can be both bigger and smaller.
@@ -388,80 +388,80 @@ Array<T, AllocatorType>& Array<T, AllocatorType>::operator=(Array<T, AllocatorTy
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE T* Array<T, AllocatorType>::Data() const
+ALWAYS_INLINE T* Array<T, AllocatorType>::Data() const
 {
 	return m_Data;
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE usize Array<T, AllocatorType>::Size() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::Size() const
 {
 	return m_Size;
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE usize Array<T, AllocatorType>::Capacity() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::Capacity() const
 {
 	return m_Capacity;
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE bool Array<T, AllocatorType>::IsEmpty() const
+ALWAYS_INLINE bool Array<T, AllocatorType>::IsEmpty() const
 {
 	return (m_Size == 0);
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE T& Array<T, AllocatorType>::operator[](usize index)
+ALWAYS_INLINE T& Array<T, AllocatorType>::operator[](usize index)
 {
 	HC_ASSERT(index < m_Size); // Index out of range!
 	return m_Data[index];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE const T& Array<T, AllocatorType>::operator[](usize index) const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::operator[](usize index) const
 {
 	HC_ASSERT(index < m_Size); // Index out of range!
 	return m_Data[index];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE T& Array<T, AllocatorType>::At(usize index)
+ALWAYS_INLINE T& Array<T, AllocatorType>::At(usize index)
 {
 	HC_ASSERT(index < m_Size); // Index out of range!
 	return m_Data[index];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE const T& Array<T, AllocatorType>::At(usize index) const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::At(usize index) const
 {
 	HC_ASSERT(index < m_Size); // Index out of range!
 	return m_Data[index];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE T& Array<T, AllocatorType>::Front()
+ALWAYS_INLINE T& Array<T, AllocatorType>::Front()
 {
 	HC_ASSERT(m_Size > 0); // The array is empty!
 	return m_Data[0];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE const T& Array<T, AllocatorType>::Front() const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::Front() const
 {
 	HC_ASSERT(m_Size > 0); // The array is empty!
 	return m_Data[0];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE T& Array<T, AllocatorType>::Back()
+ALWAYS_INLINE T& Array<T, AllocatorType>::Back()
 {
 	HC_ASSERT(m_Size > 0); // The array is empty!
 	return m_Data[m_Size - 1];
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE const T& Array<T, AllocatorType>::Back() const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::Back() const
 {
 	HC_ASSERT(m_Size > 0); // The array is empty!
 	return m_Data[m_Size - 1];
@@ -655,19 +655,19 @@ void Array<T, AllocatorType>::Clear()
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE bool Array<T, AllocatorType>::ShouldGrow(usize requiredAdditionalSize)
+ALWAYS_INLINE bool Array<T, AllocatorType>::ShouldGrow(usize requiredAdditionalSize)
 {
 	return m_Size + requiredAdditionalSize > m_Capacity;
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE usize Array<T, AllocatorType>::NextCapacity() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::NextCapacity() const
 {
 	return m_Capacity + m_Capacity / 2 + 1;
 }
 
 template<typename T, typename AllocatorType>
-FORCEINLINE usize Array<T, AllocatorType>::NextCapacity(usize requiredAdditionalSize) const
+ALWAYS_INLINE usize Array<T, AllocatorType>::NextCapacity(usize requiredAdditionalSize) const
 {
 	const usize nextCapacity = NextCapacity();
 	const usize requiredCapacity = m_Size + requiredAdditionalSize;

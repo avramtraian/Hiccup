@@ -17,7 +17,7 @@ namespace Utils
 
 // Computes the coefficients and discriminant for solving the ray-sphere intersection equation.
 template<typename T>
-FORCEINLINE void InterectSphereCoefficients(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& b, T& discriminant)
+ALWAYS_INLINE void InterectSphereCoefficients(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& b, T& discriminant)
 {
 	// a = Dot(ray.Direction, ray.Direction) = 1
 	b = Vector3T<T>::Dot(ray.Origin, ray.Direction) - Vector3T<T>::Dot(ray.Direction, sphereOrigin);
@@ -46,7 +46,7 @@ FORCEINLINE void InterectSphereCoefficients(const RayT<T>& ray, const Vector3T<T
  * @return The number of intersection points. This can be 0 - no hits, 1 - single hit, 2 - double hit.
  */
 template<typename T>
-FORCEINLINE uint8 InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& outT1, T& outT2)
+ALWAYS_INLINE uint8 InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& outT1, T& outT2)
 {
 	T b = {};
 	T discriminant = {};
@@ -81,7 +81,7 @@ FORCEINLINE uint8 InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOr
  * @return True if the ray hits the sphere (and thus there is an intersection point); False otherwise.
  */
 template<typename T>
-FORCEINLINE bool InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& outT)
+ALWAYS_INLINE bool InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius, T& outT)
 {
 	T b = {};
 	T discriminant = {};
@@ -106,7 +106,7 @@ FORCEINLINE bool InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOri
  * @return True if the ray hits the sphere; False otherwise.
  */
 template<typename T>
-FORCEINLINE bool InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius)
+ALWAYS_INLINE bool InterectSphere(const RayT<T>& ray, const Vector3T<T>& sphereOrigin, T sphereRadius)
 {
 	T b = {};
 	T discriminant = {};

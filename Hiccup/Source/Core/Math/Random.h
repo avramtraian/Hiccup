@@ -28,7 +28,7 @@ public:
 	 * 
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static float32 Float32Range(float32 min, float32 max)
+	ALWAYS_INLINE static float32 Float32Range(float32 min, float32 max)
 	{
 		return min + (max - min) * Float32();
 	}
@@ -44,7 +44,7 @@ public:
 	 * 
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static float64 Float64Range(float64 min, float64 max)
+	ALWAYS_INLINE static float64 Float64Range(float64 min, float64 max)
 	{
 		return min + (max - min) * Float64();
 	}
@@ -60,7 +60,7 @@ public:
 	 *
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static uint32 UInt32Range(uint32 min, uint32 max)
+	ALWAYS_INLINE static uint32 UInt32Range(uint32 min, uint32 max)
 	{
 		return min + UInt32() % (max - min + 1);
 	}
@@ -76,13 +76,13 @@ public:
 	 *
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static uint64 UInt64Range(uint64 min, uint64 max)
+	ALWAYS_INLINE static uint64 UInt64Range(uint64 min, uint64 max)
 	{
 		return min + UInt64() % (max - min + 1);
 	}
 
 	/** @return A random 32-bit signed integer. */
-	FORCEINLINE static int32 Int32()
+	ALWAYS_INLINE static int32 Int32()
 	{
 		const uint32 v = UInt32();
 		return *(const int32*)(&v);
@@ -96,13 +96,13 @@ public:
 	 *
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static int32 Int32Range(int32 min, int32 max)
+	ALWAYS_INLINE static int32 Int32Range(int32 min, int32 max)
 	{
 		return min + UInt32() % (max - min + 1);
 	}
 
 	/** @return A random 32-bit signed integer. */
-	FORCEINLINE static int64 Int64()
+	ALWAYS_INLINE static int64 Int64()
 	{
 		const uint64 v = UInt64();
 		return *(const int64*)(&v);
@@ -116,7 +116,7 @@ public:
 	 *
 	 * @return The random generated value.
 	 */
-	FORCEINLINE static int64 Int64Range(int64 min, int64 max)
+	ALWAYS_INLINE static int64 Int64Range(int64 min, int64 max)
 	{
 		return min + UInt64() % (max - min + 1);
 	}

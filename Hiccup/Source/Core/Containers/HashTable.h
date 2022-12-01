@@ -83,7 +83,7 @@ public:
 
 public:
 	/** @return The load factor of the table. */
-	FORCEINLINE float64 GetLoadFactor() const;
+	ALWAYS_INLINE float64 GetLoadFactor() const;
 
 public:
 	/**
@@ -285,7 +285,7 @@ public:
 	 *   function returns false, the iterating process will stop.
 	 */
 	template<typename Func>
-	FORCEINLINE void ForEach(Func func);
+	ALWAYS_INLINE void ForEach(Func func);
 
 	/**
 	 * Iterators over all the valid elements stored in the table.
@@ -295,20 +295,20 @@ public:
 	 *   function returns false, the iterating process will stop.
 	 */
 	template<typename Func>
-	FORCEINLINE void ForEach(Func func) const;
+	ALWAYS_INLINE void ForEach(Func func) const;
 
 private:
 	// Whether or not the table's load factor is greater than the maximum allowed load factor.
-	FORCEINLINE bool IsOverLoadFactor() const;
+	ALWAYS_INLINE bool IsOverLoadFactor() const;
 
 	// Computes the table's natural next capacity.
-	FORCEINLINE usize NextCapacity() const;
+	ALWAYS_INLINE usize NextCapacity() const;
 
 	// Computes the table's next capacity, taking into the account the number of elements it must contain.
-	FORCEINLINE usize NextCapacity(usize additionalRequiredSize) const;
+	ALWAYS_INLINE usize NextCapacity(usize additionalRequiredSize) const;
 
 	// Computes the capacity for which the table can store the required number of elements.
-	FORCEINLINE usize RequiredCapacityFor(usize requiredSize) const;
+	ALWAYS_INLINE usize RequiredCapacityFor(usize requiredSize) const;
 
 	// It reallocates the table's internal memory buffer/array.
 	void ReAllocate(usize newCapacity);
@@ -500,7 +500,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-FORCEINLINE float64 HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::GetLoadFactor() const
+ALWAYS_INLINE float64 HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::GetLoadFactor() const
 {
 	return (float64)m_Size / (float64)m_Capacity;
 }
@@ -779,7 +779,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::Clear()
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 template<typename Func>
-FORCEINLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ForEach(Func func)
+ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ForEach(Func func)
 {
 	if (m_Size == 0)
 	{
@@ -801,7 +801,7 @@ FORCEINLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 template<typename Func>
-FORCEINLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ForEach(Func func) const
+ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ForEach(Func func) const
 {
 	if (m_Size == 0)
 	{
@@ -822,19 +822,19 @@ FORCEINLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-FORCEINLINE bool HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::IsOverLoadFactor() const
+ALWAYS_INLINE bool HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::IsOverLoadFactor() const
 {
 	return (m_Capacity == 0) || (GetLoadFactor() >= MaxLoadFactor);
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-FORCEINLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::NextCapacity() const
+ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::NextCapacity() const
 {
 	return m_Capacity * 2 + 2;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-FORCEINLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::NextCapacity(usize additionalRequiredSize) const
+ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::NextCapacity(usize additionalRequiredSize) const
 {
 	const usize nextCapacity = NextCapacity();
 	const usize requiredCapacity = (usize)((float64)(m_Size + additionalRequiredSize) / MaxLoadFactor) + 1;
@@ -842,7 +842,7 @@ FORCEINLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparato
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-FORCEINLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::RequiredCapacityFor(usize requiredSize) const
+ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::RequiredCapacityFor(usize requiredSize) const
 {
 	return (usize)((float64)requiredSize / MaxLoadFactor) + 1;
 }
