@@ -1,6 +1,6 @@
 // Copyright (c) 2022-2022 Avram Traian. All rights reserved.
 
-#include "Core/Memory.h"
+#include "Core/Memory/Memory.h"
 
 void* operator new(size_t bytesCount)
 {

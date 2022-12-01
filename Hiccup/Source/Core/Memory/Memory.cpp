@@ -2,8 +2,8 @@
 
 #include "Memory.h"
 
-#include "Platform/Platform.h"
-#include "Containers/HashTable.h"
+#include "Core/Platform/Platform.h"
+#include "Core/Containers/HashTable.h"
 
 #include <cstring>
 

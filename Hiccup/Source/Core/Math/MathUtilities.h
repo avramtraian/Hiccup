@@ -107,7 +107,7 @@ public:
 
 	// Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
 	template<typename T>
-	FORCEINLINE static bool AreNearlyEqual(T a, T b, T tolerance = KINDA_SMALL_NUMBER)
+	FORCEINLINE static bool AreNearlyEqual(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
 	{
 		return Abs<T>(a - b) <= tolerance;
 	}

@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Core/CoreMinimal.h"
-#include "Core/Memory.h"
+#include "Core/Memory/Memory.h"
 
 #include "Hash.h"
 #include "Comparator.h"

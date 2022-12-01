@@ -2,7 +2,7 @@
 
 #include "Core/Platform/Platform.h"
 
-#include "Core/Memory.h"
+#include "Core/Memory/Memory.h"
 
 #include <Windows.h>
 #include <cstdlib>

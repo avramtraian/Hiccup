@@ -10,8 +10,9 @@
 #include "Core/Logger.h"
 #include "Core/Assert.h"
 
-#include "Core/Memory.h"
-#include "Core/Buffer.h"
+#include "Core/Memory/Memory.h"
+#include "Core/Memory/Buffer.h"
+#include "Core/Memory/Arena.h"
 
 #include "Core/Performance.h"
 
