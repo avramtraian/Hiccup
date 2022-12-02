@@ -243,14 +243,14 @@ ALWAYS_INLINE const T* SharedPtr<T>::operator->() const
 template<typename T>
 ALWAYS_INLINE T* SharedPtr<T>::Get()
 {
-	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference nullptr!
+	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference a nullptr!
 	return m_Pointer;
 }
 
 template<typename T>
 ALWAYS_INLINE const T* SharedPtr<T>::Get() const
 {
-	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference nullptr!
+	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference a nullptr!
 	return m_Pointer;
 }
 
