@@ -71,7 +71,7 @@
 #ifdef __gcc__
 	#define HC_COMPILER_GCC             1
 	#define HC_COMPILER_GCC_CLANG       1
-#endif // __clang__
+#endif // __gcc__
 
 #ifndef HC_COMPILER_MSVC
 	#define HC_COMPILER_MSVC            0
