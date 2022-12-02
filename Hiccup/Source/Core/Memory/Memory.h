@@ -61,7 +61,6 @@ public:
 	 * @param source Where the memory will be copied from.
 	 * @param bytesCount The number of bytes to copy.
 	 */
-	// TODO(Traian): Maybe inline this function?
 	HC_API static void Copy(void* detination, const void* source, usize bytesCount);
 
 	/**
@@ -72,7 +71,6 @@ public:
 	 * @param value The value for each byte.
 	 * @param bytesCount The number of bytes to set.
 	 */
-	 // TODO(Traian): Maybe inline this function?
 	HC_API static void Set(void* detination, uint8 value, usize bytesCount);
 
 	/**
@@ -82,7 +80,6 @@ public:
 	 * @param destination The address of the memory block to zero.
 	 * @param bytesCount The number of bytes to zero.
 	 */
-	 // TODO(Traian): Maybe inline this function?
 	HC_API static void Zero(void* detination, usize bytesCount);
 
 public:
