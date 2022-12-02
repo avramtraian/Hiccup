@@ -194,7 +194,7 @@ public:
 	 *
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeIf(T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
@@ -205,7 +205,7 @@ public:
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeSafe(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeSafe(const Vector2T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
@@ -219,7 +219,7 @@ public:
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector2T<T> NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
@@ -438,7 +438,7 @@ public:
 	 * 
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeIf(T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeIf(T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
@@ -449,7 +449,7 @@ public:
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeSafe(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeSafe(const Vector3T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
@@ -463,7 +463,7 @@ public:
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold = KINDA_SMALL_NUMBER, T tolerance = KINDA_SMALL_NUMBER) const;
+	ALWAYS_INLINE Vector3T<T> NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
