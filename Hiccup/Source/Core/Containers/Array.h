@@ -262,7 +262,8 @@ public:
 	void Clear();
 
 private:
-	ALWAYS_INLINE bool ShouldGrow(usize requiredAdditionalSize);
+	// Checks whether or not the container can store an additional number of elements, without reallocating.
+	ALWAYS_INLINE bool ShouldGrow(usize requiredAdditionalSize) const;
 
 	/** @return The array's natural growth. */
 	ALWAYS_INLINE usize NextCapacity() const;
@@ -655,7 +656,7 @@ void Array<T, AllocatorType>::Clear()
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE bool Array<T, AllocatorType>::ShouldGrow(usize requiredAdditionalSize)
+ALWAYS_INLINE bool Array<T, AllocatorType>::ShouldGrow(usize requiredAdditionalSize) const
 {
 	return m_Size + requiredAdditionalSize > m_Capacity;
 }
