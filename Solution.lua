@@ -18,6 +18,15 @@ workspace "Hiccup"
 
 	startproject "Hiccup-Editor"
 
+	LibraryNames = {}
+	LibraryPaths = {}
+	IncludeDirectories = {}
+	
+	VulkanPath = os.getenv("VULKAN_SDK");
+	LibraryNames["VulkanSDK"] = "vulkan-1.lib";
+	LibraryPaths["VulkanSDK"] = (VulkanPath.."/Lib")
+	IncludeDirectories["VulkanSDK"] = (VulkanPath.."/Include")
+
 	group "Core"
 		include "Hiccup/Hiccup.lua"
 	group "Tools"

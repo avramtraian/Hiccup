@@ -28,7 +28,9 @@ project "Hiccup-Core"
 
 	includedirs
 	{
-		"%{prj.location}/Source"
+		"%{prj.location}/Source",
+
+		(IncludeDirectories["VulkanSDK"])
 	}
 
 	forceincludes
@@ -39,6 +41,16 @@ project "Hiccup-Core"
 	defines
 	{
 		"HC_EXPORT_API"
+	}
+
+	links
+	{
+		(LibraryNames["VulkanSDK"])
+	}
+
+	libdirs
+	{
+		(LibraryPaths["VulkanSDK"])
 	}
 
 	filter "platforms:Win64"
