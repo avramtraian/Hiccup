@@ -16,7 +16,7 @@ struct ProfilerData
 	uint64                  FrameIndex    = 0;
 	bool                    InFrame       = false;
 };
-internal ProfilerData* s_ProfilerData = nullptr;
+static_internal ProfilerData* s_ProfilerData = nullptr;
 
 bool Profiler::Initialize(const ProfilerSpecification& specification)
 {

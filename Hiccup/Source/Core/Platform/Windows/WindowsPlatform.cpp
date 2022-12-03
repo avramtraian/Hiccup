@@ -21,7 +21,7 @@ struct WindowsPlatformData
 	Platform::ConsoleColor ConsoleForeground;
 	Platform::ConsoleColor ConsoleBackground;
 };
-internal WindowsPlatformData* s_PlatformData = nullptr;
+static_internal WindowsPlatformData* s_PlatformData = nullptr;
 
 bool Platform::Initialize(const PlatformSpecification& specification)
 {

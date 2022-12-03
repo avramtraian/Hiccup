@@ -54,7 +54,7 @@ struct LoggerData
 
 #endif // HC_ENABLE_LOGS
 };
-internal LoggerData* s_LoggerData = nullptr;
+static_internal LoggerData* s_LoggerData = nullptr;
 
 bool Logger::Initialize(const LoggerSpecification& specification)
 {

@@ -109,8 +109,8 @@
 
 //////////////// UTILITIES ////////////////
 
-#define internal                        static
-#define persistent                      static
+#define static_internal                 static
+#define static_persistent               static
 
 #define ArrayCount(ARRAY)               (sizeof(ARRAY) / sizeof(ARRAY[0]))
 

@@ -14,7 +14,7 @@ struct MemoryData
 {
 	MemorySpecification Specification;
 };
-internal MemoryData* s_MemoryData = nullptr;
+static_internal MemoryData* s_MemoryData = nullptr;
 
 bool Memory::Initialize(const MemorySpecification& specification)
 {
@@ -149,7 +149,7 @@ struct MemoryTrackerData
 
 	UntrackedHashTable<void*, AllocationInfo> AllocationsTable;
 };
-internal MemoryTrackerData* s_TrackerData = nullptr;
+static_internal MemoryTrackerData* s_TrackerData = nullptr;
 
 bool Memory::Tracker::Initialize()
 {
