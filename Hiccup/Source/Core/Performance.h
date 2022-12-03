@@ -32,7 +32,7 @@ namespace HC
  *----------------------------------------------------------------
  * Hiccup Performance Profiler Tool Specification.
  *----------------------------------------------------------------
-*/
+ */
 struct ProfilerSpecification
 {
 };
@@ -42,7 +42,7 @@ struct ProfilerSpecification
  * Hiccup Performance Profiler Tool.
  *----------------------------------------------------------------
  * This class holds all the functionality that the Hiccup Performance Profiler Tool API provides.
-*/
+ */
 class Profiler
 {
 public:

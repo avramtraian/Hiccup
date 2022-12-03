@@ -32,7 +32,7 @@ namespace HC
  *----------------------------------------------------------------
  * Memory System Specification.
  *----------------------------------------------------------------
-*/
+ */
 struct MemorySpecification
 {
 	// Whether or not to initialize the tracker. This flag is ignored when
@@ -45,7 +45,7 @@ struct MemorySpecification
  * Hiccup Memory System.
  *----------------------------------------------------------------
  * This class holds all the functionality that the Hiccup Memory API provides.
-*/
+ */
 class Memory
 {
 public:
@@ -92,7 +92,7 @@ public:
 	 * @param bytesCount The number of bytes the memory block will have.
 	 * 
 	 * @return The address of the allocated memory block.
-	*/
+	 */
 	HC_API static void* AllocateRaw(usize bytesCount);
 
 	/**
@@ -102,7 +102,7 @@ public:
 	 * @param bytesCount The number of bytes the memory block will have.
 	 *
 	 * @return The address of the allocated memory block.
-	*/
+	 */
 	HC_API static void* Allocate(usize bytesCount);
 
 	/**
@@ -135,7 +135,7 @@ public:
 	 *   Use 'FreeRaw' instead.
 	 *
 	 * @param memoryBlock The address of the memory block to free.
-	*/
+	 */
 	HC_API static void Free(void* memoryBlock);
 
 #if HC_ENABLE_MEMORY_TRACKING
@@ -150,7 +150,7 @@ public:
 	 *   Also, if 'HC_ENABLE_MEMORY_TRACKING' is defined as 0, this system will be completely
 	 *   removed from the binaries.
 	 * This tool can only be used IF it was initialized. This can be checked by using 'IsActive'.
-	*/
+	 */
 	class Tracker
 	{
 	public:
@@ -158,7 +158,7 @@ public:
 		 * Checks if the Memory Tracking Tools are available.
 		 * 
 		 * @return True if the system is active; False otherwise.
-		*/
+		 */
 		HC_API static bool IsActive();
 
 	public:

@@ -11,7 +11,7 @@ namespace HC
  *----------------------------------------------------------------
  * Platform System Specification.
  *----------------------------------------------------------------
-*/
+ */
 struct PlatformSpecification
 {
 	// Whether or not the console is attached.
@@ -24,7 +24,7 @@ struct PlatformSpecification
  *----------------------------------------------------------------
  * This class holds all the functionality that the Hiccup Platform API provides.
  * Usually, these calls should only be used internally by other higher-level systems.
-*/
+ */
 class Platform
 {
 public:

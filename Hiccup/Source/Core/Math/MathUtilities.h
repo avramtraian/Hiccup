@@ -25,8 +25,8 @@ namespace HC
 #define DOUBLE_GOLDEN_RATIO         (1.6180339887498948482045868343656381)
 
 /**
-* More PI-related constants.
-*/
+ * More PI-related constants.
+ */
 #define INV_PI                      (0.31830988618F)
 #define TWO_PI                      (6.28318530717F)
 #define HALF_PI                     (1.57079632679F)
@@ -38,8 +38,8 @@ namespace HC
 #define DOUBLE_PI_SQUARED           (9.86960440108935861883)
 
 /**
-* Common square roots.
-*/
+ * Common square roots.
+ */
 #define SQRT_2                      (1.41421356237F)
 #define SQRT_3                      (1.73205080756F)
 #define INV_SQRT_2                  (0.70710678118F)

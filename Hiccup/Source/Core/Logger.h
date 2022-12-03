@@ -43,7 +43,7 @@ namespace HC
  *----------------------------------------------------------------
  * Logging System Specification.
  *----------------------------------------------------------------
-*/
+ */
 struct LoggerSpecification
 {
 };
@@ -53,7 +53,7 @@ struct LoggerSpecification
  * Hiccup Logging System.
  *----------------------------------------------------------------
  * This class holds all the functionality that the Hiccup Logging API provides.
-*/
+ */
 class Logger
 {
 public:
