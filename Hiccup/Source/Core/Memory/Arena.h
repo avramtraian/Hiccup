@@ -26,10 +26,13 @@ namespace HC
 struct HC_API LinearMemoryArena
 {
 public:
+	HC_NON_COPIABLE(LinearMemoryArena)
+	HC_NON_MOVABLE(LinearMemoryArena)
+
 	// Default constructor.
 	ALWAYS_INLINE LinearMemoryArena()
-		: m_Buffer()
-		, m_Allocated(0)
+		: m_buffer()
+		, m_allocated(0)
 	{}
 
 	/**
@@ -38,51 +41,47 @@ public:
 	 * @param size The number of bytes the arena can store.
 	 */
 	ALWAYS_INLINE LinearMemoryArena(usize size)
-		: m_Buffer(size)
-		, m_Allocated(0)
+		: m_buffer(size)
+		, m_allocated(0)
 	{}
 
 	// Destructor.
 	ALWAYS_INLINE ~LinearMemoryArena()
 	{
-		ReleaseMemory();
+		release_memory();
 	}
-
-	// Copy operations are not allowed.
-	LinearMemoryArena(const LinearMemoryArena&) = delete;
-	LinearMemoryArena& operator=(const LinearMemoryArena&) = delete;
 
 public:
 	/** @return Pointer to the arena's memory block. */
-	ALWAYS_INLINE uint8* Data() const { return m_Buffer.Data; }
+	ALWAYS_INLINE uint8* data() const { return m_buffer.data; }
 
 	/** @return The number of bytes the arena can store. */
-	ALWAYS_INLINE usize Size() const { return m_Buffer.Size; }
+	ALWAYS_INLINE usize size() const { return m_buffer.size; }
 
 	/** @return The number of currently allocated bytes. */
-	ALWAYS_INLINE usize Allocated() const { return m_Allocated; }
+	ALWAYS_INLINE usize allocated() const { return m_allocated; }
 
-	ALWAYS_INLINE bool IsValid() const { return (m_Buffer.Data != nullptr); }
+	ALWAYS_INLINE bool is_valid() const { return (m_buffer.data != nullptr); }
 
 public:
 	/** @return True if the arena can store the given number of bytes; False otherwise. */
-	ALWAYS_INLINE bool IsAbleToStore(usize bytesCount)
+	ALWAYS_INLINE bool is_able_to_store(usize bytes_count)
 	{
-		return (m_Allocated + bytesCount <= m_Buffer.Size);
+		return (m_allocated + bytes_count <= m_buffer.size);
 	}
 
 	/** @return True if the arena can store an instance of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool IsAbleToStoreType()
+	ALWAYS_INLINE bool is_able_to_store_type()
 	{
-		return IsAbleToStore(sizeof(T));
+		return is_able_to_store(sizeof(T));
 	}
 
 	/** @return True if the arena can store an array of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool IsAbleToStoreArray(usize count)
+	ALWAYS_INLINE bool is_able_to_store_array(usize count)
 	{
-		return IsAbleToStore(count * sizeof(T));
+		return is_able_to_store(count * sizeof(T));
 	}
 
 public:
@@ -90,70 +89,70 @@ public:
 	 * Allocates a block of memory from the arena.
 	 * If the arena doesn't have enough space for it, nullptr is returned.
 	 * 
-	 * @param bytesCount The size (in bytes) of the requested memory block.
+	 * @param bytes_count The size (in bytes) of the requested memory block.
 	 * 
 	 * @return Pointer to the allocated memory block, or nullptr on failure.
 	 */
-	uint8* Allocate(usize bytesCount)
+	uint8* allocate(usize bytes_count)
 	{
-		if ((bytesCount == 0) || !IsAbleToStore(bytesCount))
+		if ((bytes_count == 0) || !is_able_to_store(bytes_count))
 		{
 			return nullptr;
 		}
 
-		uint8* memory = m_Buffer.Data + m_Allocated;
-		m_Allocated += bytesCount;
+		uint8* memory = m_buffer.data + m_allocated;
+		m_allocated += bytes_count;
 		return memory;
 	}
 
 	/**
 	 * Allocates a block of memory from the arena, casting the result to the
 	 *   given type.
-	 * Same behavior as the 'Allocate'.
+	 * Same behavior as the 'allocate'.
 	 * 
-	 * @param bytesCount The size (in bytes) of the requested memory block.
+	 * @param bytes_count The size (in bytes) of the requested memory block.
 	 * 
 	 * @return Pointer to the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	ALWAYS_INLINE T* AllocateAs(usize bytesCount)
+	ALWAYS_INLINE T* allocate_as(usize bytes_count)
 	{
-		return (T*)Allocate(bytesCount);
+		return (T*)allocate(bytes_count);
 	}
 
 	/**
 	 * Allocates enough memory for the provided type.
-	 * Same behavior as the 'Allocate'.
+	 * Same behavior as the 'allocate'.
 	 * 
 	 * @return Pointer to the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	ALWAYS_INLINE T* AllocateType()
+	ALWAYS_INLINE T* allocate_type()
 	{
-		return (T*)Allocate(sizeof(T));
+		return (T*)allocate(sizeof(T));
 	}
 
 	/**
 	 * Allocates enough memory for an array of the provided type.
-	 * Same behavior as 'Allocate'.
+	 * Same behavior as 'allocate'.
 	 * 
 	 * @param count The number of elements of the array.
 	 * 
 	 * @retirm Pointer the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	ALWAYS_INLINE T* AllocateArray(usize count)
+	ALWAYS_INLINE T* allocate_array(usize count)
 	{
-		return (T*)Allocate(count * sizeof(T));
+		return (T*)allocate(count * sizeof(T));
 	}
 	
 	/**
 	 * Resets the arena. The arena's memory buffer is not released from memory,
 	 *   but rather the allocated number of bytes is set to 0.
 	 */
-	void Reset()
+	void reset()
 	{
-		m_Allocated = 0;
+		m_allocated = 0;
 	}
 
 public:
@@ -164,12 +163,12 @@ public:
 	 * @param destination Pointer to the destination memory arena. This must be
 	 *   an invalid memory arena.
 	 */
-	static void Copy(const LinearMemoryArena& source, LinearMemoryArena* destination)
+	static void copy(const LinearMemoryArena& source, LinearMemoryArena* destination)
 	{
-		HC_ASSERT(!destination->IsValid()); // Destination is a valid memory arena!
+		HC_ASSERT(!destination->is_valid()); // Destination is a valid memory arena!
 
-		destination->m_Buffer = Buffer::Copy(source.m_Buffer);
-		destination->m_Allocated = source.m_Allocated;
+		destination->m_buffer = Buffer::copy(source.m_buffer);
+		destination->m_allocated = source.m_allocated;
 	}
 
 public:
@@ -178,28 +177,28 @@ public:
 	 * 
 	 * @param bytesCount The number of bytes the arena can store.
 	 */
-	void AllocateMemory(usize bytesCount)
+	void allocate_memory(usize bytes_count)
 	{
-		Reset();
-		m_Buffer.Allocate(bytesCount);
+		reset();
+		m_buffer.allocate(bytes_count);
 	}
 
 	/**
 	 * Releases the arena's memory buffer.
 	 * This function must be called manually when the arena is no longer required.
 	 */
-	void ReleaseMemory()
+	void release_memory()
 	{
-		Reset();
-		m_Buffer.Release();
+		reset();
+		m_buffer.release();
 	}
 
 private:
 	// The arena memory buffer.
-	Buffer m_Buffer;
+	Buffer m_buffer;
 
 	// The number of bytes currently allocated.
-	usize m_Allocated;
+	usize m_allocated;
 };
 
 /**
@@ -214,10 +213,13 @@ private:
 struct HC_API StackMemoryArena
 {
 public:
+	HC_NON_COPIABLE(StackMemoryArena)
+	HC_NON_MOVABLE(StackMemoryArena)
+
 	// Default constructor.
 	ALWAYS_INLINE StackMemoryArena()
-		: m_Buffer()
-		, m_Allocated(0)
+		: m_buffer()
+		, m_allocated(0)
 	{}
 
 	/**
@@ -226,119 +228,115 @@ public:
 	 * @param size The number of bytes the arena can store.
 	 */
 	ALWAYS_INLINE StackMemoryArena(usize size)
-		: m_Buffer(size)
-		, m_Allocated(0)
+		: m_buffer(size)
+		, m_allocated(0)
 	{}
 
 	// Destructor.
 	ALWAYS_INLINE ~StackMemoryArena()
 	{
-		ReleaseMemory();
+		release_memory();
 	}
-
-	// Copy operations are not allowed.
-	StackMemoryArena(const StackMemoryArena&) = delete;
-	StackMemoryArena& operator=(const StackMemoryArena&) = delete;
 
 public:
 	/** @return Pointer to the arena's memory block. */
-	ALWAYS_INLINE uint8* Data() const { return m_Buffer.Data; }
+	ALWAYS_INLINE uint8* data() const { return m_buffer.data; }
 
 	/** @return The number of bytes the arena can store. */
-	ALWAYS_INLINE usize Size() const { return m_Buffer.Size; }
+	ALWAYS_INLINE usize size() const { return m_buffer.size; }
 
 	/** @return The number of currently allocated bytes. */
-	ALWAYS_INLINE usize Allocated() const { return m_Allocated; }
+	ALWAYS_INLINE usize allocated() const { return m_allocated; }
 
-	ALWAYS_INLINE bool IsValid() const { return (m_Buffer.Data != nullptr); }
+	ALWAYS_INLINE bool is_valid() const { return (m_buffer.data != nullptr); }
 
 public:
 	/** @return True if the arena can store the given number of bytes; False otherwise. */
-	ALWAYS_INLINE bool IsAbleToStore(usize bytesCount)
+	ALWAYS_INLINE bool is_able_to_store(usize bytes_count)
 	{
-		return (m_Allocated + bytesCount <= m_Buffer.Size);
+		return (m_allocated + bytes_count <= m_buffer.size);
 	}
 
 	/** @return True if the arena can store an instance of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool IsAbleToStoreType()
+	ALWAYS_INLINE bool is_able_to_store_type()
 	{
-		return IsAbleToStore(sizeof(T));
+		return is_able_to_store(sizeof(T));
 	}
 
 	/** @return True if the arena can store an array of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool IsAbleToStoreArray(usize count)
+	ALWAYS_INLINE bool is_able_to_store_array(usize count)
 	{
-		return IsAbleToStore(count * sizeof(T));
+		return is_able_to_store(count * sizeof(T));
 	}
 
 public:
-	uint8* Push(usize bytesCount)
+	uint8* push(usize bytes_count)
 	{
-		if ((bytesCount == 0) || !IsAbleToStore(bytesCount))
+		if ((bytes_count == 0) || !is_able_to_store(bytes_count))
 		{
 			return nullptr;
 		}
 
-		uint8* memory = m_Buffer.Data + m_Allocated;
-		m_Allocated += bytesCount;
+		uint8* memory = m_buffer.data + m_allocated;
+		m_allocated += bytes_count;
 		return memory;
 	}
 
 	template<typename T>
-	ALWAYS_INLINE T* PushAs(usize bytesCount)
+	ALWAYS_INLINE T* push_as(usize bytes_count)
 	{
-		return (T*)Push(bytesCount);
+		return (T*)push(bytes_count);
 	}
 
 	template<typename T>
-	ALWAYS_INLINE T* PushType()
+	ALWAYS_INLINE T* push_type()
 	{
-		return (T*)Push(sizeof(T));
+		return (T*)push(sizeof(T));
 	}
 
 	template<typename T>
-	ALWAYS_INLINE T* PushArray(usize count)
+	ALWAYS_INLINE T* push_array(usize count)
 	{
-		return (T*)Push(count * sizeof(T));
+		return (T*)push(count * sizeof(T));
 	}
 
-	void Pop(usize bytesCount)
+	void pop(usize bytes_count)
 	{
-		HC_ASSERT(m_Allocated >= bytesCount); // Trying to pop too much from the stack!
-		m_Allocated -= bytesCount;
-	}
-
-	template<typename T>
-	ALWAYS_INLINE void PopType()
-	{
-		Pop(sizeof(T));
+		HC_ASSERT(m_allocated >= bytes_count); // Trying to pop too much from the stack!
+		m_allocated -= bytes_count;
 	}
 
 	template<typename T>
-	ALWAYS_INLINE void PopArray(usize count)
+	ALWAYS_INLINE void pop_type()
 	{
-		Pop(count * sizeof(T));
+		pop(sizeof(T));
 	}
 
-	void Pop(void* memoryAddress)
+	template<typename T>
+	ALWAYS_INLINE void pop_array(usize count)
 	{
-		uint8* memory = (uint8*)memoryAddress;
+		pop(count * sizeof(T));
+	}
+
+	void pop(void* memory_address)
+	{
+		uint8* memory = (uint8*)memory_address;
 
 		// Memory address doesn't belong to the stack!
-		HC_ASSERT(m_Buffer.Data <= memoryAddress && memoryAddress < m_Buffer.Data + m_Allocated);
+		HC_ASSERT(m_buffer.data <= memory_address && memory_address < m_buffer.data + m_allocated);
 
-		m_Allocated = memory - m_Buffer.Data;
+		m_allocated = memory - m_buffer.data;
 	}
 
 	/**
 	 * Resets the arena. The arena's memory buffer is not released from memory,
 	 *   but rather the allocated number of bytes is set to 0.
 	 */
-	void Reset()
+	void reset()
 	{
-		m_Allocated = 0;
+		m_allocated = 0;
 	}
 
 public:
@@ -349,12 +347,12 @@ public:
 	 * @param destination Pointer to the destination memory arena. This must be
 	 *   an invalid memory arena.
 	 */
-	static void Copy(const StackMemoryArena& source, StackMemoryArena* destination)
+	static void copy(const StackMemoryArena& source, StackMemoryArena* destination)
 	{
-		HC_ASSERT(!destination->IsValid()); // Destination is a valid memory arena!
+		HC_ASSERT(!destination->is_valid()); // Destination is a valid memory arena!
 
-		destination->m_Buffer = Buffer::Copy(source.m_Buffer);
-		destination->m_Allocated = source.m_Allocated;
+		destination->m_buffer = Buffer::copy(source.m_buffer);
+		destination->m_allocated = source.m_allocated;
 	}
 
 public:
@@ -363,28 +361,28 @@ public:
 	 * 
 	 * @param bytesCount The number of bytes the arena can store.
 	 */
-	void AllocateMemory(usize bytesCount)
+	void allocate_memory(usize bytes_count)
 	{
-		Reset();
-		m_Buffer.Allocate(bytesCount);
+		reset();
+		m_buffer.allocate(bytes_count);
 	}
 
 	/**
 	 * Releases the arena's memory buffer.
 	 * This function must be called manually when the arena is no longer required.
 	 */
-	void ReleaseMemory()
+	void release_memory()
 	{
-		Reset();
-		m_Buffer.Release();
+		reset();
+		m_buffer.release();
 	}
 
 private:
 	// The arena memory buffer.
-	Buffer m_Buffer;
+	Buffer m_buffer;
 
 	// The number of bytes currently allocated.
-	usize m_Allocated;
+	usize m_allocated;
 };
 
 } // namespace HC

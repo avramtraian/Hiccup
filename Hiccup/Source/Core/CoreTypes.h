@@ -26,6 +26,16 @@ using bool32    = int32;
 using usize     = size_t;
 using uptr      = uintptr_t;
 
+// The type cannot be copied.
+#define HC_NON_COPIABLE(TYPE_NAME)          \
+	TYPE_NAME(const TYPE_NAME&) = delete;   \
+	TYPE_NAME& operator=(const TYPE_NAME&) = delete;
+
+// The type cannot be moved.
+#define HC_NON_MOVABLE(TYPE_NAME)                           \
+	TYPE_NAME(TYPE_NAME&&) noexcept = delete;               \
+	TYPE_NAME& operator=(TYPE_NAME&&) noexcept = delete;    \
+
 /**
  *----------------------------------------------------------------
  * Hiccup Types Utilities.

@@ -21,16 +21,16 @@ struct HC_API Buffer
 {
 public:
 	// Pointer the buffer's memory block.
-	uint8* Data;
+	uint8* data;
 
 	// The number of bytes the buffer can store.
-	usize Size;
+	usize size;
 
 public:
 	// Default constructor.
 	ALWAYS_INLINE Buffer()
-		: Data(nullptr)
-		, Size(0)
+		: data(nullptr)
+		, size(0)
 	{}
 
 	/**
@@ -38,27 +38,27 @@ public:
 	 *
 	 * @param size The number of bytes the buffer can store.
 	 */
-	ALWAYS_INLINE Buffer(usize size)
-		: Data(nullptr)
-		, Size(0)
+	ALWAYS_INLINE Buffer(usize in_size)
+		: data(nullptr)
+		, size(0)
 	{
-		Allocate(size);
+		allocate(in_size);
 	}
 
 	/**
-	* Destructor. It performs a shallow copy. For a deep copy, use
-	*   'Buffer::Copy'.
+	* It performs a shallow copy. For a deep copy, use
+	*   'Buffer::copy'.
 	*/
 	ALWAYS_INLINE Buffer(const Buffer& other) = default;
 
 public:
 	/** @return Pointer to the buffer's memory block, casted to the given type. */
 	template<typename T>
-	ALWAYS_INLINE T* As() { return (T*)Data; }
+	ALWAYS_INLINE T* as() { return (T*)data; }
 
 	/** @return Pointer to the buffer's memory block, casted to the given type. */
 	template<typename T>
-	ALWAYS_INLINE const T* As() const { return (const T*)Data; }
+	ALWAYS_INLINE const T* as() const { return (const T*)data; }
 
 	/**
 	 * Copies a buffer, performing a deep copy.
@@ -67,10 +67,10 @@ public:
 	 * 
 	 * @return The newly created buffer.
 	 */
-	ALWAYS_INLINE static Buffer Copy(Buffer source)
+	ALWAYS_INLINE static Buffer copy(Buffer source)
 	{
-		Buffer destination = Buffer(source.Size);
-		Memory::copy(destination.Data, source.Data, source.Size);
+		Buffer destination = Buffer(source.size);
+		Memory::copy(destination.data, source.data, source.size);
 		return destination;
 	}
 
@@ -80,25 +80,25 @@ public:
 	 * 
 	 * @param size The number of bytes the buffer can store.
 	 */
-	ALWAYS_INLINE void Allocate(usize size)
+	ALWAYS_INLINE void allocate(usize size)
 	{
-		if (Data)
+		if (data)
 		{
-			Release();
+			release();
 		}
 
-		Data = hc_new uint8[size];
-		Size = size;
+		data = hc_new uint8[size];
+		size = size;
 	}
 
 	/**
 	 * Releases the buffer's memory block.
 	 */
-	ALWAYS_INLINE void Release()
+	ALWAYS_INLINE void release()
 	{
-		hc_delete[] Data;
-		Data = nullptr;
-		Size = 0;
+		hc_delete[] data;
+		data = nullptr;
+		size = 0;
 	}
 };
 

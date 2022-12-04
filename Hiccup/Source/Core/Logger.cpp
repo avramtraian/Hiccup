@@ -64,11 +64,11 @@ bool Logger::Initialize(const LoggerSpecification& specification)
 
 	Buffer buffer = Buffer(2 * kilobytes(8));
 
-	s_LoggerData->FormatBuffer.Data = buffer.Data;
-	s_LoggerData->FormatBuffer.Size = buffer.Size / 2;
+	s_LoggerData->FormatBuffer.data = buffer.data;
+	s_LoggerData->FormatBuffer.size = buffer.size / 2;
 
-	s_LoggerData->LogBuffer.Data = buffer.Data + buffer.Size / 2;
-	s_LoggerData->LogBuffer.Size = buffer.Size / 2;
+	s_LoggerData->LogBuffer.data = buffer.data + buffer.size / 2;
+	s_LoggerData->LogBuffer.size = buffer.size / 2;
 
 	return true;
 }
@@ -76,9 +76,9 @@ bool Logger::Initialize(const LoggerSpecification& specification)
 void Logger::Shutdown()
 {
 	Buffer buffer;
-	buffer.Data = s_LoggerData->FormatBuffer.Data;
-	buffer.Size = s_LoggerData->FormatBuffer.Size + s_LoggerData->LogBuffer.Size;
-	buffer.Release();
+	buffer.data = s_LoggerData->FormatBuffer.data;
+	buffer.size = s_LoggerData->FormatBuffer.size + s_LoggerData->LogBuffer.size;
+	buffer.release();
 
 	hc_delete s_LoggerData;
 	s_LoggerData = nullptr;
@@ -96,18 +96,18 @@ void Logger::Log(LogType type, const char* tag, const char* message, ...)
 	va_list argList;
 	va_start(argList, message);
 
-	vsprintf_s(s_LoggerData->FormatBuffer.As<char>(), s_LoggerData->FormatBuffer.Size, message, argList);
+	vsprintf_s(s_LoggerData->FormatBuffer.as<char>(), s_LoggerData->FormatBuffer.size, message, argList);
 
 	Platform::SystemTime systemTime;
 	Platform::GetLocalSystemTime(&systemTime);
 
 	int logLength = sprintf_s(
-		s_LoggerData->LogBuffer.As<char>(), s_LoggerData->LogBuffer.Size,
+		s_LoggerData->LogBuffer.as<char>(), s_LoggerData->LogBuffer.size,
 		"[%02u:%02u:%02u][%s]%s %s\n",
 		systemTime.Hour, systemTime.Minute, systemTime.Second,
 		tag,
 		s_LoggerData->TypeStrings[(uint8)type],
-		s_LoggerData->FormatBuffer.As<const char>()
+		s_LoggerData->FormatBuffer.as<const char>()
 	);
 
 	va_end(argList);
@@ -116,7 +116,7 @@ void Logger::Log(LogType type, const char* tag, const char* message, ...)
 		s_LoggerData->TypeColorFG[(uint8)type],
 		s_LoggerData->TypeColorBG[(uint8)type]
 	);
-	Platform::WriteToConsole(s_LoggerData->LogBuffer.As<const char>(), (usize)logLength);
+	Platform::WriteToConsole(s_LoggerData->LogBuffer.as<const char>(), (usize)logLength);
 }
 
 #endif // HC_ENABLE_LOGS
