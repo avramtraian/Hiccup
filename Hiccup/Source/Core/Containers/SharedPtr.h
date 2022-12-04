@@ -136,6 +136,13 @@ public:
 	 */
 	void release();
 
+public:
+	template<typename... Args>
+	static SharedPtr<T> create(Args&&... args)
+	{
+		return SharedPtr<T>(hc_new T(Types::forward<Args>(args)...));
+	}
+
 private:
 	// The held object.
 	T* m_instance;
