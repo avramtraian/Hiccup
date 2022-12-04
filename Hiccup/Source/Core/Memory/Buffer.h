@@ -80,15 +80,15 @@ public:
 	 * 
 	 * @param size The number of bytes the buffer can store.
 	 */
-	ALWAYS_INLINE void allocate(usize size)
+	ALWAYS_INLINE void allocate(usize in_size)
 	{
 		if (data)
 		{
 			release();
 		}
 
-		data = hc_new uint8[size];
-		size = size;
+		data = hc_new uint8[in_size];
+		size = in_size;
 	}
 
 	/**
