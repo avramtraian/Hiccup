@@ -208,7 +208,7 @@ usize Memory::Tracker::get_current_allocations_count()
 
 void Memory::Tracker::log_memory_usage()
 {
-	s_tracker_data->allocations_table.ForEach([](void* memory_block, const AllocationInfo& allocation) -> bool
+	s_tracker_data->allocations_table.for_each([](void* memory_block, const AllocationInfo& allocation) -> bool
 		{
 			HC_LOG_DEBUG("Allocation [%p]:", memory_block);
 			HC_LOG_DEBUG("    Bytes Count:        %u", allocation.bytes_count);
@@ -236,18 +236,18 @@ void Memory::Tracker::register_tagged_allocation(void* memory_block, usize bytes
 	s_tracker_data->allocated += bytes_count;
 	s_tracker_data->allocations_count++;
 
-	s_tracker_data->allocations_table.Insert(memory_block, Types::Move(allocation));
+	s_tracker_data->allocations_table.insert(memory_block, Types::Move(allocation));
 }
 
 void Memory::Tracker::register_deallocation(void* memory_block)
 {
-	const usize allocationIndex = s_tracker_data->allocations_table.FindExistingIndex(memory_block);
-	const AllocationInfo& allocation = s_tracker_data->allocations_table.AtIndex(allocationIndex);
+	const usize allocationIndex = s_tracker_data->allocations_table.find_existing_index(memory_block);
+	const AllocationInfo& allocation = s_tracker_data->allocations_table.at_index(allocationIndex);
 
 	s_tracker_data->deallocated += allocation.bytes_count;
 	s_tracker_data->deallocations_count++;
 
-	s_tracker_data->allocations_table.RemoveIndex(allocationIndex);
+	s_tracker_data->allocations_table.remove_index(allocationIndex);
 }
 #endif // HC_ENABLE_MEMORY_TRACKING
 

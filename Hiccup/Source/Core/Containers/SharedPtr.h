@@ -5,24 +5,11 @@
 #include "Core/CoreMinimal.h"
 #include "Core/Memory/Memory.h"
 
-/**
- * This should be included in every class/struct that uses automatic
- *   reference counting.
- * 
- * Usage:
- *   class/struct SomeObject
- *   {
- *       HC_SHARED_OBJECT;
- * 
- *   public/private:
- *       // ...
- *   };
- */
-#define HC_SHARED_OBJECT                \
-	private:                            \
-		uint64 __m_ReferenceCount = 0;  \
-		                                \
-		template<typename T>            \
+#define HC_REFERENCED_COUNTED_OBJECT            \
+	private:                                    \
+		uint64 m_reference_count_internal = 0;  \
+		                                        \
+		template<typename T>                    \
 		friend class SharedPtr;
 
 namespace HC
@@ -33,8 +20,8 @@ namespace HC
  * Hiccup SharedPtr.
  *----------------------------------------------------------------
  * Automatic intrusive reference counted object holder.
- * 
- * @tparam T A subclass of RefCounted.
+ * The instance type must contain 'HC_REFERENCED_COUNTED_OBJECT'
+ *   in its declaration.
  */
 template<typename T>
 class SharedPtr
@@ -112,13 +99,13 @@ public:
 
 public:
 	/** @return The held object. */
-	ALWAYS_INLINE T* Get();
+	ALWAYS_INLINE T* get();
 
 	/** @return The held object. */
-	ALWAYS_INLINE const T* Get() const;
+	ALWAYS_INLINE const T* get() const;
 
 	/** @return True if the pointer is valid (not nullptr); False otherwise. */
-	ALWAYS_INLINE bool IsValid() const;
+	ALWAYS_INLINE bool is_valid() const;
 
 public:
 	/**
@@ -147,68 +134,68 @@ public:
 	 * Releases the object, decrementing its reference count. If the count hits 0,
 	 *   the object destructor is called and the memory is freed.
 	 */
-	void Release();
+	void release();
 
 private:
 	// The held object.
-	T* m_Pointer;
+	T* m_instance;
 };
 
 //////////////// SHARED POINTER IMPLEMENTATION ////////////////
 
 template<typename T>
 SharedPtr<T>::SharedPtr()
-	: m_Pointer(nullptr)
+	: m_instance(nullptr)
 {}
 
 template<typename T>
 SharedPtr<T>::SharedPtr(const SharedPtr<T>& other)
-	: m_Pointer(other.m_Pointer)
+	: m_instance(other.m_instance)
 {
-	if (m_Pointer)
+	if (m_instance)
 	{
-		m_Pointer->__m_ReferenceCount++;
+		m_instance->m_reference_count_internal++;
 	}
 }
 
 template<typename T>
 SharedPtr<T>::SharedPtr(SharedPtr<T>&& other) noexcept
-	: m_Pointer(other.m_Pointer)
+	: m_instance(other.m_instance)
 {
-	other.m_Pointer = nullptr;
+	other.m_instance = nullptr;
 }
 
 template<typename T>
 SharedPtr<T>::SharedPtr(T* pointer)
-	: m_Pointer(pointer)
+	: m_instance(pointer)
 {
-	if (m_Pointer)
+	if (m_instance)
 	{
-		m_Pointer->__m_ReferenceCount++;
+		m_instance->m_reference_count_internal++;
 	}
 }
 
 template<typename T>
 SharedPtr<T>::SharedPtr(std::nullptr_t)
-	: m_Pointer(nullptr)
+	: m_instance(nullptr)
 {}
 
 template<typename T>
 SharedPtr<T>::~SharedPtr()
 {
-	Release();
+	release();
 }
 
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& other)
 {
-	if (other.m_Pointer)
+	if (other.m_instance)
 	{
-		other.m_Pointer->__m_ReferenceCount++;
+		other.m_instance->m_reference_count_internal++;
 	}
 
-	Release();
-	m_Pointer = other.m_Pointer;
+	release();
+	m_instance = other.m_instance;
 
 	return *this;
 }
@@ -216,82 +203,82 @@ SharedPtr<T>& SharedPtr<T>::operator=(const SharedPtr<T>& other)
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(SharedPtr<T>&& other) noexcept
 {
-	m_Pointer = other.m_Pointer;
-	other.m_Pointer = nullptr;
+	m_instance = other.m_instance;
+	other.m_instance = nullptr;
 	return *this;
 }
 
 template<typename T>
 SharedPtr<T>& SharedPtr<T>::operator=(std::nullptr_t)
 {
-	Release();
+	release();
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE T* SharedPtr<T>::operator->()
 {
-	return Get();
+	return get();
 }
 
 template<typename T>
 ALWAYS_INLINE const T* SharedPtr<T>::operator->() const
 {
-	return Get();
+	return get();
 }
 
 template<typename T>
-ALWAYS_INLINE T* SharedPtr<T>::Get()
+ALWAYS_INLINE T* SharedPtr<T>::get()
 {
-	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference a nullptr!
-	return m_Pointer;
+	HC_ASSERT(m_instance != nullptr); // Trying to dereference a nullptr!
+	return m_instance;
 }
 
 template<typename T>
-ALWAYS_INLINE const T* SharedPtr<T>::Get() const
+ALWAYS_INLINE const T* SharedPtr<T>::get() const
 {
-	HC_ASSERT(m_Pointer != nullptr); // Trying to dereference a nullptr!
-	return m_Pointer;
+	HC_ASSERT(m_instance != nullptr); // Trying to dereference a nullptr!
+	return m_instance;
 }
 
 template<typename T>
-ALWAYS_INLINE bool SharedPtr<T>::IsValid() const
+ALWAYS_INLINE bool SharedPtr<T>::is_valid() const
 {
-	return (m_Pointer != nullptr);
+	return (m_instance != nullptr);
 }
 
 template<typename T>
 bool SharedPtr<T>::operator==(const SharedPtr<T>& other) const
 {
-	return m_Pointer == other.m_Pointer;
+	return m_instance == other.m_instance;
 }
 
 template<typename T>
 bool SharedPtr<T>::operator!=(const SharedPtr<T>& other) const
 {
-	return m_Pointer != other.m_Pointer;
+	return m_instance != other.m_instance;
 }
 
 template<typename T>
 SharedPtr<T>::operator bool() const
 {
-	return IsValid();
+	return is_valid();
 }
 
 template<typename T>
-void SharedPtr<T>::Release()
+void SharedPtr<T>::release()
 {
-	if (!m_Pointer)
+	if (!m_instance)
 	{
 		return;
 	}
 
-	if ((--(m_Pointer->__m_ReferenceCount)) == 0)
+	if ((--(m_instance->m_reference_count_internal)) == 0)
 	{
-		hc_delete m_Pointer;
+		hc_delete m_instance;
 	}
 
-	m_Pointer = nullptr;
+	m_instance = nullptr;
 }
 
 } // namespace HC

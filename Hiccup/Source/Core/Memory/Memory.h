@@ -240,9 +240,9 @@ public:
 	}
 
 	/** @see 'Memory::allocate_tagged'. */
-	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* fileName, const char* functionName, uint32 lineNumber)
+	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
 	{
-		return Memory::allocate_tagged(bytes_count, fileName, functionName, lineNumber);
+		return Memory::allocate_tagged(bytes_count, filename, function_sig, line_number);
 	}
 
 	/** @see 'Memory::free_raw'. */
@@ -285,21 +285,21 @@ public:
 	}
 
 	/** @see 'Memory::allocate_tagged'. */
-	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* fileName, const char* functionName, uint32 lineNumber)
+	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
 	{
 		return Memory::allocate_raw(bytes_count);
 	}
 
 	/** @see 'Memory::free_raw'. */
-	ALWAYS_INLINE void free_raw(void* memoryBlock, usize bytes_count)
+	ALWAYS_INLINE void free_raw(void* memory_block, usize bytes_count)
 	{
-		Memory::free_raw(memoryBlock);
+		Memory::free_raw(memory_block);
 	}
 
 	/** @see 'Memory::free'. */
-	ALWAYS_INLINE void free(void* memoryBlock, usize bytes_count)
+	ALWAYS_INLINE void free(void* memory_block, usize bytes_count)
 	{
-		Memory::free_raw(memoryBlock);
+		Memory::free_raw(memory_block);
 	}
 
 public:
