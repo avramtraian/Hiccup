@@ -18,8 +18,8 @@ bool should_restart_application()
 
 Application* Application::s_instance = nullptr;
 
-Application::Application(const ApplicationDescription& specification)
-	: m_description(specification)
+Application::Application(const ApplicationDescription& description)
+	: m_description(description)
 {
 	s_instance = this;
 }

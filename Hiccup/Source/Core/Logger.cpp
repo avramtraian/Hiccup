@@ -15,7 +15,7 @@ namespace HC
 
 struct LoggerData
 {
-	LoggerSpecification specification;
+	LoggerDescription description;
 
 	const char* log_type_strings[(uint8)Logger::LogType::max_enum_value] =
 	{
@@ -56,11 +56,11 @@ struct LoggerData
 };
 static_internal LoggerData* s_logger_data = nullptr;
 
-bool Logger::initialize(const LoggerSpecification& specification)
+bool Logger::initialize(const LoggerDescription& description)
 {
 	s_logger_data = hc_new LoggerData();
 
-	s_logger_data->specification = specification;
+	s_logger_data->description = description;
 
 	Buffer buffer = Buffer(2 * kilobytes(8));
 

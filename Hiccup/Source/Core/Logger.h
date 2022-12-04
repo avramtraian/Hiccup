@@ -41,10 +41,10 @@ namespace HC
 
 /**
  *----------------------------------------------------------------
- * Logging System Specification.
+ * Logging System Description.
  *----------------------------------------------------------------
  */
-struct LoggerSpecification
+struct LoggerDescription
 {
 };
 
@@ -66,7 +66,7 @@ public:
 	};
 
 public:
-	static bool initialize(const LoggerSpecification& specification);
+	static bool initialize(const LoggerDescription& description);
 	static void shutdown();
 
 #if HC_ENABLE_LOGS

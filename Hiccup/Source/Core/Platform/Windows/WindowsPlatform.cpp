@@ -12,18 +12,16 @@ namespace HC
 
 struct WindowsPlatformData
 {
-	PlatformSpecification specification;
-
-	uint64 performance_tick_frequency;
-	uint64 initialization_nanoseconds;
-
-	HANDLE console_handle;
-	Platform::ConsoleColor console_foreground;
-	Platform::ConsoleColor console_background;
+	PlatformDescription     description;
+	uint64                  performance_tick_frequency;
+	uint64                  initialization_nanoseconds;
+	HANDLE                  console_handle;
+	Platform::ConsoleColor  console_foreground;
+	Platform::ConsoleColor  console_background;
 };
 static_internal WindowsPlatformData* s_platform_data = nullptr;
 
-bool Platform::initialize(const PlatformSpecification& specification)
+bool Platform::initialize(const PlatformDescription& description)
 {
 	s_platform_data = (WindowsPlatformData*)std::malloc(sizeof(WindowsPlatformData));
 	if (!s_platform_data)
@@ -33,7 +31,7 @@ bool Platform::initialize(const PlatformSpecification& specification)
 
 	new (s_platform_data) WindowsPlatformData();
 
-	s_platform_data->specification = specification;
+	s_platform_data->description = description;
 
 	LARGE_INTEGER performance_tick_frequency;
 	if (!QueryPerformanceFrequency(&performance_tick_frequency))
@@ -44,7 +42,7 @@ bool Platform::initialize(const PlatformSpecification& specification)
 
 	s_platform_data->initialization_nanoseconds = get_nanoseconds();
 
-	if (s_platform_data->specification.is_console_attached)
+	if (s_platform_data->description.is_console_attached)
 	{
 		s_platform_data->console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 		s_platform_data->console_foreground = ConsoleColor::max_enum_value;
@@ -57,7 +55,7 @@ bool Platform::initialize(const PlatformSpecification& specification)
 
 void Platform::shutdown()
 {
-	if (s_platform_data->specification.is_console_attached)
+	if (s_platform_data->description.is_console_attached)
 	{
 		set_console_color(ConsoleColor::light_gray, ConsoleColor::black);
 	}
@@ -105,7 +103,7 @@ uint64 Platform::get_nanoseconds_since_initialization()
 
 void Platform::set_console_color(ConsoleColor foreground, ConsoleColor background)
 {
-	if (!s_platform_data->specification.is_console_attached)
+	if (!s_platform_data->description.is_console_attached)
 	{
 		return;
 	}
@@ -124,7 +122,7 @@ void Platform::set_console_color(ConsoleColor foreground, ConsoleColor backgroun
 
 void Platform::write_to_console(const char* message, usize message_length)
 {
-	if (!s_platform_data->specification.is_console_attached)
+	if (!s_platform_data->description.is_console_attached)
 	{
 		return;
 	}

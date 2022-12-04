@@ -19,13 +19,13 @@ HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDes
 	uint16 system_shutdowns_count = 0;
 
 	// Initializing the Platform system.
-	PlatformSpecification platform_spec = {};
+	PlatformDescription platform_desc = {};
 #if HC_CONFIGURATION_SHIPPING
-	platform_spec.is_console_attached = false;
+	platform_desc.is_console_attached = false;
 #else
-	platform_spec.is_console_attached = true;
+	platform_desc.is_console_attached = true;
 #endif
-	if (!Platform::initialize(platform_spec))
+	if (!Platform::initialize(platform_desc))
 	{
 		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
@@ -36,9 +36,9 @@ HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDes
 	system_shutdowns[system_shutdowns_count++] = Platform::shutdown;
 
 	// Initializing the Memory system.
-	MemorySpecification memory_spec = {};
-	memory_spec.should_initialize_tracker = true;
-	if (!Memory::initialize(memory_spec))
+	MemoryDescription memory_desc = {};
+	memory_desc.should_initialize_tracker = true;
+	if (!Memory::initialize(memory_desc))
 	{
 		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
@@ -50,8 +50,8 @@ HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDes
 
 #if HC_ENABLE_PROFILING
 	// Initializing the Performance Profiling Tool.
-	ProfilerSpecification profiler_spec = {};
-	if (!Profiler::initializer(profiler_spec))
+	ProfilerDescription profiler_desc = {};
+	if (!Profiler::initializer(profiler_desc))
 	{
 		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
@@ -63,8 +63,8 @@ HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDes
 #endif // HC_ENABLE_PROFILING
 
 	// Initializing the Logging system.
-	LoggerSpecification logger_spec = {};
-	if (!Logger::initialize(logger_spec))
+	LoggerDescription logger_desc = {};
+	if (!Logger::initialize(logger_desc))
 	{
 		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{

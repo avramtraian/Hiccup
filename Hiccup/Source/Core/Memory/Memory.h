@@ -30,10 +30,10 @@ namespace HC
 
 /**
  *----------------------------------------------------------------
- * Memory System Specification.
+ * Memory System Description.
  *----------------------------------------------------------------
  */
-struct MemorySpecification
+struct MemoryDescription
 {
 	// Whether or not to initialize the tracker. This flag is ignored when
 	//   'HC_ENABLE_MEMORY_TRACKING' is set to 0.
@@ -49,7 +49,7 @@ struct MemorySpecification
 class Memory
 {
 public:
-	static bool initialize(const MemorySpecification& specification);
+	static bool initialize(const MemoryDescription& description);
 	static void shutdown();
 
 public:

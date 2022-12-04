@@ -12,16 +12,19 @@ namespace HC
 
 struct ProfilerData
 {
-	ProfilerSpecification   specification = {};
-	uint64                  frame_index   = 0;
-	bool                    is_in_frame   = false;
+	ProfilerDescription   description;
+	uint64                frame_index;
+	bool                  is_in_frame;
 };
 static_internal ProfilerData* s_profiler_data = nullptr;
 
-bool Profiler::initializer(const ProfilerSpecification& specification)
+bool Profiler::initializer(const ProfilerDescription& description)
 {
 	s_profiler_data = hc_new ProfilerData();
-	s_profiler_data->specification = specification;
+
+	s_profiler_data->description = description;
+	s_profiler_data->frame_index = 0;
+	s_profiler_data->is_in_frame = false;
 
 	return true;
 }

@@ -9,10 +9,10 @@ namespace HC
 
 /**
  *----------------------------------------------------------------
- * Platform System Specification.
+ * Platform System Description.
  *----------------------------------------------------------------
  */
-struct PlatformSpecification
+struct PlatformDescription
 {
 	// Whether or not the console is attached.
 	bool is_console_attached;
@@ -76,7 +76,7 @@ public:
 	};
 
 public:
-	static bool initialize(const PlatformSpecification& specification);
+	static bool initialize(const PlatformDescription& description);
 	static void shutdown();
 
 public:

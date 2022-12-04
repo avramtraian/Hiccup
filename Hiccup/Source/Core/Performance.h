@@ -30,10 +30,10 @@ namespace HC
 
 /**
  *----------------------------------------------------------------
- * Hiccup Performance Profiler Tool Specification.
+ * Hiccup Performance Profiler Tool Description.
  *----------------------------------------------------------------
  */
-struct ProfilerSpecification
+struct ProfilerDescription
 {
 };
 
@@ -46,7 +46,7 @@ struct ProfilerSpecification
 class Profiler
 {
 public:
-	static bool initializer(const ProfilerSpecification& specification);
+	static bool initializer(const ProfilerDescription& description);
 	static void shutdown();
 
 	static void begin_frame();

@@ -12,19 +12,19 @@ namespace HC
 
 struct MemoryData
 {
-	MemorySpecification specification;
+	MemoryDescription description;
 };
 static_internal MemoryData* s_memory_data = nullptr;
 
-bool Memory::initialize(const MemorySpecification& specification)
+bool Memory::initialize(const MemoryDescription& description)
 {
 	s_memory_data = (MemoryData*)Platform::allocate_memory(sizeof(MemoryData));
 	new (s_memory_data) MemoryData();
 
-	s_memory_data->specification = specification;
+	s_memory_data->description = description;
 
 #if HC_ENABLE_MEMORY_TRACKING
-	if (s_memory_data->specification.should_initialize_tracker)
+	if (s_memory_data->description.should_initialize_tracker)
 	{
 		return Tracker::initialize();
 	}
