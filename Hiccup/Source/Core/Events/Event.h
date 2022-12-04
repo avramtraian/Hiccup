@@ -27,6 +27,7 @@ class Event
 protected:
 	Event(EventType event_type)
 		: m_event_type(event_type)
+		, m_is_handled(false)
 	{}
 
 public:
