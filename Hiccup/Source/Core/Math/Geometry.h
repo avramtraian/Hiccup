@@ -1261,10 +1261,10 @@ struct RayT
 {
 public:
 	// The ray's origin.
-	Vector3T<T> Origin;
+	Vector3T<T> origin;
 
 	// The ray's direction.
-	Vector3T<T> Direction;
+	Vector3T<T> direction;
 
 public:
 	/**
@@ -1295,8 +1295,8 @@ using Ray = Rayf;
 
 template<typename T>
 ALWAYS_INLINE RayT<T>::RayT()
-	: Origin()
-	, Direction()
+	: origin()
+	, direction()
 {}
 
 // Ray Implementation
@@ -1314,10 +1314,10 @@ struct AABB2T
 {
 public:
 	// The upper bound point.
-	Vector2T<T> MinBound;
+	Vector2T<T> min_bound;
 
 	// The lower bound point.
-	Vector2T<T> MaxBound;
+	Vector2T<T> max_bound;
 
 public:
 	/**
@@ -1326,7 +1326,7 @@ public:
 	ALWAYS_INLINE AABB2T();
 
 public:
-	ALWAYS_INLINE bool ContainsPoint(const Vector2T<T>& point) const;
+	ALWAYS_INLINE bool contains_point(const Vector2T<T>& point) const;
 };
 
 using AABB2f = AABB2T<float32>;
@@ -1351,10 +1351,10 @@ struct AABB3T
 {
 public:
 	// The upper bound point.
-	Vector3T<T> MinBound;
+	Vector3T<T> min_bound;
 
 	// The lower bound point.
-	Vector3T<T> MaxBound;
+	Vector3T<T> max_bound;
 
 public:
 	/**
@@ -1363,7 +1363,7 @@ public:
 	ALWAYS_INLINE AABB3T();
 
 public:
-	ALWAYS_INLINE bool ContainsPoint(const Vector3T<T>& point) const;
+	ALWAYS_INLINE bool contains_point(const Vector3T<T>& point) const;
 };
 
 using AABB3f    = AABB3T<float32>;
@@ -1380,16 +1380,16 @@ using AABB3     = AABB3f;
 
 template<typename T>
 ALWAYS_INLINE AABB2T<T>::AABB2T()
-	: MinBound(T(+1))
-	, MaxBound(T(-1))
+	: min_bound(T(+1))
+	, max_bound(T(-1))
 {}
 
 template<typename T>
-ALWAYS_INLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
+ALWAYS_INLINE bool AABB2T<T>::contains_point(const Vector2T<T>& point) const
 {
 	return
-		MinBound.x <= point.x && point.x <= MaxBound.x &&
-		MinBound.y <= point.y && point.y <= MaxBound.y;
+		min_bound.x <= point.x && point.x <= max_bound.x &&
+		min_bound.y <= point.y && point.y <= max_bound.y;
 }
 
 // AABB2 Implementation
@@ -1399,17 +1399,17 @@ ALWAYS_INLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
 
 template<typename T>
 ALWAYS_INLINE AABB3T<T>::AABB3T()
-	: MinBound(T(+1))
-	, MaxBound(T(-1))
+	: min_bound(T(+1))
+	, max_bound(T(-1))
 {}
 
 template<typename T>
-ALWAYS_INLINE bool AABB3T<T>::ContainsPoint(const Vector3T<T>& point) const
+ALWAYS_INLINE bool AABB3T<T>::contains_point(const Vector3T<T>& point) const
 {
 	return
-		MinBound.x <= point.x && point.x <= MaxBound.x &&
-		MinBound.y <= point.y && point.y <= MaxBound.y &&
-		MinBound.z <= point.z && point.z <= MaxBound.z;
+		min_bound.x <= point.x && point.x <= max_bound.x &&
+		min_bound.y <= point.y && point.y <= max_bound.y &&
+		min_bound.z <= point.z && point.z <= max_bound.z;
 }
 
 // AABB3 Implementation
