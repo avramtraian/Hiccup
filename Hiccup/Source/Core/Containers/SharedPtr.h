@@ -288,7 +288,7 @@ void SharedPtr<T>::Release()
 
 	if ((--(m_Pointer->__m_ReferenceCount)) == 0)
 	{
-		HcDelete m_Pointer;
+		hc_delete m_Pointer;
 	}
 
 	m_Pointer = nullptr;

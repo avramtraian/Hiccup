@@ -64,16 +64,16 @@ public:
 
 public:
 	/** @return Pointer to the array's memory block. */
-	ALWAYS_INLINE T* Data() const;
+	ALWAYS_INLINE T* data() const;
 
 	/** @return The number of elements that are currently stored in the container. */
-	ALWAYS_INLINE usize Size() const;
+	ALWAYS_INLINE usize size() const;
 
 	/** @return The capacity (in elements) of the array's memory block. */
-	ALWAYS_INLINE usize Capacity() const;
+	ALWAYS_INLINE usize capacity() const;
 
 	/** @return True if the container has no elements stored; False otherwise. */
-	ALWAYS_INLINE bool IsEmpty() const;
+	ALWAYS_INLINE bool is_empty() const;
 
 public:
 	/**
@@ -102,7 +102,7 @@ public:
 	 * 
 	 * @return Reference to the element stored at the specified index.
 	 */
-	ALWAYS_INLINE T& At(usize index);
+	ALWAYS_INLINE T& at(usize index);
 
 	/**
 	 * Gets the element stored at the specified index.
@@ -112,19 +112,19 @@ public:
 	 *
 	 * @return Reference to the element stored at the specified index.
 	 */
-	ALWAYS_INLINE const T& At(usize index) const;
+	ALWAYS_INLINE const T& at(usize index) const;
 
 	/** @return The first element in the array. */
-	ALWAYS_INLINE T& Front();
+	ALWAYS_INLINE T& front();
 
 	/** @return The first element in the array. */
-	ALWAYS_INLINE const T& Front() const;
+	ALWAYS_INLINE const T& front() const;
 
 	/** @return The last element in the array. */
-	ALWAYS_INLINE T& Back();
+	ALWAYS_INLINE T& back();
 
 	/** @return The last element in the array. */
-	ALWAYS_INLINE const T& Back() const;
+	ALWAYS_INLINE const T& back() const;
 
 public:
 	/**
@@ -135,7 +135,7 @@ public:
 	 * 
 	 * @return Reference to the new element (that is stored in the array).
 	 */
-	T& Add(const T& element);
+	T& add(const T& element);
 
 	/**
 	 * Adds an element to the container.
@@ -146,7 +146,7 @@ public:
 	 * 
 	 * @return Reference to the new element (that is stored in the array).
 	 */
-	T& Add(T&& element);
+	T& add(T&& element);
 
 	/**
 	 * Adds an element to the container.
@@ -157,7 +157,7 @@ public:
 	 * @return Reference to the newly created element.
 	 */
 	template<typename... Args>
-	T& EmplaceBack(Args&&... args);
+	T& emplace_back(Args&&... args);
 
 	/**
 	 * Adds an element to the container.
@@ -165,7 +165,7 @@ public:
 	 * 
 	 * @return Reference to the newly created element.
 	 */
-	T& AddDefaulted();
+	T& add_defaulted();
 
 	/**
 	 * Adds elements to the container.
@@ -175,7 +175,7 @@ public:
 	 * 
 	 * @return The index of the first added element.
 	 */
-	usize AddDefaulted(usize count);
+	usize add_defaulted(usize count);
 
 	/**
 	 * Adds an element to the container.
@@ -183,7 +183,7 @@ public:
 	 * 
 	 * @return The index of the added element.
 	 */
-	usize AddZeroed();
+	usize add_zeroed();
 
 	/**
 	 * Adds elements to the container.
@@ -193,7 +193,7 @@ public:
 	 * 
 	 * @return The index of the first added element.
 	 */
-	usize AddZeroed(usize count);
+	usize add_zeroed(usize count);
 
 	/**
 	 * Adds an element to the container.
@@ -201,7 +201,7 @@ public:
 	 * 
 	 * @return The index of the added element.
 	 */
-	usize AddUninitialized();
+	usize add_uninitialized();
 
 	/**
 	 * Adds elements to the container.
@@ -211,7 +211,7 @@ public:
 	 * 
 	 * @return The index of the first added element.
 	 */
-	usize AddUninitialized(usize count);
+	usize add_uninitialized(usize count);
 
 public:
 	/**
@@ -219,151 +219,151 @@ public:
 	 * If the new size is greater than the old size, the new elements are initialized
 	 *   with their default constructor.
 	 * 
-	 * @param newSize The array's new size.
+	 * @param new_size The array's new size.
 	 */
-	void SetSizeDefaulted(usize newSize);
+	void set_size_defaulted(usize new_size);
 
 	/**
 	 * Resizes the array.
 	 * If the new size is greater than the old size, the new elements are initialized
 	 *   by setting their memory to zero.
 	 * 
-	 * @param newSize The array's new size.
+	 * @param new_size The array's new size.
 	 */
-	void SetSizeZeroed(usize newSize);
+	void set_size_zeroed(usize new_size);
 
 	/**
 	 * Resizes the array.
 	 * If the new size is greater than the old size, the new elements are not
 	 *   initialized in any way.
 	 * 
-	 * @param newSize The array's new size.
+	 * @param new_size The array's new size.
 	 */
-	void SetSizeUninitialized(usize newSize);
+	void set_size_uninitialized(usize new_size);
 
 	/**
 	 * Resizes the array by just setting its size to the new value.
 	 * This function can easily be a source of bugs.
 	 * 
-	 * @param newSize The array's new size.
+	 * @param new_size The array's new size.
 	 */
-	void SetSizeInternal(usize newSize);
+	void set_size_internal(usize new_size);
 
 	/**
 	 * Sets the array's capacity to the specified value, by reallocating the array's memory buffer.
 	 * 
-	 * @param newCapacity The array's memory buffer's new capacity.
+	 * @param new_capacity The array's memory buffer's new capacity.
 	 */
-	void SetCapacity(usize newCapacity);
+	void set_capacity(usize new_capacity);
 
 	/**
 	 * Clears the array. It doesn't shrink the memory block.
 	 */
-	void Clear();
+	void clear();
 
 private:
 	// Checks whether or not the container can store an additional number of elements, without reallocating.
-	ALWAYS_INLINE bool ShouldGrow(usize requiredAdditionalSize) const;
+	ALWAYS_INLINE bool should_grow(usize required_additional_size) const;
 
 	/** @return The array's natural growth. */
-	ALWAYS_INLINE usize NextCapacity() const;
+	ALWAYS_INLINE usize calculate_growth() const;
 
 	/** @return Whether the array's natural growth, or the minimum required size. */
-	ALWAYS_INLINE usize NextCapacity(usize requiredAdditionalSize) const;
+	ALWAYS_INLINE usize calculate_growth(usize required_additional_size) const;
 
 	/**
 	 * ReAllocates the memory block. The new block can be both bigger and smaller.
 	 * All the elements are moved into the new memory block.
 	 * 
-	 * @param newCapacity The capacity of the new memory block.
+	 * @param new_capacity The capacity of the new memory block.
 	 */
-	void ReAllocate(usize newCapacity);
+	void re_allocate(usize new_capacity);
 
 	/**
 	 * ReAllocates the memory block. The new block can be both bigger and smaller.
 	 * The elements are not transfered to the new memory block.
 	 *
-	 * @param newCapacity The capacity of the new memory block.
+	 * @param new_capacity The capacity of the new memory block.
 	 */
-	void ReAllocateNoCopy(usize newCapacity);
+	void re_allocate_no_copy(usize new_capacity);
 
 	/**
 	 * Deletes the memory block.
 	 */
-	void DeleteData();
+	void release_memory();
 
 private:
 	// Pointer to the memory block that holds the array's elements.
-	T* m_Data;
+	T* m_data;
 
 	// The capacity (in elements) of the memory block.
-	usize m_Capacity;
+	usize m_capacity;
 
 	// The number of valid elements currently stored in the array.
-	usize m_Size;
+	usize m_size;
 
 	// The allocator instance used to perform all memory allocations/deallocations.
-	AllocatorType m_AllocatorInstance;
+	AllocatorType m_allocator_instance;
 };
 
 //////////////// ARRAY IMPLEMENTATION ////////////////
 
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>::Array()
-	: m_Data(nullptr)
-	, m_Capacity(0)
-	, m_Size(0)
+	: m_data(nullptr)
+	, m_capacity(0)
+	, m_size(0)
 {}
 
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>::Array(const Array<T, AllocatorType>& other)
-	: m_Data(nullptr)
-	, m_Capacity(0)
-	, m_Size(0)
+	: m_data(nullptr)
+	, m_capacity(0)
+	, m_size(0)
 {
-	ReAllocateNoCopy(other.m_Size);
-	m_Size = other.m_Size;
+	re_allocate_no_copy(other.m_size);
+	m_size = other.m_size;
 
-	for (usize i = 0; i < m_Size; ++i)
+	for (usize i = 0; i < m_size; ++i)
 	{
-		new (m_Data + i) T(other.m_Data[i]);
+		new (m_data + i) T(other.m_data[i]);
 	}
 }
 
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>::Array(Array<T, AllocatorType>&& other) noexcept
-	: m_Data(other.m_Data)
-	, m_Capacity(other.m_Capacity)
-	, m_Size(other.m_Size)
+	: m_data(other.m_data)
+	, m_capacity(other.m_capacity)
+	, m_size(other.m_size)
 {
-	other.m_Data = nullptr;
-	other.m_Capacity = 0;
-	other.m_Size = 0;
+	other.m_data = nullptr;
+	other.m_capacity = 0;
+	other.m_size = 0;
 }
 
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>::~Array()
 {
-	Clear();
-	DeleteData();
+	clear();
+	release_memory();
 }
 
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>& Array<T, AllocatorType>::operator=(const Array<T, AllocatorType>& other)
 {
-	if (other.m_Size > m_Capacity)
+	if (other.m_size > m_capacity)
 	{
-		ReAllocateNoCopy(other.m_Size);
+		re_allocate_no_copy(other.m_size);
 	}
 	else
 	{
-		Clear();
+		clear();
 	}
 
-	m_Size = other.m_Size;
-	for (usize i = 0; i < m_Size; ++i)
+	m_size = other.m_size;
+	for (usize i = 0; i < m_size; ++i)
 	{
-		new (m_Data + i) T(other.m_Data[i]);
+		new (m_data + i) T(other.m_data[i]);
 	}
 
 	return *this;
@@ -372,351 +372,351 @@ Array<T, AllocatorType>& Array<T, AllocatorType>::operator=(const Array<T, Alloc
 template<typename T, typename AllocatorType>
 Array<T, AllocatorType>& Array<T, AllocatorType>::operator=(Array<T, AllocatorType>&& other) noexcept
 {
-	Clear();
+	clear();
 
-	T* tempData = m_Data;
-	usize tempCapacity = m_Capacity;
+	T* temp_data = m_data;
+	usize temp_capacity = m_capacity;
 
-	m_Data = other.m_Data;
-	m_Capacity = other.m_Capacity;
-	m_Size = other.m_Size;
+	m_data = other.m_data;
+	m_capacity = other.m_capacity;
+	m_size = other.m_size;
 
-	other.m_Data = tempData;
-	other.m_Capacity = tempCapacity;
-	other.m_Size = 0;
+	other.m_data = temp_data;
+	other.m_capacity = temp_capacity;
+	other.m_size = 0;
 
 	return *this;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE T* Array<T, AllocatorType>::Data() const
+ALWAYS_INLINE T* Array<T, AllocatorType>::data() const
 {
-	return m_Data;
+	return m_data;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE usize Array<T, AllocatorType>::Size() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::size() const
 {
-	return m_Size;
+	return m_size;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE usize Array<T, AllocatorType>::Capacity() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::capacity() const
 {
-	return m_Capacity;
+	return m_capacity;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE bool Array<T, AllocatorType>::IsEmpty() const
+ALWAYS_INLINE bool Array<T, AllocatorType>::is_empty() const
 {
-	return (m_Size == 0);
+	return (m_size == 0);
 }
 
 template<typename T, typename AllocatorType>
 ALWAYS_INLINE T& Array<T, AllocatorType>::operator[](usize index)
 {
-	HC_ASSERT(index < m_Size); // Index out of range!
-	return m_Data[index];
+	HC_ASSERT(index < m_size); // Index out of range!
+	return m_data[index];
 }
 
 template<typename T, typename AllocatorType>
 ALWAYS_INLINE const T& Array<T, AllocatorType>::operator[](usize index) const
 {
-	HC_ASSERT(index < m_Size); // Index out of range!
-	return m_Data[index];
+	HC_ASSERT(index < m_size); // Index out of range!
+	return m_data[index];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE T& Array<T, AllocatorType>::At(usize index)
+ALWAYS_INLINE T& Array<T, AllocatorType>::at(usize index)
 {
-	HC_ASSERT(index < m_Size); // Index out of range!
-	return m_Data[index];
+	HC_ASSERT(index < m_size); // Index out of range!
+	return m_data[index];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE const T& Array<T, AllocatorType>::At(usize index) const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::at(usize index) const
 {
-	HC_ASSERT(index < m_Size); // Index out of range!
-	return m_Data[index];
+	HC_ASSERT(index < m_size); // Index out of range!
+	return m_data[index];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE T& Array<T, AllocatorType>::Front()
+ALWAYS_INLINE T& Array<T, AllocatorType>::front()
 {
-	HC_ASSERT(m_Size > 0); // The array is empty!
-	return m_Data[0];
+	HC_ASSERT(m_size > 0); // The array is empty!
+	return m_data[0];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE const T& Array<T, AllocatorType>::Front() const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::front() const
 {
-	HC_ASSERT(m_Size > 0); // The array is empty!
-	return m_Data[0];
+	HC_ASSERT(m_size > 0); // The array is empty!
+	return m_data[0];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE T& Array<T, AllocatorType>::Back()
+ALWAYS_INLINE T& Array<T, AllocatorType>::back()
 {
-	HC_ASSERT(m_Size > 0); // The array is empty!
-	return m_Data[m_Size - 1];
+	HC_ASSERT(m_size > 0); // The array is empty!
+	return m_data[m_size - 1];
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE const T& Array<T, AllocatorType>::Back() const
+ALWAYS_INLINE const T& Array<T, AllocatorType>::back() const
 {
-	HC_ASSERT(m_Size > 0); // The array is empty!
-	return m_Data[m_Size - 1];
+	HC_ASSERT(m_size > 0); // The array is empty!
+	return m_data[m_size - 1];
 }
 
 template<typename T, typename AllocatorType>
-T& Array<T, AllocatorType>::Add(const T& element)
+T& Array<T, AllocatorType>::add(const T& element)
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	new (m_Data + m_Size) T(element);
-	return m_Data[m_Size++];
+	new (m_data + m_size) T(element);
+	return m_data[m_size++];
 }
 
 template<typename T, typename AllocatorType>
-T& Array<T, AllocatorType>::Add(T&& element)
+T& Array<T, AllocatorType>::add(T&& element)
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	new (m_Data + m_Size) T(Types::Move(element));
-	return m_Data[m_Size++];
+	new (m_data + m_size) T(Types::Move(element));
+	return m_data[m_size++];
 }
 
 template<typename T, typename AllocatorType>
 template<typename... Args>
-T& Array<T, AllocatorType>::EmplaceBack(Args&&... args)
+T& Array<T, AllocatorType>::emplace_back(Args&&... args)
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	new (m_Data + m_Size) T(Types::Forward<Args>(args)...);
-	return m_Data[m_Size++];
+	new (m_data + m_size) T(Types::Forward<Args>(args)...);
+	return m_data[m_size++];
 }
 
 template<typename T, typename AllocatorType>
-T& Array<T, AllocatorType>::AddDefaulted()
+T& Array<T, AllocatorType>::add_defaulted()
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	new (m_Data + m_Size) T();
-	return m_Data[m_Size++];
+	new (m_data + m_size) T();
+	return m_data[m_size++];
 }
 
 template<typename T, typename AllocatorType>
-usize Array<T, AllocatorType>::AddDefaulted(usize count)
+usize Array<T, AllocatorType>::add_defaulted(usize count)
 {
-	if (ShouldGrow(count))
+	if (should_grow(count))
 	{
-		ReAllocate(NextCapacity(count));
+		re_allocate(calculate_growth(count));
 	}
 
-	const usize oldSize = m_Size;
-	m_Size += count;
+	const usize old_size = m_size;
+	m_size += count;
 
-	for (usize i = oldSize; i < m_Size; ++i)
+	for (usize i = old_size; i < m_size; ++i)
 	{
-		new (m_Data + i) T();
+		new (m_data + i) T();
 	}
 
-	return oldSize;
+	return old_size;
 }
 
 template<typename T, typename AllocatorType>
-usize Array<T, AllocatorType>::AddZeroed()
+usize Array<T, AllocatorType>::add_zeroed()
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	Memory::Zero(m_Data + m_Size, sizeof(T));
-	return (m_Size++);
+	Memory::zero(m_data + m_size, sizeof(T));
+	return (m_size++);
 }
 
 template<typename T, typename AllocatorType>
-usize Array<T, AllocatorType>::AddZeroed(usize count)
+usize Array<T, AllocatorType>::add_zeroed(usize count)
 {
-	if (ShouldGrow(count))
+	if (should_grow(count))
 	{
-		ReAllocate(NextCapacity(count));
+		re_allocate(calculate_growth(count));
 	}
 
-	Memory::Zero(m_Data + m_Size, count * sizeof(T));
-	const usize oldSize = m_Size;
-	m_Size += count;
-	return oldSize;
+	Memory::zero(m_data + m_size, count * sizeof(T));
+	const usize old_size = m_size;
+	m_size += count;
+	return old_size;
 }
 
 template<typename T, typename AllocatorType>
-usize Array<T, AllocatorType>::AddUninitialized()
+usize Array<T, AllocatorType>::add_uninitialized()
 {
-	if (ShouldGrow(1))
+	if (should_grow(1))
 	{
-		ReAllocate(NextCapacity());
+		re_allocate(calculate_growth());
 	}
 
-	return (m_Size++);
+	return (m_size++);
 }
 
 template<typename T, typename AllocatorType>
-usize Array<T, AllocatorType>::AddUninitialized(usize count)
+usize Array<T, AllocatorType>::add_uninitialized(usize count)
 {
-	if (ShouldGrow(count))
+	if (should_grow(count))
 	{
-		ReAllocate(NextCapacity(count));
+		re_allocate(calculate_growth(count));
 	}
 
-	const usize oldSize = m_Size;
-	m_Size += count;
-	return oldSize;
+	const usize old_size = m_size;
+	m_size += count;
+	return old_size;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::SetSizeDefaulted(usize newSize)
+void Array<T, AllocatorType>::set_size_defaulted(usize new_size)
 {
-	usize oldSize = m_Size;
-	SetSizeUninitialized(newSize);
+	const usize old_size = m_size;
+	set_size_uninitialized(new_size);
 
-	for (usize index = oldSize; index < m_Size; ++index)
+	for (usize index = old_size; index < m_size; ++index)
 	{
-		new (m_Data + index) T();
-	}
-}
-
-template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::SetSizeZeroed(usize newSize)
-{
-	usize oldSize = m_Size;
-	SetSizeUninitialized(newSize);
-
-	if (m_Size > oldSize)
-	{
-		Memory::Zero(m_Data + oldSize, (m_Size - oldSize) * sizeof(T));
+		new (m_data + index) T();
 	}
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::SetSizeUninitialized(usize newSize)
+void Array<T, AllocatorType>::set_size_zeroed(usize new_size)
 {
-	if (newSize > m_Capacity)
+	const usize old_size = m_size;
+	set_size_uninitialized(new_size);
+
+	if (m_size > old_size)
 	{
-		ReAllocate(NextCapacity(newSize - m_Size));
+		Memory::zero(m_data + old_size, (m_size - old_size) * sizeof(T));
+	}
+}
+
+template<typename T, typename AllocatorType>
+void Array<T, AllocatorType>::set_size_uninitialized(usize new_size)
+{
+	if (new_size > m_capacity)
+	{
+		re_allocate(calculate_growth(new_size - m_size));
 	}
 	else
 	{
-		for (usize index = newSize; index < m_Size; ++index)
+		for (usize index = new_size; index < m_size; ++index)
 		{
-			m_Data[index].~T();
+			m_data[index].~T();
 		}
 	}
 
-	m_Size = newSize;
+	m_size = new_size;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::SetSizeInternal(usize newSize)
+void Array<T, AllocatorType>::set_size_internal(usize new_size)
 {
-	m_Size = newSize;
+	m_size = new_size;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::SetCapacity(usize newCapacity)
+void Array<T, AllocatorType>::set_capacity(usize new_capacity)
 {
-	if (newCapacity == m_Capacity)
+	if (new_capacity == m_capacity)
 	{
 		return;
 	}
 
-	ReAllocate(newCapacity);
+	re_allocate(new_capacity);
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::Clear()
+void Array<T, AllocatorType>::clear()
 {
-	for (usize i = 0; i < m_Size; ++i)
+	for (usize i = 0; i < m_size; ++i)
 	{
-		m_Data[i].~T();
+		m_data[i].~T();
 	}
-	m_Size = 0;
+	m_size = 0;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE bool Array<T, AllocatorType>::ShouldGrow(usize requiredAdditionalSize) const
+ALWAYS_INLINE bool Array<T, AllocatorType>::should_grow(usize required_additional_size) const
 {
-	return m_Size + requiredAdditionalSize > m_Capacity;
+	return m_size + required_additional_size > m_capacity;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE usize Array<T, AllocatorType>::NextCapacity() const
+ALWAYS_INLINE usize Array<T, AllocatorType>::calculate_growth() const
 {
-	return m_Capacity + m_Capacity / 2 + 1;
+	return m_capacity + m_capacity / 2 + 1;
 }
 
 template<typename T, typename AllocatorType>
-ALWAYS_INLINE usize Array<T, AllocatorType>::NextCapacity(usize requiredAdditionalSize) const
+ALWAYS_INLINE usize Array<T, AllocatorType>::calculate_growth(usize required_additional_size) const
 {
-	const usize nextCapacity = NextCapacity();
-	const usize requiredCapacity = m_Size + requiredAdditionalSize;
-	return nextCapacity > requiredCapacity ? nextCapacity : requiredCapacity;
+	const usize natural_growth = calculate_growth();
+	const usize requiredCapacity = m_size + required_additional_size;
+	return natural_growth > requiredCapacity ? natural_growth : requiredCapacity;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::ReAllocate(usize newCapacity)
+void Array<T, AllocatorType>::re_allocate(usize new_capacity)
 {
-	T* newBlock = (T*)m_AllocatorInstance.AllocateTaggedI(newCapacity * sizeof(T));
+	T* new_data = (T*)m_allocator_instance.allocate_tagged_i(new_capacity * sizeof(T));
 
-	if (m_Size > newCapacity)
+	if (m_size > new_capacity)
 	{
-		for (usize i = newCapacity; i < m_Size; ++i)
+		for (usize i = new_capacity; i < m_size; ++i)
 		{
-			m_Data[i].~T();
+			m_data[i].~T();
 		}
-		m_Size = newCapacity;
+		m_size = new_capacity;
 	}
 
-	for (usize i = 0; i < m_Size; ++i)
+	for (usize i = 0; i < m_size; ++i)
 	{
-		new (newBlock + i) T(Types::Move(m_Data[i]));
-		m_Data[i].~T();
+		new (new_data + i) T(Types::Move(m_data[i]));
+		m_data[i].~T();
 	}
 
-	DeleteData();
+	release_memory();
 
-	m_Data = newBlock;
-	m_Capacity = newCapacity;
+	m_data = new_data;
+	m_capacity = new_capacity;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::ReAllocateNoCopy(usize newCapacity)
+void Array<T, AllocatorType>::re_allocate_no_copy(usize new_capacity)
 {
-	T* newBlock = (T*)m_AllocatorInstance.AllocateTaggedI(newCapacity * sizeof(T));
+	T* new_data = (T*)m_allocator_instance.allocate_tagged_i(new_capacity * sizeof(T));
 
-	Clear();
-	DeleteData();
+	clear();
+	release_memory();
 
-	m_Data = newBlock;
-	m_Capacity = newCapacity;
+	m_data = new_data;
+	m_capacity = new_capacity;
 }
 
 template<typename T, typename AllocatorType>
-void Array<T, AllocatorType>::DeleteData()
+void Array<T, AllocatorType>::release_memory()
 {
-	m_AllocatorInstance.Free(m_Data, m_Capacity * sizeof(T));
+	m_allocator_instance.free(m_data, m_capacity * sizeof(T));
 }
 
 } // namespace HC

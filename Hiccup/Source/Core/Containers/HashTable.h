@@ -417,7 +417,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 			}
 
 			other.m_Size = 0;
-			Memory::Set(other.m_States, (uint8)BucketState::Empty, other.m_Capacity * sizeof(BucketState));
+			Memory::set(other.m_States, (uint8)BucketState::Empty, other.m_Capacity * sizeof(BucketState));
 		}
 	}
 }
@@ -426,7 +426,7 @@ template<typename KeyType, typename ValueType, typename AllocatorType, typename 
 HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::~HashTable()
 {
 	Clear();
-	m_AllocatorInstance.Free(m_KeyValues, m_Capacity * (sizeof(KeyValue) + sizeof(BucketState)));
+	m_AllocatorInstance.free(m_KeyValues, m_Capacity * (sizeof(KeyValue) + sizeof(BucketState)));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -493,7 +493,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 		}
 
 		other.m_Size = 0;
-		Memory::Set(other.m_States, (uint8)BucketState::Empty, other.m_Capacity * sizeof(BucketState));
+		Memory::set(other.m_States, (uint8)BucketState::Empty, other.m_Capacity * sizeof(BucketState));
 	}
 
 	return *this;
@@ -760,7 +760,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::Clear()
 {
 	if (m_Size == 0)
 	{
-		Memory::Set(m_States, (uint8)BucketState::Empty, m_Capacity * sizeof(BucketState));
+		Memory::set(m_States, (uint8)BucketState::Empty, m_Capacity * sizeof(BucketState));
 		return;
 	}
 
@@ -774,7 +774,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::Clear()
 	}
 
 	m_Size = 0;
-	Memory::Set(m_States, (uint8)BucketState::Empty, m_Capacity * sizeof(BucketState));
+	Memory::set(m_States, (uint8)BucketState::Empty, m_Capacity * sizeof(BucketState));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -850,12 +850,12 @@ ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Compara
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ReAllocate(usize newCapacity)
 {
-	void* newBlock = m_AllocatorInstance.AllocateTaggedI(newCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
+	void* newBlock = m_AllocatorInstance.allocate_tagged_i(newCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
 
 	KeyValue* newKeyValues = (KeyValue*)newBlock;
 	BucketState* newStates = (BucketState*)(newKeyValues + newCapacity);
 
-	Memory::Set(newStates, (uint8)BucketState::Empty, newCapacity * sizeof(BucketState));
+	Memory::set(newStates, (uint8)BucketState::Empty, newCapacity * sizeof(BucketState));
 
 	KeyValue* oldKeyValues = m_KeyValues;
 	BucketState* oldStates = m_States;
@@ -874,7 +874,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ReAllocat
 		}
 	}
 
-	m_AllocatorInstance.Free(oldKeyValues, oldCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
+	m_AllocatorInstance.free(oldKeyValues, oldCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -891,14 +891,14 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ReAllocat
 			}
 		}
 	}
-	m_AllocatorInstance.Free(m_KeyValues, m_Capacity * (sizeof(KeyValue) + sizeof(BucketState)));
+	m_AllocatorInstance.free(m_KeyValues, m_Capacity * (sizeof(KeyValue) + sizeof(BucketState)));
 
-	void* newBlock = m_AllocatorInstance.AllocateTaggedI(newCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
+	void* newBlock = m_AllocatorInstance.allocate_tagged_i(newCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
 
 	KeyValue* newKeyValues = (KeyValue*)newBlock;
 	BucketState* newStates = (BucketState*)(newKeyValues + newCapacity);
 
-	Memory::Set(newStates, BucketState::Empty, newCapacity * sizeof(BucketState));
+	Memory::set(newStates, BucketState::Empty, newCapacity * sizeof(BucketState));
 
 	m_KeyValues = newKeyValues;
 	m_States = newStates;

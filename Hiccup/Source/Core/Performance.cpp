@@ -20,7 +20,7 @@ static_internal ProfilerData* s_ProfilerData = nullptr;
 
 bool Profiler::Initialize(const ProfilerSpecification& specification)
 {
-	s_ProfilerData = HcNew ProfilerData();
+	s_ProfilerData = hc_new ProfilerData();
 	s_ProfilerData->Specification = specification;
 
 	return true;
@@ -28,7 +28,7 @@ bool Profiler::Initialize(const ProfilerSpecification& specification)
 
 void Profiler::Shutdown()
 {
-	HcDelete s_ProfilerData;
+	hc_delete s_ProfilerData;
 	s_ProfilerData = nullptr;
 }
 

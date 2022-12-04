@@ -37,8 +37,8 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 
 	// Initializing the Memory system.
 	MemorySpecification memorySpec = {};
-	memorySpec.ShouldInitializeTracker = true;
-	if (!Memory::Initialize(memorySpec))
+	memorySpec.should_initialize_tracker = true;
+	if (!Memory::initialize(memorySpec))
 	{
 		for (int32 i = systemShudownsCount - 1; i >= 0; --i)
 		{
@@ -46,7 +46,7 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 		}
 		return -2;
 	}
-	systemShutdowns[systemShudownsCount++] = Memory::Shutdown;
+	systemShutdowns[systemShudownsCount++] = Memory::shutdown;
 
 #if HC_ENABLE_PROFILING
 	// Initializing the Performance Profiling Tool.
@@ -77,7 +77,7 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 	do
 	{
 		// Creating the application.
-		Application* application = HcNew Application(appSpec);
+		Application* application = hc_new Application(appSpec);
 		if (!application)
 		{
 			HC_LOG_FATAL("Failed to create the application instance! Aborting...");
@@ -88,7 +88,7 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 		application->Run();
 
 		// Destroying the application.
-		HcDelete application;
+		hc_delete application;
 	}
 	while (ShouldRestartApplication());
 

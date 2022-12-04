@@ -52,7 +52,7 @@ void OnAssertFailed(const char* expression, const char* category, const char* fi
 	maxWidth = Math::Max(maxWidth, lineWidth);
 
 	char whitespace[512];
-	Memory::Set(whitespace, ' ', sizeof(whitespace));
+	Memory::set(whitespace, ' ', sizeof(whitespace));
 
 	// Header.
 	{
@@ -61,11 +61,11 @@ void OnAssertFailed(const char* expression, const char* category, const char* fi
 		uint32 rightPadding = totalPadding / 2 + totalPadding % 2;
 
 		char leftPaddingBuffer[256];
-		Memory::Set(leftPaddingBuffer, '-', sizeof(leftPaddingBuffer));
+		Memory::set(leftPaddingBuffer, '-', sizeof(leftPaddingBuffer));
 		leftPaddingBuffer[leftPadding] = 0;
 
 		char rightPaddingBuffer[256];
-		Memory::Set(rightPaddingBuffer, '-', sizeof(rightPaddingBuffer));
+		Memory::set(rightPaddingBuffer, '-', sizeof(rightPaddingBuffer));
 		rightPaddingBuffer[rightPadding] = 0;
 
 		HC_LOG_FATAL("+-%s%s%s-+", leftPaddingBuffer, titleBuffer, rightPaddingBuffer);
@@ -115,7 +115,7 @@ void OnAssertFailed(const char* expression, const char* category, const char* fi
 	// Footer.
 	{
 		char footerBuffer[512];
-		Memory::Set(footerBuffer, '-', sizeof(footerBuffer));
+		Memory::set(footerBuffer, '-', sizeof(footerBuffer));
 		footerBuffer[maxWidth] = 0;
 		HC_LOG_FATAL("+-%s-+", footerBuffer);
 	}

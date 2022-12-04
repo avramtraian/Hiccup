@@ -70,7 +70,7 @@ public:
 	ALWAYS_INLINE static Buffer Copy(Buffer source)
 	{
 		Buffer destination = Buffer(source.Size);
-		Memory::Copy(destination.Data, source.Data, source.Size);
+		Memory::copy(destination.Data, source.Data, source.Size);
 		return destination;
 	}
 
@@ -87,7 +87,7 @@ public:
 			Release();
 		}
 
-		Data = HcNew uint8[size];
+		Data = hc_new uint8[size];
 		Size = size;
 	}
 
@@ -96,7 +96,7 @@ public:
 	 */
 	ALWAYS_INLINE void Release()
 	{
-		HcDelete[] Data;
+		hc_delete[] Data;
 		Data = nullptr;
 		Size = 0;
 	}

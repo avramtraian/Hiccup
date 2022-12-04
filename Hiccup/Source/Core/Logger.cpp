@@ -58,7 +58,7 @@ static_internal LoggerData* s_LoggerData = nullptr;
 
 bool Logger::Initialize(const LoggerSpecification& specification)
 {
-	s_LoggerData = HcNew LoggerData();
+	s_LoggerData = hc_new LoggerData();
 
 	s_LoggerData->Specification = specification;
 
@@ -80,7 +80,7 @@ void Logger::Shutdown()
 	buffer.Size = s_LoggerData->FormatBuffer.Size + s_LoggerData->LogBuffer.Size;
 	buffer.Release();
 
-	HcDelete s_LoggerData;
+	hc_delete s_LoggerData;
 	s_LoggerData = nullptr;
 }
 

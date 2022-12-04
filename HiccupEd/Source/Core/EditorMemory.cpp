@@ -2,17 +2,17 @@
 
 #include "Core/Memory/Memory.h"
 
-void* operator new(size_t bytesCount)
+void* operator new(size_t bytes_count)
 {
-	return HC::Memory::Allocate(bytesCount);
+	return HC::Memory::allocate(bytes_count);
 }
 
-void* operator new(size_t bytesCount, const char* fileName, const char* functionName, HC::uint32 lineNumber)
+void* operator new(size_t bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number)
 {
-	return HC::Memory::AllocateTagged(bytesCount, fileName, functionName, lineNumber);
+	return HC::Memory::allocate_tagged(bytes_count, filename, function_sig, line_number);
 }
 
-void operator delete(void* memoryBlock)
+void operator delete(void* memory_block)
 {
-	HC::Memory::Free(memoryBlock);
+	HC::Memory::free(memory_block);
 }
