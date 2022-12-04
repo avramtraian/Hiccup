@@ -11,7 +11,7 @@
 namespace HC
 {
 
-HC_API int32 guarded_main(const ApplicationDescription& application_desc, char** cmd_args, uint32 cmd_args_count)
+HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDescription*), char** cmd_args, uint32 cmd_args_count)
 {
 	// Shutdown graph.
 	using PFN_Shutdown = void(*)(void);
@@ -76,7 +76,15 @@ HC_API int32 guarded_main(const ApplicationDescription& application_desc, char**
 
 	do
 	{
-		// Creating the application.
+		// Creating the application description.
+		ApplicationDescription application_desc = {};
+		if (!create_application_desc_callback || !create_application_desc_callback(&application_desc))
+		{
+			HC_LOG_FATAL("Failed to create the application description! Aborting...");
+			return -2;
+		}
+
+		// Creating the application instance.
 		Application* application = hc_new Application(application_desc);
 		if (!application)
 		{

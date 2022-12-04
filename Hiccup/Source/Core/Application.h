@@ -37,7 +37,7 @@ private:
 	HC_API static Application* s_instance;
 
 private:
-	ApplicationDescription m_specification;
+	ApplicationDescription m_description;
 	bool m_is_running = false;
 };
 

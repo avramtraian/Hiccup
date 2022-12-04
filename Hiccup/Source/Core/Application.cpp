@@ -19,7 +19,7 @@ bool should_restart_application()
 Application* Application::s_instance = nullptr;
 
 Application::Application(const ApplicationDescription& specification)
-	: m_specification(specification)
+	: m_description(specification)
 {
 	s_instance = this;
 }
@@ -56,9 +56,9 @@ void Application::on_event(Event& e)
 	dispatcher.Dispatch<KeyPressedEvent>(Application::on_key_pressed_event);
 	dispatcher.Dispatch<KeyReleasedEvent>(Application::on_key_released_event);
 
-	if (m_specification.on_event)
+	if (m_description.on_event)
 	{
-		m_specification.on_event(e);
+		m_description.on_event(e);
 	}
 }
 

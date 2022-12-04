@@ -6,7 +6,7 @@
 namespace HC
 {
 
-bool create_application(ApplicationDescription* out_application_desc)
+bool create_application_desc(ApplicationDescription* out_application_desc)
 {
 	return true;
 }
