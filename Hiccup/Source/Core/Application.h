@@ -7,7 +7,7 @@
 namespace HC
 {
 
-HC_API bool ShouldRestartApplication();
+HC_API bool should_restart_application();
 
 struct ApplicationSpecification
 {
@@ -17,21 +17,21 @@ struct ApplicationSpecification
 class Application
 {
 public:
-	HC_API static Application* Get() { return s_Instance; }
+	HC_API static Application* get() { return s_instance; }
 
 public:
 	Application(const ApplicationSpecification& specification);
 	~Application();
 
-	void Run();
-	void Close();
+	void run();
+	void close();
 
 private:
-	HC_API static Application* s_Instance;
+	HC_API static Application* s_instance;
 
 private:
-	ApplicationSpecification m_Specification;
-	bool m_IsRunning = false;
+	ApplicationSpecification m_specification;
+	bool m_is_running = false;
 };
 
 } // namespace HC

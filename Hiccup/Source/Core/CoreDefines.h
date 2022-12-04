@@ -112,9 +112,9 @@
 #define static_internal                 static
 #define static_persistent               static
 
-#define ArrayCount(ARRAY)               (sizeof(ARRAY) / sizeof(ARRAY[0]))
+#define array_count(ARRAY)              (sizeof(ARRAY) / sizeof(ARRAY[0]))
 
-#define Bit(X)                          (1 << (X))
+#define bit(X)                          (1 << (X))
 
 #define HC_LINE                         __LINE__
 #define HC_FILE                         __FILE__

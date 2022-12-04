@@ -18,7 +18,7 @@ static_internal MemoryData* s_memory_data = nullptr;
 
 bool Memory::initialize(const MemorySpecification& specification)
 {
-	s_memory_data = (MemoryData*)Platform::AllocateMemory(sizeof(MemoryData));
+	s_memory_data = (MemoryData*)Platform::allocate_memory(sizeof(MemoryData));
 	new (s_memory_data) MemoryData();
 
 	s_memory_data->specification = specification;
@@ -43,7 +43,7 @@ void Memory::shutdown()
 #endif // HC_ENABLE_MEMORY_TRACKING
 
 	s_memory_data->~MemoryData();
-	Platform::FreeMemory(s_memory_data);
+	Platform::free_memory(s_memory_data);
 	s_memory_data = nullptr;
 }
 
@@ -69,7 +69,7 @@ void* Memory::allocate_raw(usize bytes_count)
 		return nullptr;
 	}
 
-	return Platform::AllocateMemory(bytes_count);
+	return Platform::allocate_memory(bytes_count);
 }
 
 void* Memory::allocate(usize bytes_count)
@@ -108,7 +108,7 @@ void* Memory::allocate_tagged(usize bytes_count, const char* filename, const cha
 
 void Memory::free_raw(void* memory_block)
 {
-	Platform::FreeMemory(memory_block);
+	Platform::free_memory(memory_block);
 }
 
 void Memory::free(void* memory_block)
@@ -236,7 +236,7 @@ void Memory::Tracker::register_tagged_allocation(void* memory_block, usize bytes
 	s_tracker_data->allocated += bytes_count;
 	s_tracker_data->allocations_count++;
 
-	s_tracker_data->allocations_table.insert(memory_block, Types::Move(allocation));
+	s_tracker_data->allocations_table.insert(memory_block, Types::move(allocation));
 }
 
 void Memory::Tracker::register_deallocation(void* memory_block)

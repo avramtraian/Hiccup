@@ -12,155 +12,155 @@ namespace HC
 
 struct WindowsPlatformData
 {
-	PlatformSpecification Specification;
+	PlatformSpecification specification;
 
-	uint64 PerformanceTickFrequency;
-	uint64 InitializationNanoseconds;
+	uint64 performance_tick_frequency;
+	uint64 initialization_nanoseconds;
 
-	HANDLE ConsoleHandle;
-	Platform::ConsoleColor ConsoleForeground;
-	Platform::ConsoleColor ConsoleBackground;
+	HANDLE console_handle;
+	Platform::ConsoleColor console_foreground;
+	Platform::ConsoleColor console_background;
 };
-static_internal WindowsPlatformData* s_PlatformData = nullptr;
+static_internal WindowsPlatformData* s_platform_data = nullptr;
 
-bool Platform::Initialize(const PlatformSpecification& specification)
+bool Platform::initialize(const PlatformSpecification& specification)
 {
-	s_PlatformData = (WindowsPlatformData*)std::malloc(sizeof(WindowsPlatformData));
-	if (!s_PlatformData)
+	s_platform_data = (WindowsPlatformData*)std::malloc(sizeof(WindowsPlatformData));
+	if (!s_platform_data)
 	{
 		return false;
 	}
 
-	new (s_PlatformData) WindowsPlatformData();
+	new (s_platform_data) WindowsPlatformData();
 
-	s_PlatformData->Specification = specification;
+	s_platform_data->specification = specification;
 
-	LARGE_INTEGER performanceTickFrequency;
-	if (!QueryPerformanceFrequency(&performanceTickFrequency))
+	LARGE_INTEGER performance_tick_frequency;
+	if (!QueryPerformanceFrequency(&performance_tick_frequency))
 	{
 		return false;
 	}
-	s_PlatformData->PerformanceTickFrequency = performanceTickFrequency.QuadPart;
+	s_platform_data->performance_tick_frequency = performance_tick_frequency.QuadPart;
 
-	s_PlatformData->InitializationNanoseconds = GetNanoseconds();
+	s_platform_data->initialization_nanoseconds = get_nanoseconds();
 
-	if (s_PlatformData->Specification.IsConsoleAttached)
+	if (s_platform_data->specification.is_console_attached)
 	{
-		s_PlatformData->ConsoleHandle = GetStdHandle(STD_OUTPUT_HANDLE);
-		s_PlatformData->ConsoleForeground = ConsoleColor::MaxEnumValue;
-		s_PlatformData->ConsoleBackground = ConsoleColor::MaxEnumValue;
-		SetConsoleColor(ConsoleColor::LightGray, ConsoleColor::Black);
+		s_platform_data->console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+		s_platform_data->console_foreground = ConsoleColor::max_enum_value;
+		s_platform_data->console_background = ConsoleColor::max_enum_value;
+		set_console_color(ConsoleColor::light_gray, ConsoleColor::black);
 	}
 
 	return true;
 }
 
-void Platform::Shutdown()
+void Platform::shutdown()
 {
-	if (s_PlatformData->Specification.IsConsoleAttached)
+	if (s_platform_data->specification.is_console_attached)
 	{
-		SetConsoleColor(ConsoleColor::LightGray, ConsoleColor::Black);
+		set_console_color(ConsoleColor::light_gray, ConsoleColor::black);
 	}
 
-	s_PlatformData->~WindowsPlatformData();
-	std::free(s_PlatformData);
-	s_PlatformData = nullptr;
+	s_platform_data->~WindowsPlatformData();
+	std::free(s_platform_data);
+	s_platform_data = nullptr;
 }
 
-void* Platform::AllocateMemory(usize bytesCount)
+void* Platform::allocate_memory(usize bytes_count)
 {
-	return std::malloc(bytesCount);
+	return std::malloc(bytes_count);
 }
 
-void Platform::FreeMemory(void* memoryBlock)
+void Platform::free_memory(void* memory_block)
 {
-	std::free(memoryBlock);
+	std::free(memory_block);
 }
 
-uint64 Platform::GetPerformanceTickCount()
+uint64 Platform::get_performance_tick_count()
 {
-	LARGE_INTEGER performanceCounter;
-	QueryPerformanceCounter(&performanceCounter);
-	return performanceCounter.QuadPart;
+	LARGE_INTEGER performance_counter;
+	QueryPerformanceCounter(&performance_counter);
+	return performance_counter.QuadPart;
 }
 
-uint64 Platform::GetPerformanceTickFrequency()
+uint64 Platform::get_performance_tick_frequency()
 {
-	return s_PlatformData->PerformanceTickFrequency;
+	return s_platform_data->performance_tick_frequency;
 }
 
-uint64 Platform::GetNanoseconds()
+uint64 Platform::get_nanoseconds()
 {
-	const uint64 ticks = GetPerformanceTickCount();
-	const uint64 ticksFreq = s_PlatformData->PerformanceTickFrequency;
+	const uint64 ticks = get_performance_tick_count();
+	const uint64 ticks_freq = s_platform_data->performance_tick_frequency;
 
-	float64 nanoseconds = ((float64)ticks * 1e9) / (float64)ticksFreq;
+	const float64 nanoseconds = ((float64)ticks * 1e9) / (float64)ticks_freq;
 	return (uint64)nanoseconds;
 }
 
-uint64 Platform::GetNanosecondsSinceInitialization()
+uint64 Platform::get_nanoseconds_since_initialization()
 {
-	return GetNanoseconds() - s_PlatformData->InitializationNanoseconds;
+	return get_nanoseconds() - s_platform_data->initialization_nanoseconds;
 }
 
-void Platform::SetConsoleColor(ConsoleColor foreground, ConsoleColor background)
+void Platform::set_console_color(ConsoleColor foreground, ConsoleColor background)
 {
-	if (!s_PlatformData->Specification.IsConsoleAttached)
+	if (!s_platform_data->specification.is_console_attached)
 	{
 		return;
 	}
 	 
-	if (s_PlatformData->ConsoleForeground == foreground && s_PlatformData->ConsoleBackground == background)
+	if (s_platform_data->console_foreground == foreground && s_platform_data->console_background == background)
 	{
 		return;
 	}
 
-	s_PlatformData->ConsoleForeground = foreground;
-	s_PlatformData->ConsoleBackground = background;
+	s_platform_data->console_foreground = foreground;
+	s_platform_data->console_background = background;
 
-	const WORD consoleColor = (WORD)s_PlatformData->ConsoleForeground | ((WORD)s_PlatformData->ConsoleBackground << 4);
-	SetConsoleTextAttribute(s_PlatformData->ConsoleHandle, consoleColor);
+	const WORD console_color = (WORD)s_platform_data->console_foreground | ((WORD)s_platform_data->console_background << 4);
+	SetConsoleTextAttribute(s_platform_data->console_handle, console_color);
 }
 
-void Platform::WriteToConsole(const char* message, usize messageLength)
+void Platform::write_to_console(const char* message, usize message_length)
 {
-	if (!s_PlatformData->Specification.IsConsoleAttached)
+	if (!s_platform_data->specification.is_console_attached)
 	{
 		return;
 	}
 
-	WriteConsoleA(s_PlatformData->ConsoleHandle, message, (DWORD)messageLength, NULL, NULL);
+	WriteConsoleA(s_platform_data->console_handle, message, (DWORD)message_length, NULL, NULL);
 }
 
-void Platform::GetLocalSystemTime(SystemTime* outSystemTime)
+void Platform::get_local_system_time(SystemTime* out_system_time)
 {
 	SYSTEMTIME systemTime;
 	GetLocalTime(&systemTime);
 
-	outSystemTime->Year = systemTime.wYear;
-	outSystemTime->Month = systemTime.wMonth;
-	outSystemTime->Day = systemTime.wDay;
-	outSystemTime->Hour = systemTime.wHour;
-	outSystemTime->Second = systemTime.wSecond;
-	outSystemTime->Minute = systemTime.wMinute;
-	outSystemTime->Millisecond = systemTime.wMilliseconds;
+	out_system_time->year = systemTime.wYear;
+	out_system_time->month = systemTime.wMonth;
+	out_system_time->day = systemTime.wDay;
+	out_system_time->hour = systemTime.wHour;
+	out_system_time->second = systemTime.wSecond;
+	out_system_time->minute = systemTime.wMinute;
+	out_system_time->millisecond = systemTime.wMilliseconds;
 }
 
-void Platform::GetGlobalSystemTime(SystemTime* outSystemTime)
+void Platform::get_global_system_time(SystemTime* out_system_time)
 {
 	SYSTEMTIME systemTime;
 	GetSystemTime(&systemTime);
 
-	outSystemTime->Year = systemTime.wYear;
-	outSystemTime->Month = systemTime.wMonth;
-	outSystemTime->Day = systemTime.wDay;
-	outSystemTime->Hour = systemTime.wHour;
-	outSystemTime->Second = systemTime.wSecond;
-	outSystemTime->Minute = systemTime.wMinute;
-	outSystemTime->Millisecond = systemTime.wMilliseconds;
+	out_system_time->year = systemTime.wYear;
+	out_system_time->month = systemTime.wMonth;
+	out_system_time->day = systemTime.wDay;
+	out_system_time->hour = systemTime.wHour;
+	out_system_time->second = systemTime.wSecond;
+	out_system_time->minute = systemTime.wMinute;
+	out_system_time->millisecond = systemTime.wMilliseconds;
 }
 
-uint32 Platform::OpenPopup(const char* title, const char* message, uint32 flags)
+uint32 Platform::open_popup(const char* title, const char* message, uint32 flags)
 {
 	UINT type = 0;
 

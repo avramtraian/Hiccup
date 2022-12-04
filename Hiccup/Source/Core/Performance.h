@@ -13,8 +13,8 @@
 	#define HC_PROFILE_FUNCTION()                   HC_PROFILE_INTERNAL2(HC_FUNCTION_NAME, HC_LINE)
 	#define HC_PROFILE_SCOPE(SCOPE_NAME)            HC_PROFILE_INTERNAL2(SCOPE_NAME, HC_LINE)
 
-	#define HC_PROFILE_BEGIN_FRAME                  ::HC::Profiler::BeginFrame()
-	#define HC_PROFILE_END_FRAME                    ::HC::Profiler::EndFrame()
+	#define HC_PROFILE_BEGIN_FRAME                  ::HC::Profiler::begin_frame()
+	#define HC_PROFILE_END_FRAME                    ::HC::Profiler::end_frame()
 #else
 	#define HC_PROFILE_FUNCTION()
 	#define HC_PROFILE_SCOPE(SCOPE_NAME)
@@ -46,22 +46,22 @@ struct ProfilerSpecification
 class Profiler
 {
 public:
-	static bool Initialize(const ProfilerSpecification& specification);
-	static void Shutdown();
+	static bool initializer(const ProfilerSpecification& specification);
+	static void shutdown();
 
-	static void BeginFrame();
-	static void EndFrame();
+	static void begin_frame();
+	static void end_frame();
 
 public:
 	struct ScopedTimer
 	{
 	public:
-		ScopedTimer(const char* scopeName);
+		ScopedTimer(const char* scope_name);
 		~ScopedTimer();
 
 	private:
-		const char* m_Name;
-		uint64 m_EnteringTime;
+		const char* m_name;
+		uint64 m_entering_time;
 	};
 };
 

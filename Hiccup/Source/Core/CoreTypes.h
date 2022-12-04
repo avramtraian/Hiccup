@@ -97,13 +97,13 @@ public:
 
 public:
 	template<typename T>
-	ALWAYS_INLINE static constexpr RemoveReferenceType<T>&& Move(T&& object) noexcept
+	ALWAYS_INLINE static constexpr RemoveReferenceType<T>&& move(T&& object) noexcept
 	{
 		return static_cast<RemoveReferenceType<T>&&>(object);
 	}
 
 	template<typename T>
-	ALWAYS_INLINE static constexpr T&& Forward(RemoveReferenceType<T>& object) noexcept
+	ALWAYS_INLINE static constexpr T&& forward(RemoveReferenceType<T>& object) noexcept
 	{
 		return static_cast<T&&>(object);
 	}

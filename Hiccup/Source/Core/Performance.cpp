@@ -12,59 +12,59 @@ namespace HC
 
 struct ProfilerData
 {
-	ProfilerSpecification   Specification = {};
-	uint64                  FrameIndex    = 0;
-	bool                    InFrame       = false;
+	ProfilerSpecification   specification = {};
+	uint64                  frame_index   = 0;
+	bool                    is_in_frame   = false;
 };
-static_internal ProfilerData* s_ProfilerData = nullptr;
+static_internal ProfilerData* s_profiler_data = nullptr;
 
-bool Profiler::Initialize(const ProfilerSpecification& specification)
+bool Profiler::initializer(const ProfilerSpecification& specification)
 {
-	s_ProfilerData = hc_new ProfilerData();
-	s_ProfilerData->Specification = specification;
+	s_profiler_data = hc_new ProfilerData();
+	s_profiler_data->specification = specification;
 
 	return true;
 }
 
-void Profiler::Shutdown()
+void Profiler::shutdown()
 {
-	hc_delete s_ProfilerData;
-	s_ProfilerData = nullptr;
+	hc_delete s_profiler_data;
+	s_profiler_data = nullptr;
 }
 
-void Profiler::BeginFrame()
+void Profiler::begin_frame()
 {
-	if (s_ProfilerData->InFrame)
+	if (s_profiler_data->is_in_frame)
 	{
 		HC_LOG_WARN("Profiler::BeginFrame - Trying to begin a new frame, while another one is in flight!");
 		return;
 	}
 
-	s_ProfilerData->InFrame = true;
+	s_profiler_data->is_in_frame = true;
 }
 
-void Profiler::EndFrame()
+void Profiler::end_frame()
 {
-	if (!s_ProfilerData->InFrame)
+	if (!s_profiler_data->is_in_frame)
 	{
 		HC_LOG_WARN("Profiler::EndFrame - No frame is in flight.");
 		return;
 	}
 
-	s_ProfilerData->InFrame = false;
-	s_ProfilerData->FrameIndex++;
+	s_profiler_data->is_in_frame = false;
+	s_profiler_data->frame_index++;
 }
 
-Profiler::ScopedTimer::ScopedTimer(const char* scopeName)
-	: m_Name(scopeName)
+Profiler::ScopedTimer::ScopedTimer(const char* scope_name)
+	: m_name(scope_name)
 {
-	m_EnteringTime = Platform::GetNanosecondsSinceInitialization();
+	m_entering_time = Platform::get_nanoseconds_since_initialization();
 }
 
 Profiler::ScopedTimer::~ScopedTimer()
 {
-	const uint64 exitingTime = Platform::GetNanosecondsSinceInitialization();
-	const uint64 scopeTime = exitingTime - m_EnteringTime;
+	const uint64 exitingTime = Platform::get_nanoseconds_since_initialization();
+	const uint64 scopeTime = exitingTime - m_entering_time;
 
 	// s_ProfilerData->ScopedTimerRecords[m_Name] += scopeTime;
 }

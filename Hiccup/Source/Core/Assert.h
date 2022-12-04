@@ -25,7 +25,7 @@
 namespace HC
 {
 
-HC_API void OnAssertFailed(const char* expression, const char* category, const char* fileName, const char* functionName, uint32 lineNumber, const char* message, ...);
+HC_API void on_assert_failed(const char* expression, const char* category, const char* filename, const char* function_sig, uint32 line_number, const char* message, ...);
 
 } // namespace HC
 
@@ -33,7 +33,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_ASSERT(EXPRESSION)                   \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "ASSERT",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				nullptr                             \
@@ -44,7 +44,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_ASSERTF(EXPRESSION, ...)             \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "ASSERT",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				__VA_ARGS__                         \
@@ -60,7 +60,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_DASSERT(EXPRESSION)                  \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "ASSERT",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				nullptr                             \
@@ -71,7 +71,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_DASSERTF(EXPRESSION, ...)            \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "ASSERT",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				__VA_ARGS__                         \
@@ -87,7 +87,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_VERIFY(EXPRESSION)                   \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "VERIFY",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				nullptr                             \
@@ -98,7 +98,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_VERIFYF(EXPRESSION, ...)             \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "VERIFY",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				__VA_ARGS__                         \
@@ -114,7 +114,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_DVERIFY(EXPRESSION)                  \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "VERIFY",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				nullptr                             \
@@ -125,7 +125,7 @@ HC_API void OnAssertFailed(const char* expression, const char* category, const c
 	#define HC_DVERIFYF(EXPRESSION, ...)            \
 		if (!(EXPRESSION))                          \
 		{                                           \
-			::HC::OnAssertFailed(                   \
+			::HC::on_assert_failed(                 \
 				#EXPRESSION, "VERIFY",              \
 				HC_FILE, HC_FUNCTION_SIG, HC_LINE,  \
 				__VA_ARGS__                         \

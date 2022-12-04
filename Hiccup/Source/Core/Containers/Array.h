@@ -488,7 +488,7 @@ T& Array<T, AllocatorType>::add(T&& element)
 		re_allocate(calculate_growth());
 	}
 
-	new (m_data + m_size) T(Types::Move(element));
+	new (m_data + m_size) T(Types::move(element));
 	return m_data[m_size++];
 }
 
@@ -501,7 +501,7 @@ T& Array<T, AllocatorType>::emplace_back(Args&&... args)
 		re_allocate(calculate_growth());
 	}
 
-	new (m_data + m_size) T(Types::Forward<Args>(args)...);
+	new (m_data + m_size) T(Types::forward<Args>(args)...);
 	return m_data[m_size++];
 }
 
@@ -691,7 +691,7 @@ void Array<T, AllocatorType>::re_allocate(usize new_capacity)
 
 	for (usize i = 0; i < m_size; ++i)
 	{
-		new (new_data + i) T(Types::Move(m_data[i]));
+		new (new_data + i) T(Types::move(m_data[i]));
 		m_data[i].~T();
 	}
 

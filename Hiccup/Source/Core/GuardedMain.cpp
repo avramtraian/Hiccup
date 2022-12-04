@@ -11,73 +11,73 @@
 namespace HC
 {
 
-HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs, uint32 cmdArgsCount)
+HC_API int32 guarded_main(const ApplicationSpecification& application_spec, char** cmd_args, uint32 cmd_args_count)
 {
 	// Shutdown graph.
 	using PFN_Shutdown = void(*)(void);
-	PFN_Shutdown systemShutdowns[4] = {};
-	uint16 systemShudownsCount = 0;
+	PFN_Shutdown system_shutdowns[4] = {};
+	uint16 system_shutdowns_count = 0;
 
 	// Initializing the Platform system.
-	PlatformSpecification platformSpec = {};
+	PlatformSpecification platform_spec = {};
 #if HC_CONFIGURATION_SHIPPING
-	platformSpec.IsConsoleAttached = false;
+	platform_spec.is_console_attached = false;
 #else
-	platformSpec.IsConsoleAttached = true;
+	platform_spec.is_console_attached = true;
 #endif
-	if (!Platform::Initialize(platformSpec))
+	if (!Platform::initialize(platform_spec))
 	{
-		for (int32 i = systemShudownsCount - 1; i >= 0; --i)
+		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
-			systemShutdowns[i]();
+			system_shutdowns[i]();
 		}
 		return -2;
 	}
-	systemShutdowns[systemShudownsCount++] = Platform::Shutdown;
+	system_shutdowns[system_shutdowns_count++] = Platform::shutdown;
 
 	// Initializing the Memory system.
-	MemorySpecification memorySpec = {};
-	memorySpec.should_initialize_tracker = true;
-	if (!Memory::initialize(memorySpec))
+	MemorySpecification memory_spec = {};
+	memory_spec.should_initialize_tracker = true;
+	if (!Memory::initialize(memory_spec))
 	{
-		for (int32 i = systemShudownsCount - 1; i >= 0; --i)
+		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
-			systemShutdowns[i]();
+			system_shutdowns[i]();
 		}
 		return -2;
 	}
-	systemShutdowns[systemShudownsCount++] = Memory::shutdown;
+	system_shutdowns[system_shutdowns_count++] = Memory::shutdown;
 
 #if HC_ENABLE_PROFILING
 	// Initializing the Performance Profiling Tool.
-	ProfilerSpecification profilerSpec = {};
-	if (!Profiler::Initialize(profilerSpec))
+	ProfilerSpecification profiler_spec = {};
+	if (!Profiler::initializer(profiler_spec))
 	{
-		for (int32 i = systemShudownsCount - 1; i >= 0; --i)
+		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
-			systemShutdowns[i]();
+			system_shutdowns[i]();
 		}
 		return -2;
 	}
-	systemShutdowns[systemShudownsCount++] = Profiler::Shutdown;
+	system_shutdowns[system_shutdowns_count++] = Profiler::shutdown;
 #endif // HC_ENABLE_PROFILING
 
 	// Initializing the Logging system.
-	LoggerSpecification loggerSpec = {};
-	if (!Logger::Initialize(loggerSpec))
+	LoggerSpecification logger_spec = {};
+	if (!Logger::initialize(logger_spec))
 	{
-		for (int32 i = systemShudownsCount - 1; i >= 0; --i)
+		for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 		{
-			systemShutdowns[i]();
+			system_shutdowns[i]();
 		}
 		return -2;
 	}
-	systemShutdowns[systemShudownsCount++] = Logger::Shutdown;
+	system_shutdowns[system_shutdowns_count++] = Logger::shutdown;
 
 	do
 	{
 		// Creating the application.
-		Application* application = hc_new Application(appSpec);
+		Application* application = hc_new Application(application_spec);
 		if (!application)
 		{
 			HC_LOG_FATAL("Failed to create the application instance! Aborting...");
@@ -85,17 +85,17 @@ HC_API int32 GuardedMain(const ApplicationSpecification& appSpec, char** cmdArgs
 		}
 
 		// Running the application.
-		application->Run();
+		application->run();
 
 		// Destroying the application.
 		hc_delete application;
 	}
-	while (ShouldRestartApplication());
+	while (should_restart_application());
 
 	// Shutting down the core systems.
-	for (int32 i = systemShudownsCount - 1; i >= 0; --i)
+	for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
 	{
-		systemShutdowns[i]();
+		system_shutdowns[i]();
 	}
 
 	return 0;

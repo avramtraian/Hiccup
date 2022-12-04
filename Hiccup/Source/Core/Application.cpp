@@ -7,29 +7,29 @@ namespace HC
 
 static bool s_RestartApplication = false;
 
-bool ShouldRestartApplication()
+bool should_restart_application()
 {
 	return s_RestartApplication;
 }
 
-Application* Application::s_Instance = nullptr;
+Application* Application::s_instance = nullptr;
 
 Application::Application(const ApplicationSpecification& specification)
-	: m_Specification(specification)
+	: m_specification(specification)
 {
-	s_Instance = this;
+	s_instance = this;
 }
 
 Application::~Application()
 {
-	s_Instance = nullptr;
+	s_instance = nullptr;
 }
 
-void Application::Run()
+void Application::run()
 {
-	m_IsRunning = true;
+	m_is_running = true;
 
-	while (m_IsRunning)
+	while (m_is_running)
 	{
 		HC_PROFILE_BEGIN_FRAME;
 
@@ -38,12 +38,12 @@ void Application::Run()
 		HC_PROFILE_END_FRAME;
 	}
 
-	m_IsRunning = false;
+	m_is_running = false;
 }
 
-void Application::Close()
+void Application::close()
 {
-	m_IsRunning = false;
+	m_is_running = false;
 }
 
 } // namespace HC

@@ -411,7 +411,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 			if (other.m_states[i] == BucketState::occupied)
 			{
 				KeyValue& key_value = other.m_key_values[i];
-				internal_insert(Types::Move(key_value.key), Types::Move(key_value.value));
+				internal_insert(Types::move(key_value.key), Types::move(key_value.value));
 				key_value.key.~KeyType();
 				key_value.value.~ValueType();
 			}
@@ -486,7 +486,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 			if (other.m_states[i] == BucketState::occupied)
 			{
 				KeyValue& key_value = other.m_key_values[i];
-				internal_insert(Types::Move(key_value.key), Types::Move(key_value.value));
+				internal_insert(Types::move(key_value.key), Types::move(key_value.value));
 				key_value.key.~KeyType();
 				key_value.value.~ValueType();
 			}
@@ -554,7 +554,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ope
 
 	if (m_states[index] != BucketState::occupied)
 	{
-		new (&m_key_values[index].key)   KeyType(Types::Move(key));
+		new (&m_key_values[index].key)   KeyType(Types::move(key));
 		new (&m_key_values[index].value) ValueType();
 		m_states[index] = BucketState::occupied;
 		m_size++;
@@ -664,13 +664,13 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(key);
-	new (&m_key_values[index].value) ValueType(Types::Move(value));
+	new (&m_key_values[index].value) ValueType(Types::move(value));
 	m_states[index] = BucketState::occupied;
 	m_size++;
 
 #else
 
-	const usize index = internal_insert(key, Types::Move(value));
+	const usize index = internal_insert(key, Types::move(value));
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -690,14 +690,14 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 	const usize index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
 
-	new (&m_key_values[index].key)   KeyType(Types::Move(key));
+	new (&m_key_values[index].key)   KeyType(Types::move(key));
 	new (&m_key_values[index].value) ValueType(value);
 	m_states[index] = BucketState::occupied;
 	m_size++;
 
 #else
 
-	const usize index = internal_insert(Types::Move(key), value);
+	const usize index = internal_insert(Types::move(key), value);
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -717,14 +717,14 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 	const usize index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
 
-	new (&m_key_values[index].key)   KeyType(Types::Move(key));
-	new (&m_key_values[index].value) ValueType(Types::Move(value));
+	new (&m_key_values[index].key)   KeyType(Types::move(key));
+	new (&m_key_values[index].value) ValueType(Types::move(value));
 	m_states[index] = BucketState::occupied;
 	m_size++;
 
 #else
 
-	const usize index = internal_insert(Types::Move(key), Types::Move(value));
+	const usize index = internal_insert(Types::move(key), Types::move(value));
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -870,7 +870,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 	{
 		if (old_states[i] == BucketState::occupied)
 		{
-			internal_insert(Types::Move(old_key_values[i].key), Types::Move(old_key_values[i].value));
+			internal_insert(Types::move(old_key_values[i].key), Types::move(old_key_values[i].value));
 		}
 	}
 
@@ -974,7 +974,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
 	new (&m_key_values[index].key)   KeyType  (key);
-	new (&m_key_values[index].value) ValueType(Types::Move(value));
+	new (&m_key_values[index].value) ValueType(Types::move(value));
 	m_states[index] = BucketState::occupied;
 
 	m_size++;
@@ -986,7 +986,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 {
 	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
-	new (&m_key_values[index].key)   KeyType  (Types::Move(key));
+	new (&m_key_values[index].key)   KeyType  (Types::move(key));
 	new (&m_key_values[index].value) ValueType(value);
 	m_states[index] = BucketState::occupied;
 
@@ -999,8 +999,8 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 {
 	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
-	new (&m_key_values[index].key)   KeyType  (Types::Move(key));
-	new (&m_key_values[index].value) ValueType(Types::Move(value));
+	new (&m_key_values[index].key)   KeyType  (Types::move(key));
+	new (&m_key_values[index].value) ValueType(Types::move(value));
 	m_states[index] = BucketState::occupied;
 
 	m_size++;

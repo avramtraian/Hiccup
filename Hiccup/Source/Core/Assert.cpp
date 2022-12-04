@@ -12,120 +12,120 @@
 namespace HC
 {
 
-void OnAssertFailed(const char* expression, const char* category, const char* fileName, const char* functionName, uint32 lineNumber, const char* message, ...)
+void on_assert_failed(const char* expression, const char* category, const char* filename, const char* function_sig, uint32 line_number, const char* message, ...)
 {
-	char titleBuffer[32];
-	uint32 titleWidth = (uint32)sprintf_s(titleBuffer, " %s FAILED ", category);
+	char title_buffer[32];
+	uint32 title_width = (uint32)sprintf_s(title_buffer, " %s FAILED ", category);
 
-	char messageBuffer[512] = {};
-	uint32 messageWidth = 0;
+	char message_buffer[512] = {};
+	uint32 message_width = 0;
 
-	char formattedMessage[512] = {};
+	char formatted_message[512] = {};
 
 	if (message)
 	{
-		va_list argList;
-		va_start(argList, message);
-		vsprintf_s(formattedMessage, message, argList);
-		messageWidth = (uint32)sprintf_s(messageBuffer, "MESSAGE:    %s", formattedMessage);
-		va_end(argList);
+		va_list arg_list;
+		va_start(arg_list, message);
+		vsprintf_s(formatted_message, message, arg_list);
+		message_width = (uint32)sprintf_s(message_buffer, "MESSAGE:    %s", formatted_message);
+		va_end(arg_list);
 	}
 
-	char expressionBuffer[512];
-	uint32 expressionWidth = (uint32)sprintf_s(expressionBuffer, "EXPRESSION: %s", expression);
+	char expression_buffer[512];
+	uint32 expression_width = (uint32)sprintf_s(expression_buffer, "EXPRESSION: %s", expression);
 
-	char fileBuffer[512];
-	uint32 fileWidth = (uint32)sprintf_s(fileBuffer, "FILE:       %s", fileName);
+	char file_buffer[512];
+	uint32 file_width = (uint32)sprintf_s(file_buffer, "FILE:       %s", filename);
 
-	char functionBuffer[512];
-	uint32 functionWidth = (uint32)sprintf_s(functionBuffer, "FUNCTION:   %s", functionName);
+	char function_buffer[512];
+	uint32 function_width = (uint32)sprintf_s(function_buffer, "FUNCTION:   %s", function_sig);
 
-	char lineBuffer[512];
-	uint32 lineWidth = (uint32)sprintf_s(lineBuffer, "LINE:       %u", lineNumber);
+	char line_buffer[512];
+	uint32 line_width = (uint32)sprintf_s(line_buffer, "LINE:       %u", line_number);
 
-	uint32 maxWidth = 0;
-	maxWidth = Math::max(maxWidth, titleWidth);
-	maxWidth = Math::max(maxWidth, expressionWidth);
-	maxWidth = Math::max(maxWidth, messageWidth);
-	maxWidth = Math::max(maxWidth, fileWidth);
-	maxWidth = Math::max(maxWidth, functionWidth);
-	maxWidth = Math::max(maxWidth, lineWidth);
+	uint32 max_width = 0;
+	max_width = Math::max(max_width, title_width);
+	max_width = Math::max(max_width, expression_width);
+	max_width = Math::max(max_width, message_width);
+	max_width = Math::max(max_width, file_width);
+	max_width = Math::max(max_width, function_width);
+	max_width = Math::max(max_width, line_width);
 
 	char whitespace[512];
 	Memory::set(whitespace, ' ', sizeof(whitespace));
 
 	// Header.
 	{
-		uint32 totalPadding = maxWidth - titleWidth;
-		uint32 leftPadding = totalPadding / 2;
-		uint32 rightPadding = totalPadding / 2 + totalPadding % 2;
+		const uint32 total_padding = max_width - title_width;
+		const uint32 left_padding = total_padding / 2;
+		const uint32 right_padding = total_padding / 2 + total_padding % 2;
 
-		char leftPaddingBuffer[256];
-		Memory::set(leftPaddingBuffer, '-', sizeof(leftPaddingBuffer));
-		leftPaddingBuffer[leftPadding] = 0;
+		char left_padding_buffer[256];
+		Memory::set(left_padding_buffer, '-', sizeof(left_padding_buffer));
+		left_padding_buffer[left_padding] = 0;
 
-		char rightPaddingBuffer[256];
-		Memory::set(rightPaddingBuffer, '-', sizeof(rightPaddingBuffer));
-		rightPaddingBuffer[rightPadding] = 0;
+		char right_padding_buffer[256];
+		Memory::set(right_padding_buffer, '-', sizeof(right_padding_buffer));
+		right_padding_buffer[right_padding] = 0;
 
-		HC_LOG_FATAL("+-%s%s%s-+", leftPaddingBuffer, titleBuffer, rightPaddingBuffer);
+		HC_LOG_FATAL("+-%s%s%s-+", left_padding_buffer, title_buffer, right_padding_buffer);
 	}
 
 	// Expression.
 	{
-		uint32 whitespaceWidth = maxWidth - expressionWidth;
-		whitespace[whitespaceWidth] = 0;
-		HC_LOG_FATAL("| %s%s |", expressionBuffer, whitespace);
-		whitespace[whitespaceWidth] = ' ';
+		const uint32 whitespace_width = max_width - expression_width;
+		whitespace[whitespace_width] = 0;
+		HC_LOG_FATAL("| %s%s |", expression_buffer, whitespace);
+		whitespace[whitespace_width] = ' ';
 	}
 
 	// Message (if any).
 	if (message)
 	{
-		uint32 whitespaceWidth = maxWidth - messageWidth;
-		whitespace[whitespaceWidth] = 0;
-		HC_LOG_FATAL("| %s%s |", messageBuffer, whitespace);
-		whitespace[whitespaceWidth] = ' ';
+		const uint32 whitespace_width = max_width - message_width;
+		whitespace[whitespace_width] = 0;
+		HC_LOG_FATAL("| %s%s |", message_buffer, whitespace);
+		whitespace[whitespace_width] = ' ';
 	}
 
 	// File name.
 	{
-		uint32 whitespaceWidth = maxWidth - fileWidth;
-		whitespace[whitespaceWidth] = 0;
-		HC_LOG_FATAL("| %s%s |", fileBuffer, whitespace);
-		whitespace[whitespaceWidth] = ' ';
+		const uint32 whitespace_width = max_width - file_width;
+		whitespace[whitespace_width] = 0;
+		HC_LOG_FATAL("| %s%s |", file_buffer, whitespace);
+		whitespace[whitespace_width] = ' ';
 	}
 
 	// Function name.
 	{
-		uint32 whitespaceWidth = maxWidth - functionWidth;
-		whitespace[whitespaceWidth] = 0;
-		HC_LOG_FATAL("| %s%s |", functionBuffer, whitespace);
-		whitespace[whitespaceWidth] = ' ';
+		const uint32 whitespace_width = max_width - function_width;
+		whitespace[whitespace_width] = 0;
+		HC_LOG_FATAL("| %s%s |", function_buffer, whitespace);
+		whitespace[whitespace_width] = ' ';
 	}
 
 	// Line number.
 	{
-		uint32 whitespaceWidth = maxWidth - lineWidth;
-		whitespace[whitespaceWidth] = 0;
-		HC_LOG_FATAL("| %s%s |", lineBuffer, whitespace);
-		whitespace[whitespaceWidth] = ' ';
+		const uint32 whitespace_width = max_width - line_width;
+		whitespace[whitespace_width] = 0;
+		HC_LOG_FATAL("| %s%s |", line_buffer, whitespace);
+		whitespace[whitespace_width] = ' ';
 	}
 
 	// Footer.
 	{
-		char footerBuffer[512];
-		Memory::set(footerBuffer, '-', sizeof(footerBuffer));
-		footerBuffer[maxWidth] = 0;
-		HC_LOG_FATAL("+-%s-+", footerBuffer);
+		char footer_buffer[512];
+		Memory::set(footer_buffer, '-', sizeof(footer_buffer));
+		footer_buffer[max_width] = 0;
+		HC_LOG_FATAL("+-%s-+", footer_buffer);
 	}
 	
 	char buffer[2048];
 	sprintf_s(buffer, "Hiccup has crashed!\n\n[Expression]: %s\n\n[Message]: %s\n\n[File]: %s\n\n[Function]: %s\n\n[Line]: %u",
-		expression, formattedMessage,
-		fileName, functionName, lineNumber);
+		expression, formatted_message,
+		filename, function_sig, line_number);
 
-	Platform::OpenPopup("C++ Hiccup Assertion Failed", buffer, Platform::POPUP_FLAG_BUTTON_OK | Platform::POPUP_FLAG_ICON_ERROR);
+	Platform::open_popup("C++ Hiccup Assertion Failed", buffer, Platform::POPUP_FLAG_BUTTON_OK | Platform::POPUP_FLAG_ICON_ERROR);
 }
 
 } // namespace HC

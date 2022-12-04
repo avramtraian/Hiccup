@@ -15,9 +15,9 @@ namespace HC
 
 struct LoggerData
 {
-	LoggerSpecification Specification;
+	LoggerSpecification specification;
 
-	const char* TypeStrings[(uint8)Logger::LogType::MaxEnumValue] =
+	const char* log_type_strings[(uint8)Logger::LogType::max_enum_value] =
 	{
 		"[DEBUG]:",
 		"[TRACE]:",
@@ -27,68 +27,72 @@ struct LoggerData
 		"[FATAL]:"
 	};
 
-	Platform::ConsoleColor TypeColorFG[(uint8)Logger::LogType::MaxEnumValue] =
+	Platform::ConsoleColor log_type_color_FG[(uint8)Logger::LogType::max_enum_value] =
 	{
-		Platform::ConsoleColor::Purple,         // DEBUG
-		Platform::ConsoleColor::Gray,           // TRACE
-		Platform::ConsoleColor::Green,          // INFO
-		Platform::ConsoleColor::LightYellow,    // WARN
-		Platform::ConsoleColor::LightRed,       // ERROR
-		Platform::ConsoleColor::White           // FATAL
+		Platform::ConsoleColor::purple,         // DEBUG
+		Platform::ConsoleColor::gray,           // TRACE
+		Platform::ConsoleColor::green,          // INFO
+		Platform::ConsoleColor::light_yellow,   // WARN
+		Platform::ConsoleColor::light_red,      // ERROR
+		Platform::ConsoleColor::white           // FATAL
 	};
 
-	Platform::ConsoleColor TypeColorBG[(uint8)Logger::LogType::MaxEnumValue] =
+	Platform::ConsoleColor log_type_color_BG[(uint8)Logger::LogType::max_enum_value] =
 	{
-		Platform::ConsoleColor::Black,  // DEBUG
-		Platform::ConsoleColor::Black,  // TRACE
-		Platform::ConsoleColor::Black,  // INFO
-		Platform::ConsoleColor::Black,  // WARN
-		Platform::ConsoleColor::Black,  // ERROR
-		Platform::ConsoleColor::Red     // FATAL
+		Platform::ConsoleColor::black,  // DEBUG
+		Platform::ConsoleColor::black,  // TRACE
+		Platform::ConsoleColor::black,  // INFO
+		Platform::ConsoleColor::black,  // WARN
+		Platform::ConsoleColor::black,  // ERROR
+		Platform::ConsoleColor::red     // FATAL
 	};
 
 #if HC_ENABLE_LOGS
 
-	Buffer FormatBuffer;
-	Buffer LogBuffer;
+	Buffer format_buffer;
+	Buffer log_buffer;
 
 #endif // HC_ENABLE_LOGS
 };
-static_internal LoggerData* s_LoggerData = nullptr;
+static_internal LoggerData* s_logger_data = nullptr;
 
-bool Logger::Initialize(const LoggerSpecification& specification)
+bool Logger::initialize(const LoggerSpecification& specification)
 {
-	s_LoggerData = hc_new LoggerData();
+	s_logger_data = hc_new LoggerData();
 
-	s_LoggerData->Specification = specification;
+	s_logger_data->specification = specification;
 
 	Buffer buffer = Buffer(2 * kilobytes(8));
 
-	s_LoggerData->FormatBuffer.data = buffer.data;
-	s_LoggerData->FormatBuffer.size = buffer.size / 2;
+#if HC_ENABLE_LOGS
+	s_logger_data->format_buffer.data = buffer.data;
+	s_logger_data->format_buffer.size = buffer.size / 2;
 
-	s_LoggerData->LogBuffer.data = buffer.data + buffer.size / 2;
-	s_LoggerData->LogBuffer.size = buffer.size / 2;
+	s_logger_data->log_buffer.data = buffer.data + buffer.size / 2;
+	s_logger_data->log_buffer.size = buffer.size / 2;
+#endif
 
 	return true;
 }
 
-void Logger::Shutdown()
+void Logger::shutdown()
 {
 	Buffer buffer;
-	buffer.data = s_LoggerData->FormatBuffer.data;
-	buffer.size = s_LoggerData->FormatBuffer.size + s_LoggerData->LogBuffer.size;
+#if HC_ENABLE_LOGS
+	buffer.data = s_logger_data->format_buffer.data;
+	buffer.size = s_logger_data->format_buffer.size + s_logger_data->log_buffer.size;
+#endif
 	buffer.release();
 
-	hc_delete s_LoggerData;
-	s_LoggerData = nullptr;
+	hc_delete s_logger_data;
+	s_logger_data = nullptr;
 }
 
 #if HC_ENABLE_LOGS
 
-void Logger::Log(LogType type, const char* tag, const char* message, ...)
+void Logger::log(LogType type, const char* tag, const char* message, ...)
 {
-	if (!s_LoggerData)
+	if (!s_logger_data)
 	{
 		return;
 	}
@@ -96,27 +100,27 @@ void Logger::Log(LogType type, const char* tag, const char* message, ...)
 	va_list argList;
 	va_start(argList, message);
 
-	vsprintf_s(s_LoggerData->FormatBuffer.as<char>(), s_LoggerData->FormatBuffer.size, message, argList);
+	vsprintf_s(s_logger_data->format_buffer.as<char>(), s_logger_data->format_buffer.size, message, argList);
 
 	Platform::SystemTime systemTime;
-	Platform::GetLocalSystemTime(&systemTime);
+	Platform::get_local_system_time(&systemTime);
 
 	int logLength = sprintf_s(
-		s_LoggerData->LogBuffer.as<char>(), s_LoggerData->LogBuffer.size,
+		s_logger_data->log_buffer.as<char>(), s_logger_data->log_buffer.size,
 		"[%02u:%02u:%02u][%s]%s %s\n",
-		systemTime.Hour, systemTime.Minute, systemTime.Second,
+		systemTime.hour, systemTime.minute, systemTime.second,
 		tag,
-		s_LoggerData->TypeStrings[(uint8)type],
-		s_LoggerData->FormatBuffer.as<const char>()
+		s_logger_data->log_type_strings[(uint8)type],
+		s_logger_data->format_buffer.as<const char>()
 	);
 
 	va_end(argList);
 
-	Platform::SetConsoleColor(
-		s_LoggerData->TypeColorFG[(uint8)type],
-		s_LoggerData->TypeColorBG[(uint8)type]
+	Platform::set_console_color(
+		s_logger_data->log_type_color_FG[(uint8)type],
+		s_logger_data->log_type_color_BG[(uint8)type]
 	);
-	Platform::WriteToConsole(s_LoggerData->LogBuffer.as<const char>(), (usize)logLength);
+	Platform::write_to_console(s_logger_data->log_buffer.as<const char>(), (usize)logLength);
 }
 
 #endif // HC_ENABLE_LOGS
