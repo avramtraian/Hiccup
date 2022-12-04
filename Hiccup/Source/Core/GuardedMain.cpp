@@ -11,7 +11,7 @@
 namespace HC
 {
 
-HC_API int32 guarded_main(const ApplicationSpecification& application_spec, char** cmd_args, uint32 cmd_args_count)
+HC_API int32 guarded_main(const ApplicationDescription& application_desc, char** cmd_args, uint32 cmd_args_count)
 {
 	// Shutdown graph.
 	using PFN_Shutdown = void(*)(void);
@@ -77,7 +77,7 @@ HC_API int32 guarded_main(const ApplicationSpecification& application_spec, char
 	do
 	{
 		// Creating the application.
-		Application* application = hc_new Application(application_spec);
+		Application* application = hc_new Application(application_desc);
 		if (!application)
 		{
 			HC_LOG_FATAL("Failed to create the application instance! Aborting...");

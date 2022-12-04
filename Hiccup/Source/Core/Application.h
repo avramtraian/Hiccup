@@ -3,15 +3,16 @@
 #pragma once
 
 #include "Core.h"
+#include "Events/Event.h"
 
 namespace HC
 {
 
 HC_API bool should_restart_application();
 
-struct ApplicationSpecification
+struct ApplicationDescription
 {
-
+	void (*on_event)(Event&);
 };
 
 class Application
@@ -20,17 +21,23 @@ public:
 	HC_API static Application* get() { return s_instance; }
 
 public:
-	Application(const ApplicationSpecification& specification);
+	Application(const ApplicationDescription& description);
 	~Application();
 
 	void run();
 	void close();
 
+	HC_API void on_event(Event& e);
+
+private:
+	static bool on_key_pressed_event(const class KeyPressedEvent& e);
+	static bool on_key_released_event(const class KeyReleasedEvent& e);
+
 private:
 	HC_API static Application* s_instance;
 
 private:
-	ApplicationSpecification m_specification;
+	ApplicationDescription m_specification;
 	bool m_is_running = false;
 };
 

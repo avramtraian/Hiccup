@@ -2,6 +2,10 @@
 
 #include "Application.h"
 
+#include "Events/KeyEvents.h"
+#include "Events/MouseEvents.h"
+#include "Events/WindowEvents.h"
+
 namespace HC
 {
 
@@ -14,7 +18,7 @@ bool should_restart_application()
 
 Application* Application::s_instance = nullptr;
 
-Application::Application(const ApplicationSpecification& specification)
+Application::Application(const ApplicationDescription& specification)
 	: m_specification(specification)
 {
 	s_instance = this;
@@ -29,11 +33,10 @@ void Application::run()
 {
 	m_is_running = true;
 
+	uint64 iteration = 0;
 	while (m_is_running)
 	{
 		HC_PROFILE_BEGIN_FRAME;
-
-
 
 		HC_PROFILE_END_FRAME;
 	}
@@ -44,6 +47,29 @@ void Application::run()
 void Application::close()
 {
 	m_is_running = false;
+}
+
+void Application::on_event(Event& e)
+{
+	EventDispatcher dispatcher = EventDispatcher(e);
+
+	dispatcher.Dispatch<KeyPressedEvent>(Application::on_key_pressed_event);
+	dispatcher.Dispatch<KeyReleasedEvent>(Application::on_key_released_event);
+
+	if (m_specification.on_event)
+	{
+		m_specification.on_event(e);
+	}
+}
+
+bool Application::on_key_pressed_event(const KeyPressedEvent& e)
+{
+	return false;
+}
+
+bool Application::on_key_released_event(const KeyReleasedEvent& e)
+{
+	return false;
 }
 
 } // namespace HC
