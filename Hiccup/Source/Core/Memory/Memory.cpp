@@ -223,18 +223,25 @@ void Memory::Tracker::register_allocation(void* memory_block, usize bytes_count)
 {
 	s_tracker_data->allocated += bytes_count;
 	s_tracker_data->allocations_count++;
+
+	// TODO(Traian): Maybe have a separate table for allocation sizes?
+	//   Seems a bit wasteful to have a full 'AllocationInfo' used for only a 'usize'.
+	AllocationInfo allocation = {};
+	allocation.bytes_count = bytes_count;
+
+	s_tracker_data->allocations_table.insert(memory_block, Types::move(allocation));
 }
 
 void Memory::Tracker::register_tagged_allocation(void* memory_block, usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
 {
+	s_tracker_data->allocated += bytes_count;
+	s_tracker_data->allocations_count++;
+
 	AllocationInfo allocation = {};
 	allocation.bytes_count = bytes_count;
 	allocation.filename = filename;
 	allocation.function_sig = function_sig;
 	allocation.line_number = line_number;
-
-	s_tracker_data->allocated += bytes_count;
-	s_tracker_data->allocations_count++;
 
 	s_tracker_data->allocations_table.insert(memory_block, Types::move(allocation));
 }

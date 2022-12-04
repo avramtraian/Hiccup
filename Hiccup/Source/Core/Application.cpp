@@ -33,7 +33,6 @@ void Application::run()
 {
 	m_is_running = true;
 
-	uint64 iteration = 0;
 	while (m_is_running)
 	{
 		HC_PROFILE_BEGIN_FRAME;
