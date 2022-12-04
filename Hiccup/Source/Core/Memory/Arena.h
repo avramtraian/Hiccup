@@ -209,7 +209,7 @@ private:
  * This memory arena works exactly like a stack. The performance is
  *   equivalent with 'LinearMemoryArena', with the ability to free
  *   allocations.
- * Deallocations must happen in the order oposite of their corespoding deallocations.
+ * Deallocations must happen in the order opposite to their corresponding allocations.
  */
 struct HC_API StackMemoryArena
 {
