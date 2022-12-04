@@ -23,9 +23,9 @@ struct Matrix3T
 public:
 	union
 	{
-		T           Data[3 * 3];
-		T           M[3][3];
-		Vector3T<T> Rows[3];
+		T           data[3 * 3];
+		T           m[3][3];
+		Vector3T<T> rows[3];
 	};
 
 public:
@@ -36,7 +36,7 @@ public:
 
 public:
 	/** @return An identity matrix. */
-	ALWAYS_INLINE static Matrix3T<T> Identity();
+	ALWAYS_INLINE static Matrix3T<T> identity();
 };
 
 using Matrix3f  = Matrix3T<float32>;
@@ -62,9 +62,9 @@ struct Matrix4T
 public:
 	union
 	{
-		T           Data[4 * 4];
-		T           M[4][4];
-		Vector4T<T> Rows[4];
+		T           data[4 * 4];
+		T           m[4][4];
+		Vector4T<T> rows[4];
 	};
 
 public:
@@ -75,7 +75,7 @@ public:
 
 public:
 	/** @return An identity matrix. */
-	ALWAYS_INLINE static Matrix4T<T> Identity();
+	ALWAYS_INLINE static Matrix4T<T> identity();
 };
 
 using Matrix4f  = Matrix4T<float32>;
@@ -92,11 +92,11 @@ using Matrix4   = Matrix4f;
 
 template<typename T>
 ALWAYS_INLINE Matrix3T<T>::Matrix3T()
-	: Data{}
+	: data{}
 {}
 
 template<typename T>
-ALWAYS_INLINE Matrix3T<T> Matrix3T<T>::Identity()
+ALWAYS_INLINE Matrix3T<T> Matrix3T<T>::identity()
 {
 	return Matrix3T<T>
 	(
@@ -117,7 +117,7 @@ ALWAYS_INLINE Matrix4T<T>::Matrix4T()
 {}
 
 template<typename T>
-ALWAYS_INLINE Matrix4T<T> Matrix4T<T>::Identity()
+ALWAYS_INLINE Matrix4T<T> Matrix4T<T>::identity()
 {
 	return Matrix4T<T>
 	(

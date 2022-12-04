@@ -65,72 +65,72 @@ struct Math
 public:
 	// Calculates the absolute value.
 	template<typename T>
-	ALWAYS_INLINE static T Abs(T x)
+	ALWAYS_INLINE static T abs(T x)
 	{
 		return (x < 0) ? -x : x;
 	}
 
 	// Gets the maximum value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T Max(T a, T b)
+	ALWAYS_INLINE static T max(T a, T b)
 	{
 		return (a > b) ? a : b;
 	}
 
 	// Gets the maximum absolute value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T AbsMax(T a, T b)
+	ALWAYS_INLINE static T abs_max(T a, T b)
 	{
-		return Max<T>(Abs<T>(a), Abs<T>(b));
+		return max<T>(abs<T>(a), abs<T>(b));
 	}
 
 	// Gets the minimum value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T Min(T a, T b)
+	ALWAYS_INLINE static T min(T a, T b)
 	{
 		return (a < b) ? a : b;
 	}
 
 	// Gets the minimum absolute value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T AbsMin(T a, T b)
+	ALWAYS_INLINE static T abs_min(T a, T b)
 	{
-		return Min<T>(Abs<T>(a), Abs<T>(b));
+		return min<T>(abs<T>(a), abs<T>(b));
 	}
 
 	// Clamps a value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T Clamp(T x, T min, T max)
+	ALWAYS_INLINE static T clamp(T x, T min, T max)
 	{
-		return Min<T>(Max<T>(x, min), max);
+		return min<T>(max<T>(x, min), max);
 	}
 
 	// Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
 	template<typename T>
-	ALWAYS_INLINE static bool AreNearlyEqual(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
+	ALWAYS_INLINE static bool are_nearly_equal(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
 	{
-		return Abs<T>(a - b) <= tolerance;
+		return abs<T>(a - b) <= tolerance;
 	}
 
 public:
 	// Converts from degrees to radians.
 	template<typename T>
-	ALWAYS_INLINE static T ToRad(T degrees)
+	ALWAYS_INLINE static T to_rad(T degrees)
 	{
 		return degrees / T(180) * T(DOUBLE_PI);
 	}
 
 	// Converts from radians to degrees.
 	template<typename T>
-	ALWAYS_INLINE static T ToDeg(T radians)
+	ALWAYS_INLINE static T to_deg(T radians)
 	{
 		return radians / T(DOUBLE_PI) * T(180);
 	}
 
 public:
 	/** @return The square root. */
-	HC_API static float32 Sqrt(float32 x);
-	HC_API static float64 Sqrt(float64 x);
+	HC_API static float32 sqrt(float32 x);
+	HC_API static float64 sqrt(float64 x);
 
 	/**
 	 * Calculates the sine of an angle.
@@ -139,8 +139,8 @@ public:
 	 * 
 	 * @return The sine of the angle.
 	 */
-	HC_API static float32 Sin(float32 x);
-	HC_API static float64 Sin(float64 x);
+	HC_API static float32 sin(float32 x);
+	HC_API static float64 sin(float64 x);
 
 	/**
 	 * Calculates the cosine of an angle.
@@ -149,8 +149,8 @@ public:
 	 *
 	 * @return The cosine of the angle.
 	 */
-	HC_API static float32 Cos(float32 x);
-	HC_API static float64 Cos(float64 x);
+	HC_API static float32 cos(float32 x);
+	HC_API static float64 cos(float64 x);
 
 	/**
 	 * Calculates the tangent of an angle.
@@ -159,8 +159,8 @@ public:
 	 *
 	 * @return The tangent of the angle.
 	 */
-	HC_API static float32 Tan(float32 x);
-	HC_API static float64 Tan(float64 x);
+	HC_API static float32 tan(float32 x);
+	HC_API static float64 tan(float64 x);
 
 	/**
 	 * Calculates the arcsine of an value.
@@ -169,8 +169,8 @@ public:
 	 *
 	 * @return The arcsine of the value, expressed in radians.
 	 */
-	HC_API static float32 Asin(float32 x);
-	HC_API static float64 Asin(float64 x);
+	HC_API static float32 asin(float32 x);
+	HC_API static float64 asin(float64 x);
 
 	/**
 	 * Calculates the arccosine of an value.
@@ -179,8 +179,8 @@ public:
 	 *
 	 * @return The arccosine of the value, expressed in radians.
 	 */
-	HC_API static float32 Acos(float32 x);
-	HC_API static float64 Acos(float64 x);
+	HC_API static float32 acos(float32 x);
+	HC_API static float64 acos(float64 x);
 
 	/**
 	 * Calculates the arctangent of an value.
@@ -189,17 +189,17 @@ public:
 	 *
 	 * @return The arctangent of the value, expressed in radians.
 	 */
-	HC_API static float32 Atan(float32 x);
-	HC_API static float64 Atan(float64 x);
+	HC_API static float32 atan(float32 x);
+	HC_API static float64 atan(float64 x);
 };
 
 // Converts kilobytes to bytes.
-#define Kilobytes(X) (1024ULL * X)
+#define kilobytes(X) (1024ULL * X)
 
 // Converts megabytes to bytes.
-#define Megabytes(X) (1024ULL * Kilobytes(X))
+#define megabytes(X) (1024ULL * kilobytes(X))
 
 // Converts gigabytes to bytes.
-#define Gigabytes(X) (1024ULL * Megabytes(X))
+#define gigabytes(X) (1024ULL * megabytes(X))
 
 } // namespace HC

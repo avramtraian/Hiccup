@@ -62,7 +62,7 @@ bool Logger::Initialize(const LoggerSpecification& specification)
 
 	s_LoggerData->Specification = specification;
 
-	Buffer buffer = Buffer(2 * Kilobytes(8));
+	Buffer buffer = Buffer(2 * kilobytes(8));
 
 	s_LoggerData->FormatBuffer.Data = buffer.Data;
 	s_LoggerData->FormatBuffer.Size = buffer.Size / 2;

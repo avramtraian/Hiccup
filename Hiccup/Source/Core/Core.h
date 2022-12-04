@@ -28,5 +28,4 @@
 #include "Core/Math/MathUtilities.h"
 #include "Core/Math/Geometry.h"
 #include "Core/Math/Transform.h"
-#include "Core/Math/Intersection.h"
 #include "Core/Math/Random.h"

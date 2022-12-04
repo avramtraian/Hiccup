@@ -44,12 +44,12 @@ void OnAssertFailed(const char* expression, const char* category, const char* fi
 	uint32 lineWidth = (uint32)sprintf_s(lineBuffer, "LINE:       %u", lineNumber);
 
 	uint32 maxWidth = 0;
-	maxWidth = Math::Max(maxWidth, titleWidth);
-	maxWidth = Math::Max(maxWidth, expressionWidth);
-	maxWidth = Math::Max(maxWidth, messageWidth);
-	maxWidth = Math::Max(maxWidth, fileWidth);
-	maxWidth = Math::Max(maxWidth, functionWidth);
-	maxWidth = Math::Max(maxWidth, lineWidth);
+	maxWidth = Math::max(maxWidth, titleWidth);
+	maxWidth = Math::max(maxWidth, expressionWidth);
+	maxWidth = Math::max(maxWidth, messageWidth);
+	maxWidth = Math::max(maxWidth, fileWidth);
+	maxWidth = Math::max(maxWidth, functionWidth);
+	maxWidth = Math::max(maxWidth, lineWidth);
 
 	char whitespace[512];
 	Memory::set(whitespace, ' ', sizeof(whitespace));

@@ -23,22 +23,22 @@ static_internal std::random_device s_RDInt64;
 static_internal std::mt19937_64 s_GenInt64(s_RDInt64());
 static_internal std::uniform_int_distribution<uint64> s_DistInt64;
 
-float32 Random::Float32()
+float32 Random::float_32()
 {
 	return s_DistFloat32(s_GenFloat32);
 }
 
-float64 Random::Float64()
+float64 Random::float_64()
 {
 	return s_DistFloat64(s_GenFloat64);
 }
 
-uint32 Random::UInt32()
+uint32 Random::uint_32()
 {
 	return s_DistInt32(s_GenInt32);
 }
 
-uint64 Random::UInt64()
+uint64 Random::uint_64()
 {
 	return s_DistInt64(s_GenInt64);
 }

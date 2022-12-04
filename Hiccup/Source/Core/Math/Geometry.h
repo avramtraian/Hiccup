@@ -44,10 +44,10 @@ struct Vector2T
 {
 public:
 	// The vector's component on the X-axis.
-	T X;
+	T x;
 
 	// The vector's component on the Y-axis.
-	T Y;
+	T y;
 
 	/**
 	 * Default constructor.
@@ -64,10 +64,10 @@ public:
 	/**
 	 * Component constructor.
 	 *
-	 * @param x The component on the X-axis.
-	 * @param y The component on the Y-axis.
+	 * @param in_x The component on the X-axis.
+	 * @param in_y The component on the Y-axis.
 	 */
-	ALWAYS_INLINE Vector2T(T x, T y);
+	ALWAYS_INLINE Vector2T(T in_x, T in_y);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
@@ -174,17 +174,17 @@ public:
 
 public:
 	/** @return The squared magnitude of the vector. */
-	ALWAYS_INLINE T MagnitudeSquared() const;
+	ALWAYS_INLINE T magnitude_squared() const;
 
 	/** @return The magnitude of the vector. */
-	ALWAYS_INLINE T Magnitude() const;
+	ALWAYS_INLINE T magnitude() const;
 
 	/**
 	 * Normalizes this vector.
 	 *
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector2T<T> Normalize() const;
+	ALWAYS_INLINE Vector2T<T> normalize() const;
 
 	/**
 	 * Normalizes this vector, the calculation being made only if the vector is not already normalized.
@@ -194,24 +194,24 @@ public:
 	 *
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeIf(T tolerance = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector2T<T> normalize_if(T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
 	 *
-	 * @param errorResult The value to return when the normal doesn't exist.
+	 * @param error_result The value to return when the normal doesn't exist.
 	 * @param threshold The minimum allowed value for the vector's squared magnitude for which the vector's
 	 *   normal exists.
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeSafe(const Vector2T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector2T<T> normalize_safe(const Vector2T<T>& error_result, T threshold = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
 	 *   normalized.
 	 *
-	 * @param errorResult The value to return when the normal doesn't exist.
+	 * @param error_result The value to return when the normal doesn't exist.
 	 * @param threshold The minimum allowed value for the vector's squared magnitude for which the vector's
 	 *   normal exists.
 	 * @param tolerance The maximum allowed absolute difference between the vector's squared magnitude and 1
@@ -219,7 +219,7 @@ public:
 	 *
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector2T<T> NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector2T<T> normalize_safe_if(const Vector2T<T>& error_result, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
@@ -229,7 +229,7 @@ public:
 	 *
 	 * @return The dot product.
 	 */
-	ALWAYS_INLINE static T Dot(const Vector2T<T>& a, const Vector2T<T>& b);
+	ALWAYS_INLINE static T dot(const Vector2T<T>& a, const Vector2T<T>& b);
 
 public:
 	/**
@@ -240,7 +240,7 @@ public:
 	 *
 	 * @return The reflected direction.
 	 */
-	ALWAYS_INLINE static Vector2T<T> Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal);
+	ALWAYS_INLINE static Vector2T<T> reflect(const Vector2T<T>& direction, const Vector2T<T>& normal);
 };
 
 // 2-Component vector, with 32-bit floating point precision.
@@ -273,13 +273,13 @@ struct Vector3T
 {
 public:
 	// The vector's component on the X-axis.
-	T X;
+	T x;
 
 	// The vector's component on the Y-axis.
-	T Y;
+	T y;
 
 	// The vector's component on the Z-axis.
-	T Z;
+	T z;
 
 public:
 	/**
@@ -297,11 +297,11 @@ public:
 	/**
 	 * Component constructor.
 	 * 
-	 * @param x The component on the X-axis.
-	 * @param y The component on the Y-axis.
-	 * @param z The component on the Z-axis.
+	 * @param in_x The component on the X-axis.
+	 * @param in_y The component on the Y-axis.
+	 * @param in_z The component on the Z-axis.
 	 */
-	ALWAYS_INLINE Vector3T(T x, T y, T z);
+	ALWAYS_INLINE Vector3T(T in_x, T in_y, T in_z);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
@@ -323,9 +323,9 @@ public:
 	 *   The Z component is initialized by a separate given value.
 	 *
 	 * @param vector2 The 2-component vector.
-	 * @param z The value to initialize the vector's Z component with.
+	 * @param in_z The value to initialize the vector's Z component with.
 	 */
-	ALWAYS_INLINE Vector3T(const Vector2T<T>& vector2, T z);
+	ALWAYS_INLINE Vector3T(const Vector2T<T>& vector2, T in_z);
 	
 	/**
 	 * Constructor using a 4-component vector.
@@ -418,17 +418,17 @@ public:
 
 public:
 	/** @return The squared magnitude of the vector. */
-	ALWAYS_INLINE T MagnitudeSquared() const;
+	ALWAYS_INLINE T magnitude_squared() const;
 
 	/** @return The magnitude of the vector. */
-	ALWAYS_INLINE T Magnitude() const;
+	ALWAYS_INLINE T magnitude() const;
 
 	/**
 	 * Normalizes this vector.
 	 * 
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector3T<T> Normalize() const;
+	ALWAYS_INLINE Vector3T<T> normalize() const;
 
 	/**
 	 * Normalizes this vector, the calculation being made only if the vector is not already normalized.
@@ -438,24 +438,24 @@ public:
 	 * 
 	 * @return The vector's normal.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeIf(T tolerance = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector3T<T> normalize_if(T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0).
 	 * 
-	 * @param errorResult The value to return when the normal doesn't exist.
+	 * @param error_result The value to return when the normal doesn't exist.
 	 * @param threshold The minimum allowed value for the vector's squared magnitude for which the vector's
 	 *   normal exists.
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeSafe(const Vector3T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector3T<T> normalize_safe(const Vector3T<T>& error_result, T threshold = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Normalizes this vector, only if it is safe to do it (its magnitude is not 0) and the vector isn't already
 	 *   normalized.
 	 * 
-	 * @param errorResult The value to return when the normal doesn't exist.
+	 * @param error_result The value to return when the normal doesn't exist.
 	 * @param threshold The minimum allowed value for the vector's squared magnitude for which the vector's
 	 *   normal exists.
 	 * @param tolerance The maximum allowed absolute difference between the vector's squared magnitude and 1
@@ -463,7 +463,7 @@ public:
 	 * 
 	 * @return The vector's normal (if possible) or the specified result for error.
 	 */
-	ALWAYS_INLINE Vector3T<T> NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
+	ALWAYS_INLINE Vector3T<T> normalize_safe_if(const Vector3T<T>& error_result, T threshold = T(KINDA_SMALL_NUMBER), T tolerance = T(KINDA_SMALL_NUMBER)) const;
 
 	/**
 	 * Calculates the dot product between two vectors.
@@ -473,7 +473,7 @@ public:
 	 * 
 	 * @return The dot product.
 	 */
-	ALWAYS_INLINE static T Dot(const Vector3T<T>& a, const Vector3T<T>& b);
+	ALWAYS_INLINE static T dot(const Vector3T<T>& a, const Vector3T<T>& b);
 
 	/**
 	 * Calculates the cross product between two vectors.
@@ -483,7 +483,7 @@ public:
 	 * 
 	 * @return The cross product.
 	 */
-	ALWAYS_INLINE static Vector3T<T> Cross(const Vector3T<T>& a, const Vector3T<T>& b);
+	ALWAYS_INLINE static Vector3T<T> cross(const Vector3T<T>& a, const Vector3T<T>& b);
 
 public:
 	/**
@@ -494,7 +494,7 @@ public:
 	 * 
 	 * @return The reflected direction.
 	 */
-	ALWAYS_INLINE static Vector3T<T> Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal);
+	ALWAYS_INLINE static Vector3T<T> reflect(const Vector3T<T>& direction, const Vector3T<T>& normal);
 };
 
 // 3-Component vector, with 32-bit floating point precision.
@@ -527,16 +527,16 @@ struct Vector4T
 {
 public:
 	// The vector's component on the X-axis.
-	T X;
+	T x;
 
 	// The vector's component on the Y-axis.
-	T Y;
+	T y;
 
 	// The vector's component on the Z-axis.
-	T Z;
+	T z;
 
 	// The vector's component on the W-axis.
-	T W;
+	T w;
 
 public:
 	/**
@@ -554,12 +554,12 @@ public:
 	/**
 	 * Component constructor.
 	 *
-	 * @param x The component on the X-axis.
-	 * @param y The component on the Y-axis.
-	 * @param z The component on the Z-axis.
-	 * @param w The component on the W-axis.
+	 * @param in_x The component on the X-axis.
+	 * @param in_y The component on the Y-axis.
+	 * @param in_z The component on the Z-axis.
+	 * @param in_w The component on the W-axis.
 	 */
-	ALWAYS_INLINE Vector4T(T x, T y, T z, T w);
+	ALWAYS_INLINE Vector4T(T in_x, T in_y, T in_z, T in_w);
 
 	/**
 	 * Scalar constructor. Initializes all components with the given scalar.
@@ -581,10 +581,10 @@ public:
 	 *   Z and W components are initialized with separate, given values.
 	 *
 	 * @param vector2 The 2-component vector.
-	 * @param z The value to initialize the vector's Z component with.
-	 * @param w The value to initialize the vector's W component with.
+	 * @param in_z The value to initialize the vector's Z component with.
+	 * @param in_w The value to initialize the vector's W component with.
 	 */
-	ALWAYS_INLINE Vector4T(const Vector2T<T>& vector2, T z, T w);
+	ALWAYS_INLINE Vector4T(const Vector2T<T>& vector2, T in_z, T in_w);
 
 	/**
 	 * Constructor using a 3-component vector, for the X, Y and Z components. The
@@ -599,9 +599,9 @@ public:
 	 *   W component is initialized with a separate, given value.
 	 *
 	 * @param vector3 The 3-component vector.
-	 * @param w The value to initialize the vector's W component with.
+	 * @param in_w The value to initialize the vector's W component with.
 	 */
-	ALWAYS_INLINE Vector4T(const Vector3T<T>& vector3, T w);
+	ALWAYS_INLINE Vector4T(const Vector3T<T>& vector3, T in_w);
 
 	/**
 	 * Copy assignment operator.
@@ -710,80 +710,80 @@ using Vector4   = Vector4f;
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>::Vector2T()
-	: X(T(0))
-	, Y(T(0))
+	: x(T(0))
+	, y(T(0))
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector2T<T>& other)
-	: X(other.X)
-	, Y(other.Y)
+	: x(other.x)
+	, y(other.y)
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T>::Vector2T(T x, T y)
-	: X(x)
-	, Y(y)
+ALWAYS_INLINE Vector2T<T>::Vector2T(T in_x, T in_y)
+	: x(in_x)
+	, y(in_y)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>::Vector2T(T scalar)
-	: X(scalar)
-	, Y(scalar)
+	: x(scalar)
+	, y(scalar)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector3T<T>& vector3)
-	: X(vector3.X)
-	, Y(vector3.Y)
+	: x(vector3.x)
+	, y(vector3.y)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>::Vector2T(const Vector4T<T>& vector4)
-	: X(vector4.X)
-	, Y(vector4.Y)
+	: x(vector4.x)
+	, y(vector4.y)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator=(const Vector2T<T>& other)
 {
-	X = other.X;
-	Y = other.Y;
+	x = other.x;
+	y = other.y;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator+(const Vector2T<T>& other) const
 {
-	return Vector2T<T>(X + other.X, Y + other.Y);
+	return Vector2T<T>(x + other.x, y + other.y);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator+=(const Vector2T<T>& other)
 {
-	X += other.X;
-	Y += other.Y;
+	x += other.x;
+	y += other.y;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator-(const Vector2T<T>& other) const
 {
-	return Vector2T<T>(X - other.X, Y - other.Y);
+	return Vector2T<T>(x - other.x, y - other.y);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator-=(const Vector2T<T>& other)
 {
-	X -= other.X;
-	Y -= other.Y;
+	x -= other.x;
+	y -= other.y;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector2T<T> Vector2T<T>::operator*(T scalar) const
 {
-	return Vector2T<T>(X * scalar, Y * scalar);
+	return Vector2T<T>(x * scalar, y * scalar);
 }
 
 template<typename T>
@@ -795,8 +795,8 @@ ALWAYS_INLINE Vector2T<T> operator*(T scalar, const Vector2T<T>& vector)
 template<typename T>
 ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator*=(T scalar)
 {
-	X *= scalar;
-	Y *= scalar;
+	x *= scalar;
+	y *= scalar;
 	return *this;
 }
 
@@ -813,77 +813,77 @@ ALWAYS_INLINE Vector2T<T>& Vector2T<T>::operator/=(T scalar)
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector2T<T>::MagnitudeSquared() const
+ALWAYS_INLINE T Vector2T<T>::magnitude_squared() const
 {
-	return (X * X) + (Y * Y);
+	return (x * x) + (y * y);
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector2T<T>::Magnitude() const
+ALWAYS_INLINE T Vector2T<T>::magnitude() const
 {
-	return Math::Sqrt(MagnitudeSquared());
+	return Math::sqrt(magnitude_squared());
 }
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T> Vector2T<T>::Normalize() const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::normalize() const
 {
-	return (*this) / Magnitude();
+	return (*this) / magnitude();
 }
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeIf(T tolerance) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::normalize_if(T tolerance) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (Math::AreNearlyEqual<T>(squaredMag, T(1), tolerance))
+	if (Math::are_nearly_equal<T>(squared_mag, T(1), tolerance))
 	{
 		return *this;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeSafe(const Vector2T<T>& errorResult, T threshold) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::normalize_safe(const Vector2T<T>& error_result, T threshold) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (squaredMag < threshold)
+	if (squared_mag < threshold)
 	{
-		return errorResult;
+		return error_result;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T> Vector2T<T>::NormalizeSafeIf(const Vector2T<T>& errorResult, T threshold, T tolerance) const
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::normalize_safe_if(const Vector2T<T>& error_result, T threshold, T tolerance) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (squaredMag < threshold)
+	if (squared_mag < threshold)
 	{
-		return errorResult;
+		return error_result;
 	}
 
-	if (Math::AreNearlyEqual<T>(squaredMag, T(1), tolerance))
+	if (Math::are_nearly_equal<T>(squared_mag, T(1), tolerance))
 	{
 		return *this;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector2T<T>::Dot(const Vector2T<T>& a, const Vector2T<T>& b)
+ALWAYS_INLINE T Vector2T<T>::dot(const Vector2T<T>& a, const Vector2T<T>& b)
 {
-	return (a.X * b.X) + (a.Y * b.Y);
+	return (a.x * b.x) + (a.y * b.y);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector2T<T> Vector2T<T>::Reflect(const Vector2T<T>& direction, const Vector2T<T>& normal)
+ALWAYS_INLINE Vector2T<T> Vector2T<T>::reflect(const Vector2T<T>& direction, const Vector2T<T>& normal)
 {
-	return direction - 2 * Dot(direction, normal) * normal;
+	return direction - 2 * dot(direction, normal) * normal;
 }
 
 // Vector2 Implementation
@@ -895,96 +895,96 @@ ALWAYS_INLINE Vector2T<T> Vector2T<T>::Reflect(const Vector2T<T>& direction, con
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>::Vector3T()
-	: X(T(0))
-	, Y(T(0))
-	, Z(T(0))
+	: x(T(0))
+	, y(T(0))
+	, z(T(0))
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector3T<T>& other)
-	: X(other.X)
-	, Y(other.Y)
-	, Z(other.Z)
+	: x(other.x)
+	, y(other.y)
+	, z(other.z)
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T>::Vector3T(T x, T y, T z)
-	: X(x)
-	, Y(y)
-	, Z(z)
+ALWAYS_INLINE Vector3T<T>::Vector3T(T in_x, T in_y, T in_z)
+	: x(in_x)
+	, y(in_y)
+	, z(in_z)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>::Vector3T(T scalar)
-	: X(scalar)
-	, Y(scalar)
-	, Z(scalar)
+	: x(scalar)
+	, y(scalar)
+	, z(scalar)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2)
-	: X(vector2.X)
-	, Y(vector2.Y)
-	, Z(T(0))
+	: x(vector2.x)
+	, y(vector2.y)
+	, z(T(0))
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2, T z)
-	: X(vector2.X)
-	, Y(vector2.Y)
-	, Z(z)
+ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector2T<T>& vector2, T in_z)
+	: x(vector2.x)
+	, y(vector2.y)
+	, z(in_z)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>::Vector3T(const Vector4T<T>& vector4)
-	: X(vector4.X)
-	, Y(vector4.Y)
-	, Z(vector4.Z)
+	: x(vector4.x)
+	, y(vector4.y)
+	, z(vector4.z)
 {}
 
 template<typename T>
 Vector3T<T>& Vector3T<T>::operator=(const Vector3T<T>& other)
 {
-	X = other.X;
-	Y = other.Y;
-	Z = other.Z;
+	x = other.x;
+	y = other.y;
+	z = other.z;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator+(const Vector3T<T>& other) const
 {
-	return Vector3T<T>(X + other.X, Y + other.Y, Z + other.Z);
+	return Vector3T<T>(x + other.x, y + other.y, z + other.z);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator+=(const Vector3T<T>& other)
 {
-	X += other.X;
-	Y += other.Y;
-	Z += other.Z;
+	x += other.x;
+	y += other.y;
+	z += other.z;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator-(const Vector3T<T>& other) const
 {
-	return Vector3T<T>(X - other.X, Y - other.Y, Z - other.Z);
+	return Vector3T<T>(x - other.x, y - other.y, z - other.z);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator-=(const Vector3T<T>& other)
 {
-	X -= other.X;
-	Y -= other.Y;
-	Z -= other.Z;
+	x -= other.x;
+	y -= other.y;
+	z -= other.z;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector3T<T> Vector3T<T>::operator*(T scalar) const
 {
-	return Vector3T<T>(X * scalar, Y * scalar, Z * scalar);
+	return Vector3T<T>(x * scalar, y * scalar, z * scalar);
 }
 
 template<typename T>
@@ -996,9 +996,9 @@ ALWAYS_INLINE Vector3T<T> operator*(T scalar, const Vector3T<T>& vector)
 template<typename T>
 ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator*=(T scalar)
 {
-	X *= scalar;
-	Y *= scalar;
-	Z *= scalar;
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
 	return *this;
 }
 
@@ -1015,88 +1015,88 @@ ALWAYS_INLINE Vector3T<T>& Vector3T<T>::operator/=(T scalar)
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector3T<T>::MagnitudeSquared() const
+ALWAYS_INLINE T Vector3T<T>::magnitude_squared() const
 {
-	return (X * X) + (Y * Y) + (Z * Z);
+	return (x * x) + (y * y) + (z * z);
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector3T<T>::Magnitude() const
+ALWAYS_INLINE T Vector3T<T>::magnitude() const
 {
-	return Math::Sqrt(MagnitudeSquared());
+	return Math::sqrt(magnitude_squared());
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::Normalize() const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::normalize() const
 {
-	return (*this) / Magnitude();
+	return (*this) / magnitude();
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeIf(T tolerance) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::normalize_if(T tolerance) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (Math::AreNearlyEqual<T>(squaredMag, T(1), tolerance))
+	if (Math::are_nearly_equal<T>(squared_mag, T(1), tolerance))
 	{
 		return *this;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeSafe(const Vector3T<T>& errorResult, T threshold) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::normalize_safe(const Vector3T<T>& error_result, T threshold) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (squaredMag < threshold)
+	if (squared_mag < threshold)
 	{
-		return errorResult;
+		return error_result;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::NormalizeSafeIf(const Vector3T<T>& errorResult, T threshold, T tolerance) const
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::normalize_safe_if(const Vector3T<T>& error_result, T threshold, T tolerance) const
 {
-	const T squaredMag = MagnitudeSquared();
+	const T squared_mag = magnitude_squared();
 
-	if (squaredMag < threshold)
+	if (squared_mag < threshold)
 	{
-		return errorResult;
+		return error_result;
 	}
 
-	if (Math::AreNearlyEqual<T>(squaredMag, T(1), tolerance))
+	if (Math::are_nearly_equal<T>(squared_mag, T(1), tolerance))
 	{
 		return *this;
 	}
 
-	return (*this) / Math::Sqrt(squaredMag);
+	return (*this) / Math::sqrt(squared_mag);
 }
 
 template<typename T>
-ALWAYS_INLINE T Vector3T<T>::Dot(const Vector3T<T>& a, const Vector3T<T>& b)
+ALWAYS_INLINE T Vector3T<T>::dot(const Vector3T<T>& a, const Vector3T<T>& b)
 {
-	return (a.X * b.X) + (a.Y * b.Y) + (a.Z * b.Z);
+	return (a.x * b.x) + (a.y * b.y) + (a.z * b.z);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::Cross(const Vector3T<T>& a, const Vector3T<T>& b)
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::cross(const Vector3T<T>& a, const Vector3T<T>& b)
 {
 	return Vector3T<T>
 	(
-		a.Y * b.Z - a.Z * b.Y,
-		a.Z * b.X - a.X * b.Z,
-		a.X * b.Y - a.Y * b.X
+		a.y * b.z - a.z * b.y,
+		a.z * b.x - a.x * b.z,
+		a.x * b.y - a.y * b.x
 	);
 }
 
 template<typename T>
-ALWAYS_INLINE Vector3T<T> Vector3T<T>::Reflect(const Vector3T<T>& direction, const Vector3T<T>& normal)
+ALWAYS_INLINE Vector3T<T> Vector3T<T>::reflect(const Vector3T<T>& direction, const Vector3T<T>& normal)
 {
-	return direction - 2 * Dot(direction, normal) * normal;
+	return direction - 2 * dot(direction, normal) * normal;
 }
 
 // Vector3 Implementation
@@ -1108,114 +1108,114 @@ ALWAYS_INLINE Vector3T<T> Vector3T<T>::Reflect(const Vector3T<T>& direction, con
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>::Vector4T()
-	: X(T(0))
-	, Y(T(0))
-	, Z(T(0))
-	, W(T(0))
+	: x(T(0))
+	, y(T(0))
+	, z(T(0))
+	, w(T(0))
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector4T<T>& other)
-	: X(other.X)
-	, Y(other.Y)
-	, Z(other.Z)
-	, W(other.W)
+	: x(other.x)
+	, y(other.y)
+	, z(other.z)
+	, w(other.w)
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector4T<T>::Vector4T(T x, T y, T z, T w)
-	: X(x)
-	, Y(y)
-	, Z(z)
-	, W(w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(T in_x, T in_y, T in_z, T in_w)
+	: x(in_x)
+	, y(in_y)
+	, z(in_z)
+	, w(in_w)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>::Vector4T(T scalar)
-	: X(scalar)
-	, Y(scalar)
-	, Z(scalar)
-	, W(scalar)
+	: x(scalar)
+	, y(scalar)
+	, z(scalar)
+	, w(scalar)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2)
-	: X(vector2.X)
-	, Y(vector2.Y)
-	, Z(T(0))
-	, W(T(0))
+	: x(vector2.x)
+	, y(vector2.y)
+	, z(T(0))
+	, w(T(0))
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2, T z, T w)
-	: X(vector2.X)
-	, Y(vector2.Y)
-	, Z(z)
-	, W(w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector2T<T>& vector2, T in_z, T in_w)
+	: x(vector2.x)
+	, y(vector2.y)
+	, z(in_z)
+	, w(in_w)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3)
-	: X(vector3.X)
-	, Y(vector3.Y)
-	, Z(vector3.Z)
-	, W(T(0))
+	: x(vector3.x)
+	, y(vector3.y)
+	, z(vector3.z)
+	, w(T(0))
 {}
 
 template<typename T>
-ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3, T w)
-	: X(vector3.X)
-	, Y(vector3.Y)
-	, Z(vector3.Z)
-	, W(w)
+ALWAYS_INLINE Vector4T<T>::Vector4T(const Vector3T<T>& vector3, T in_w)
+	: x(vector3.x)
+	, y(vector3.y)
+	, z(vector3.z)
+	, w(in_w)
 {}
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator=(const Vector4T<T>& other)
 {
-	X = other.X;
-	Y = other.Y;
-	Z = other.Z;
-	W = other.W;
+	x = other.x;
+	y = other.y;
+	z = other.z;
+	w = other.w;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator+(const Vector4T<T>& other) const
 {
-	return Vector4T<T>(X + other.X, Y + other.Y, Z + other.Z, W + other.W);
+	return Vector4T<T>(x + other.x, y + other.y, z + other.z, w + other.w);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator+=(const Vector4T<T>& other)
 {
-	X += other.X;
-	Y += other.Y;
-	Z += other.Z;
-	W += other.W;
+	x += other.x;
+	y += other.y;
+	z += other.z;
+	w += other.w;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator-(const Vector4T<T>& other) const
 {
-	return Vector4T<T>(X - other.X, Y - other.Y, Z - other.Z, W - other.W);
+	return Vector4T<T>(x - other.x, y - other.y, z - other.z, w - other.w);
 }
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator-=(const Vector4T<T>& other)
 {
-	X -= other.X;
-	Y -= other.Y;
-	Z -= other.Z;
-	W -= other.W;
+	x -= other.x;
+	y -= other.y;
+	z -= other.z;
+	w -= other.w;
 	return *this;
 }
 
 template<typename T>
 ALWAYS_INLINE Vector4T<T> Vector4T<T>::operator*(T scalar) const
 {
-	return Vector4T<T>(X * scalar, Y * scalar, Z * scalar, W * scalar);
+	return Vector4T<T>(x * scalar, y * scalar, z * scalar, w * scalar);
 }
 
 template<typename T>
@@ -1227,10 +1227,10 @@ ALWAYS_INLINE Vector4T<T> operator*(T scalar, const Vector4T<T>& vector)
 template<typename T>
 ALWAYS_INLINE Vector4T<T>& Vector4T<T>::operator*=(T scalar)
 {
-	X *= scalar;
-	Y *= scalar;
-	Z *= scalar;
-	W *= scalar;
+	x *= scalar;
+	y *= scalar;
+	z *= scalar;
+	w *= scalar;
 	return *this;
 }
 
@@ -1388,8 +1388,8 @@ template<typename T>
 ALWAYS_INLINE bool AABB2T<T>::ContainsPoint(const Vector2T<T>& point) const
 {
 	return
-		MinBound.X <= point.X && point.X <= MaxBound.X &&
-		MinBound.Y <= point.Y && point.Y <= MaxBound.Y;
+		MinBound.x <= point.x && point.x <= MaxBound.x &&
+		MinBound.y <= point.y && point.y <= MaxBound.y;
 }
 
 // AABB2 Implementation
@@ -1407,9 +1407,9 @@ template<typename T>
 ALWAYS_INLINE bool AABB3T<T>::ContainsPoint(const Vector3T<T>& point) const
 {
 	return
-		MinBound.X <= point.X && point.X <= MaxBound.X &&
-		MinBound.Y <= point.Y && point.Y <= MaxBound.Y &&
-		MinBound.Z <= point.Z && point.Z <= MaxBound.Z;
+		MinBound.x <= point.x && point.x <= MaxBound.x &&
+		MinBound.y <= point.y && point.y <= MaxBound.y &&
+		MinBound.z <= point.z && point.z <= MaxBound.z;
 }
 
 // AABB3 Implementation
