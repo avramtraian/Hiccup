@@ -60,11 +60,9 @@ public:
 	}
 
 	ALWAYS_INLINE T* operator->() { return get(); }
-
 	ALWAYS_INLINE const T* operator->() const { return get(); }
 
 	ALWAYS_INLINE T& operator*() { return *get(); }
-
 	ALWAYS_INLINE const T& operator*() const { return *get(); }
 
 	ALWAYS_INLINE operator bool() const { return is_valid(); }
@@ -83,6 +81,14 @@ public:
 	}
 
 	ALWAYS_INLINE bool is_valid() const { return (m_instance != nullptr); }
+
+	template<typename Q>
+	ALWAYS_INLINE UniquePtr<Q> as() const
+	{
+		Q* instance = (Q*)m_instance;
+		m_instance = nullptr;
+		return UniquePtr<Q>(instance);
+	}
 
 	void release()
 	{

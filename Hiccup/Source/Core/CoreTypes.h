@@ -34,7 +34,7 @@ using uptr      = uintptr_t;
 // The type cannot be moved.
 #define HC_NON_MOVABLE(TYPE_NAME)                           \
 	TYPE_NAME(TYPE_NAME&&) noexcept = delete;               \
-	TYPE_NAME& operator=(TYPE_NAME&&) noexcept = delete;    \
+	TYPE_NAME& operator=(TYPE_NAME&&) noexcept = delete;
 
 /**
  *----------------------------------------------------------------
