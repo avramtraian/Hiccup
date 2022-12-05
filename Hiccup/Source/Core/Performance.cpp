@@ -18,7 +18,7 @@ struct ProfilerData
 };
 static_internal ProfilerData* s_profiler_data = nullptr;
 
-bool Profiler::initializer(const ProfilerDescription& description)
+bool Profiler::initialize(const ProfilerDescription& description)
 {
 	s_profiler_data = hc_new ProfilerData();
 

@@ -8,8 +8,6 @@
 namespace HC
 {
 
-HC_API bool should_restart_application();
-
 struct ApplicationDescription
 {
 	void (*on_event)(Event&);

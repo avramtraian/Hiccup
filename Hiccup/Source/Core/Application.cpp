@@ -9,13 +9,6 @@
 namespace HC
 {
 
-static_internal bool s_RestartApplication = false;
-
-bool should_restart_application()
-{
-	return s_RestartApplication;
-}
-
 Application* Application::s_instance = nullptr;
 
 Application::Application(const ApplicationDescription& description)
