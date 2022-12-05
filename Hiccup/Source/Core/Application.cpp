@@ -9,7 +9,7 @@
 namespace HC
 {
 
-static bool s_RestartApplication = false;
+static_internal bool s_RestartApplication = false;
 
 bool should_restart_application()
 {
