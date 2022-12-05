@@ -22,6 +22,7 @@
 #include "Core/Containers/Hash.h"
 #include "Core/Containers/HashTable.h"
 #include "Core/Containers/RefPtr.h"
+#include "Core/Containers/UniquePtr.h"
 
 //////// MATH ////////
 

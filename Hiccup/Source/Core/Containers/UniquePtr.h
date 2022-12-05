@@ -70,13 +70,13 @@ public:
 public:
 	ALWAYS_INLINE T* get()
 	{
-		HC_ASSERT(m_instance); // Trying to dereference nullptr!
+		HC_DASSERT(m_instance); // Trying to dereference nullptr!
 		return m_instance
 	}
 
 	ALWAYS_INLINE const T* get() const
 	{
-		HC_ASSERT(m_instance); // Trying to dereference nullptr!
+		HC_DASSERT(m_instance); // Trying to dereference nullptr!
 		return m_instance;
 	}
 
