@@ -3,7 +3,7 @@
 #pragma once
 
 #include "Core.h"
-#include "Events/Event.h"
+#include "Engine/Events/Event.h"
 
 namespace HC
 {

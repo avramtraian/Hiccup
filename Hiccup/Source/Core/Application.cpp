@@ -2,9 +2,9 @@
 
 #include "Application.h"
 
-#include "Events/KeyEvents.h"
-#include "Events/MouseEvents.h"
-#include "Events/WindowEvents.h"
+#include "Engine/Events/KeyEvents.h"
+#include "Engine/Events/MouseEvents.h"
+#include "Engine/Events/WindowEvents.h"
 
 namespace HC
 {
