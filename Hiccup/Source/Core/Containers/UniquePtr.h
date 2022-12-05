@@ -71,7 +71,7 @@ public:
 	ALWAYS_INLINE T* get()
 	{
 		HC_DASSERT(m_instance); // Trying to dereference nullptr!
-		return m_instance
+		return m_instance;
 	}
 
 	ALWAYS_INLINE const T* get() const
