@@ -97,6 +97,9 @@
 
 #if HC_COMPILER_MSVC
 
+	// class 'A' needs to have dll-interface to be used by clients of class 'B'.
+	#pragma warning(disable : 4251)
+
 	// Literal suffix identifiers that do not start with an underscore are reserved.
 	#pragma warning(disable : 4455)
 

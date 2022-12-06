@@ -20,6 +20,7 @@
 
 #include "Core/Containers/Array.h"
 #include "Core/Containers/String.h"
+#include "Core/Containers/StringView.h"
 #include "Core/Containers/Span.h"
 #include "Core/Containers/Hash.h"
 #include "Core/Containers/HashTable.h"

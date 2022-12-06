@@ -83,9 +83,9 @@ public:
 	ALWAYS_INLINE T* values() { return m_values; }
 	ALWAYS_INLINE const T* values() const { return m_values; }
 
-	ALWAYS_INLINE uint8* bytes() const { return (uint8*)m_values; }
-
 	ALWAYS_INLINE usize count() const { return m_count; }
+
+	ALWAYS_INLINE uint8* bytes() const { return (uint8*)m_values; }
 
 	ALWAYS_INLINE usize bytes_count() const { return m_count * sizeof(T); }
 
