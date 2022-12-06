@@ -93,6 +93,16 @@
 	#error Unknown or unsupported compiler! Hiccup only supports MSVC, Clang and GCC.
 #endif // No compiler.
 
+//////////////// COMPILER WARNINGS SUPRESSION ////////////////
+
+#if HC_COMPILER_MSVC
+
+	// Literal suffix identifiers that do not start with an underscore are reserved.
+	#pragma warning(disable : 4455)
+
+#elif HC_COMPILER_GCC_CLANG
+#endif // Compiler switch.
+
 //////////////// COMPILER-SPECIFIC UTILITIES ////////////////
 
 #if HC_COMPILER_MSVC
