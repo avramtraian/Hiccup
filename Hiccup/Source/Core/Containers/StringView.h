@@ -44,6 +44,9 @@ public:
 	}
 
 public:
+	// Allows easy compatibility with C libraries (or any library that uses raw strings).
+	ALWAYS_INLINE NODISCARD const char* c_str() const { return (const char*)bytes(); }
+
 	ALWAYS_INLINE NODISCARD uint8* bytes() const { return m_view.bytes(); }
 
 	ALWAYS_INLINE NODISCARD usize bytes_count() const { return m_view.bytes_count(); }
