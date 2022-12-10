@@ -214,6 +214,25 @@ public:
 	usize add_uninitialized(usize count);
 
 public:
+	void pop()
+	{
+		HC_ASSERT(m_size > 0); // Trying to pop from an empty array!
+
+		m_data[--m_size].~T();
+	}
+
+	void pop(usize count)
+	{
+		HC_ASSERT(m_size >= count); // Trying to pop too many elements!
+
+		for (usize i = 0; i < count; ++i)
+		{
+			m_data[m_size - count - 1].~T();
+		}
+		m_size -= count;
+	}
+
+public:
 	/**
 	 * Resizes the array.
 	 * If the new size is greater than the old size, the new elements are initialized
