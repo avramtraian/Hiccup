@@ -3,7 +3,8 @@
 #pragma once
 
 #include "Core.h"
-#include "Engine/Events/Event.h"
+#include "Engine/Event.h"
+#include "Engine/Window.h"
 
 namespace HC
 {
@@ -11,6 +12,8 @@ namespace HC
 struct ApplicationDescription
 {
 	void (*on_event)(Event&);
+
+	WindowDescription window_description;
 };
 
 class Application
@@ -37,6 +40,7 @@ private:
 private:
 	ApplicationDescription m_description;
 	bool m_is_running = false;
+	UniquePtr<Window> m_primary_window;
 };
 
 } // namespace HC

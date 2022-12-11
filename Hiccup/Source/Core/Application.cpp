@@ -2,9 +2,9 @@
 
 #include "Application.h"
 
-#include "Engine/Events/KeyEvents.h"
-#include "Engine/Events/MouseEvents.h"
-#include "Engine/Events/WindowEvents.h"
+#include "Engine/KeyEvents.h"
+#include "Engine/MouseEvents.h"
+#include "Engine/WindowEvents.h"
 
 namespace HC
 {
@@ -15,10 +15,17 @@ Application::Application(const ApplicationDescription& description)
 	: m_description(description)
 {
 	s_instance = this;
+
+	if (m_description.window_description.event_callback == nullptr)
+	{
+		m_description.window_description.event_callback = [](Event& e) { Application::get()->on_event(e); };
+	}
+	m_primary_window = Window::create(m_description.window_description);
 }
 
 Application::~Application()
 {
+	m_primary_window.release();
 	s_instance = nullptr;
 }
 
@@ -29,6 +36,13 @@ void Application::run()
 	while (m_is_running)
 	{
 		HC_PROFILE_BEGIN_FRAME;
+
+		m_primary_window->update_window();
+
+		if (m_primary_window->is_pending_kill())
+		{
+			close();
+		}
 
 		HC_PROFILE_END_FRAME;
 	}
