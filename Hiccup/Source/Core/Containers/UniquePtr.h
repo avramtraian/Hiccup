@@ -83,7 +83,7 @@ public:
 	ALWAYS_INLINE bool is_valid() const { return (m_instance != nullptr); }
 
 	template<typename Q>
-	ALWAYS_INLINE UniquePtr<Q> as() const
+	ALWAYS_INLINE UniquePtr<Q> as()
 	{
 		Q* instance = (Q*)m_instance;
 		m_instance = nullptr;
