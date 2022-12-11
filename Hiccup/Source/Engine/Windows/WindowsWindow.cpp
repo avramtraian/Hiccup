@@ -180,10 +180,12 @@ Window::Window(const WindowDescription& description)
 		create_window_height = m_height;
 	}
 	
-	// TODO(Traian): Convert the title to UCS-2, and actually use it.
+	wchar_t buffer[512] = {};
+	MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, (LPCCH)m_title.bytes(), (int)m_title.bytes_count(), buffer, array_count(buffer));
+
 	HWND window_handle = CreateWindow(
 		TEXT("HiccupWindowClass"),
-		TEXT("Hello, World"), window_style,
+		buffer, window_style,
 		create_window_position_x, create_window_position_y, create_window_width, create_window_height,
 		NULL, NULL, GetModuleHandle(NULL), NULL
 	);
@@ -257,8 +259,9 @@ void Window::set_position_y(int32 new_position_y)
 void Window::set_title(StringView new_title)
 {
 	m_title = String::from_view(new_title);
-	// TODO(Traian): Convert UTF-8 to UCS-2 (Windows Unicode charset), instead of using the ANSI version of the function.
-	SetWindowTextA((HWND)m_native_handle, new_title.c_str());
+	wchar_t buffer[512] = {};
+	MultiByteToWideChar(CP_UTF8, MB_PRECOMPOSED, (LPCCH)m_title.bytes(), (int)m_title.bytes_count(), buffer, array_count(buffer));
+	SetWindowText((HWND)m_native_handle, buffer);
 }
 
 void Window::set_view_mode(WindowViewMode new_view_mode)

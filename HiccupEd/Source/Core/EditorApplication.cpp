@@ -14,6 +14,15 @@ bool create_application_desc(ApplicationDescription* out_application_desc)
 	out_application_desc->window_description.position_y = 200;
 	out_application_desc->window_description.view_mode = WindowViewMode::windowed;
 	out_application_desc->window_description.start_mode = WindowStartMode::maximized;
+
+#if HC_CONFIGURATION_DEBUG
+	out_application_desc->window_description.title = "Hiccup Editor --- Platform: Win64, Configuration: Debug --- Untitled*"sv;
+#elif HC_CONFIGURATION_RELEASE
+	out_application_desc->window_description.title = "Hiccup Editor --- Platform: Win64, Configuration: Release --- Untitled*"sv;
+#elif HC_CONFIGURATION_SHIPPING
+	out_application_desc->window_description.title = "Hiccup Editor --- Platform: Win64, Configuration: Shipping --- Untitled*"sv;
+#endif
+
 	return true;
 }
 
