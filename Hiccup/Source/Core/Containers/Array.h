@@ -5,6 +5,8 @@
 #include "Core/CoreMinimal.h"
 #include "Core/Memory/Memory.h"
 
+#include "Span.h"
+
 namespace HC
 {
 
@@ -74,6 +76,8 @@ public:
 
 	/** @return True if the container has no elements stored; False otherwise. */
 	ALWAYS_INLINE bool is_empty() const;
+
+	ALWAYS_INLINE NODISCARD Span<T> span() const { return Span<T>(m_data, m_size); }
 
 public:
 	/**
