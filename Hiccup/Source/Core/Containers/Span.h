@@ -85,6 +85,8 @@ public:
 
 	ALWAYS_INLINE usize count() const { return m_count; }
 
+	ALWAYS_INLINE bool is_empty() const { return (m_count == 0); }
+
 	ALWAYS_INLINE uint8* bytes() const { return (uint8*)m_values; }
 
 	ALWAYS_INLINE usize bytes_count() const { return m_count * sizeof(T); }
