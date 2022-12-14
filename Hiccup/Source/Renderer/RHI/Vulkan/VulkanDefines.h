@@ -6,6 +6,8 @@
 
 #include <vulkan/vulkan.h>
 
+#define HC_ENABLE_VULKAN_VALIDATION 1
+
 #define HC_VULKAN_CHECK(EXPRESSION)                                                             \
 	if (auto r = (EXPRESSION); r != VK_SUCCESS)                                                 \
 	{                                                                                           \

@@ -47,6 +47,11 @@ struct RendererCapabilities
 struct RendererDescription
 {
 	RHI rhi = RHI::none;
+	
+	// This flag will be used only if the RHI layer has the validation layer/systems compiled.
+	// For example, if the renderer will use Vulkan and HC_ENABLE_VULKAN_VALIDATION is defined
+	//   as 0 (disabled), then this flag will be ignored.
+	bool enable_validation = false;
 };
 
 class Renderer

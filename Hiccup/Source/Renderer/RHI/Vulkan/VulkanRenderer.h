@@ -9,8 +9,6 @@
 
 #include <vulkan/vulkan.h>
 
-#define HC_ENABLE_VULKAN_VALIDATION 1
-
 namespace HC
 {
 
@@ -72,7 +70,9 @@ private:
 		Array<const char*>& out_enabled
 	);
 
+#if HC_ENABLE_VULKAN_VALIDATION
 	static RendererResult create_debug_messenger();
+#endif // HC_ENABLE_VULKAN_VALIDATION
 
 	static RendererResult pick_physical_device();
 

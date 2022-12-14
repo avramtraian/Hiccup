@@ -26,6 +26,7 @@ Application::Application(const ApplicationDescription& description)
 
 	RendererDescription renderer_desc = {};
 	renderer_desc.rhi = RHI::vulkan;
+	renderer_desc.enable_validation = true;
 	HC_VERIFYF(Renderer::initialize(renderer_desc), "Failed to initialize the renderer!");
 }
 

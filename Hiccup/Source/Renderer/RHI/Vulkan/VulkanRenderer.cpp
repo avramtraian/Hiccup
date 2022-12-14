@@ -23,9 +23,13 @@ struct VulkanRendererData
 {
 	VkAllocationCallbacks* allocator = nullptr;
 
+	bool enable_validation = false;
+
 	VkInstance instance = VK_NULL_HANDLE;
 
+#if HC_ENABLE_VULKAN_VALIDATION
 	VkDebugUtilsMessengerEXT debug_messenger = VK_NULL_HANDLE;
+#endif // HC_ENABLE_VULKAN_VALIDATION
 
 	VkPhysicalDevice physical_device = VK_NULL_HANDLE;
 
@@ -118,17 +122,34 @@ bool VulkanRenderer::initialize(const RendererDescription& description)
 {
 	s_vulkan_data = hc_new VulkanRendererData();
 
+	s_vulkan_data->enable_validation = description.enable_validation;
+
+#if HC_ENABLE_VULKAN_VALIDATION
+	if (s_vulkan_data->enable_validation) {
+		HC_LOG_INFO_TAG("VULKAN", "Validation layers are enabled.");
+	}
+	else {
+		HC_LOG_INFO_TAG("VULKAN", "Validation layers are disabled.");
+	}
+#else
+	HC_LOG_INFO_TAG("VULKAN", "Validation layers are disabled (and not compiled).");
+#endif // HC_ENABLE_VULKAN_VALIDATION
+
 	if (auto r = create_instance(); r != RendererResult::success)
 	{
 		HC_LOG_ERROR_TAG("VULKAN", "Failed to create the Vulkan instance! Code: %s", renderer_result_to_string(r));
 		return false;
 	}
 
-	if (auto r = create_debug_messenger(); r != RendererResult::success)
-	{
-		HC_LOG_ERROR_TAG("VULKAN", "Failed to create the Vulkan debug messenger! Code: %s", renderer_result_to_string(r));
-		return false;
+#if HC_ENABLE_VULKAN_VALIDATION
+	if (s_vulkan_data->enable_validation) {
+		if (auto r = create_debug_messenger(); r != RendererResult::success)
+		{
+			HC_LOG_ERROR_TAG("VULKAN", "Failed to create the Vulkan debug messenger! Code: %s", renderer_result_to_string(r));
+			return false;
+		}
 	}
+#endif // HC_ENABLE_VULKAN_VALIDATION
 
 	if (!Renderer::create_render_contexts())
 	{
@@ -169,17 +190,21 @@ void VulkanRenderer::shutdown()
 	s_vulkan_data->device = VK_NULL_HANDLE;
 	HC_LOG_INFO_TAG("RENDERER", "Destroyed the Vulkan logical device.");
 
-	HC_LOG_TRACE_TAG("RENDERER", "Destroying the Vulkan debug messenger...");
-	PFN_vkDestroyDebugUtilsMessengerEXT destroy_debug_utils_messenger = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance(), "vkDestroyDebugUtilsMessengerEXT");
-	if (destroy_debug_utils_messenger)
-	{
-		destroy_debug_utils_messenger(instance(), s_vulkan_data->debug_messenger, s_vulkan_data->allocator);
+#if HC_ENABLE_VULKAN_VALIDATION
+	if (s_vulkan_data->enable_validation) {
+		HC_LOG_TRACE_TAG("RENDERER", "Destroying the Vulkan debug messenger...");
+		PFN_vkDestroyDebugUtilsMessengerEXT destroy_debug_utils_messenger = (PFN_vkDestroyDebugUtilsMessengerEXT)vkGetInstanceProcAddr(instance(), "vkDestroyDebugUtilsMessengerEXT");
+		if (destroy_debug_utils_messenger)
+		{
+			destroy_debug_utils_messenger(instance(), s_vulkan_data->debug_messenger, s_vulkan_data->allocator);
+		}
+		else
+		{
+			HC_LOG_ERROR_TAG("RENDERER", "Failed to obtain the vkDestroyDebugReportCallbackEXT function pointer!");
+		}
+		HC_LOG_INFO_TAG("RENDERER", "Destroyed the Vulkan debug messenger.");
 	}
-	else
-	{
-		HC_LOG_ERROR_TAG("RENDERER", "Failed to obtain the vkDestroyDebugReportCallbackEXT function pointer!");
-	}
-	HC_LOG_INFO_TAG("RENDERER", "Destroyed the Vulkan debug messenger.");
+#endif // HC_ENABLE_VULKAN_VALIDATION
 
 	HC_LOG_TRACE_TAG("RENDERER", "Destroying the Vulkan instance...");
 	vkDestroyInstance(s_vulkan_data->instance, s_vulkan_data->allocator);
@@ -224,7 +249,9 @@ RendererResult VulkanRenderer::create_instance()
 	Array<const char*> enabled_layers;
 
 #if HC_ENABLE_VULKAN_VALIDATION
-	optional_layers.add("VK_LAYER_KHRONOS_validation");
+	if (s_vulkan_data->enable_validation) {
+		optional_layers.add("VK_LAYER_KHRONOS_validation");
+	}
 #endif // HC_ENABLE_VULKAN_VALIDATION
 
 	Utils::log_instance_layers(required_layers.span(), optional_layers.span());
@@ -244,7 +271,9 @@ RendererResult VulkanRenderer::create_instance()
 #endif // Platform switch.
 
 #if HC_ENABLE_VULKAN_VALIDATION
-	optional_extensions.add("VK_EXT_debug_utils");
+	if (s_vulkan_data->enable_validation) {
+		optional_extensions.add("VK_EXT_debug_utils");
+	}
 #endif // HC_ENABLE_VULKAN_VALIDATION
 
 	Utils::log_instance_extensions(required_extensions.span(), optional_extensions.span());
@@ -459,6 +488,7 @@ bool VulkanRenderer::check_instance_extensions(Span<const char*> required, Span<
 	return found_all_required_extensions;
 }
 
+#if HC_ENABLE_VULKAN_VALIDATION
 RendererResult VulkanRenderer::create_debug_messenger()
 {
 	VkDebugUtilsMessengerCreateInfoEXT debug_messenger_info = {};
@@ -487,6 +517,7 @@ RendererResult VulkanRenderer::create_debug_messenger()
 
 	return RendererResult::success;
 }
+#endif // HC_ENABLE_VULKAN_VALIDATION
 
 RendererResult VulkanRenderer::pick_physical_device()
 {
