@@ -866,6 +866,10 @@ VulkanSwapchain::VulkanSwapchain(const SwapchainDescription& description, Render
 
 VulkanSwapchain::~VulkanSwapchain()
 {
+	for (usize i = 0; i < m_image_views.size(); ++i) {
+		vkDestroyImageView(s_vulkan_data->device, m_image_views[i], s_vulkan_data->allocator);
+	}
+
 	vkDestroySwapchainKHR(s_vulkan_data->device, m_swapchain_handle, s_vulkan_data->allocator);
 	m_swapchain_handle = VK_NULL_HANDLE;
 }
@@ -938,7 +942,13 @@ RendererResult VulkanSwapchain::invalidate()
 	swapchain_info.compositeAlpha = VK_COMPOSITE_ALPHA_OPAQUE_BIT_KHR;
 	swapchain_info.presentMode = m_present_mode;
 	swapchain_info.clipped = VK_TRUE;
-	swapchain_info.oldSwapchain = m_swapchain_handle;
+	swapchain_info.oldSwapchain = VK_NULL_HANDLE;
+
+	for (usize i = 0; i < m_image_views.size(); ++i) {
+		vkDestroyImageView(s_vulkan_data->device, m_image_views[i], s_vulkan_data->allocator);
+	}
+	m_image_views.clear();
+	m_images.clear();
 
 	if (m_swapchain_handle != VK_NULL_HANDLE) {
 		vkDestroySwapchainKHR(s_vulkan_data->device, m_swapchain_handle, s_vulkan_data->allocator);
@@ -948,6 +958,35 @@ RendererResult VulkanSwapchain::invalidate()
 	if (auto r = vkCreateSwapchainKHR(s_vulkan_data->device, &swapchain_info, s_vulkan_data->allocator, &m_swapchain_handle); r != VK_SUCCESS) {
 		HC_LOG_ERROR_TAG("VULKAN", "vkCreateSwapchainKHR() failed with Vulkan code: %s", vk_result_to_string(r));
 		return RendererResult::rhi_resource_creation_failed;
+	}
+
+	uint32 images_count = 0;
+	HC_VULKAN_CHECK(vkGetSwapchainImagesKHR(s_vulkan_data->device, m_swapchain_handle, &images_count, nullptr));
+
+	m_images.set_size_uninitialized(images_count);
+	HC_VULKAN_CHECK(vkGetSwapchainImagesKHR(s_vulkan_data->device, m_swapchain_handle, &images_count, m_images.data()));
+
+	m_image_views.set_size_uninitialized(m_images.size());
+	for (usize i = 0; i < m_images.size(); ++i) {
+		VkImageViewCreateInfo image_view_info = {};
+		image_view_info.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
+		image_view_info.image = m_images[i];
+		image_view_info.viewType = VK_IMAGE_VIEW_TYPE_2D;
+		image_view_info.format = m_surface_format.format;
+		image_view_info.components.r = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_info.components.g = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_info.components.b = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_info.components.a = VK_COMPONENT_SWIZZLE_IDENTITY;
+		image_view_info.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
+		image_view_info.subresourceRange.baseMipLevel = 0;
+		image_view_info.subresourceRange.levelCount = 1;
+		image_view_info.subresourceRange.baseArrayLayer = 0;
+		image_view_info.subresourceRange.layerCount = 1;
+
+		if (auto r = vkCreateImageView(s_vulkan_data->device, &image_view_info, s_vulkan_data->allocator, &m_image_views[i]); r != VK_SUCCESS) {
+			HC_LOG_ERROR_TAG("VULKAN", "Failed to create the swapchain's Vulkan image views!");
+			return RendererResult::rhi_resource_creation_failed;
+		}
 	}
 
 	return RendererResult::success;

@@ -30,6 +30,9 @@ private:
 
 	VulkanRenderContext* m_owning_context;
 
+	Array<VkImage> m_images;
+	Array<VkImageView> m_image_views;
+
 	uint32 m_min_image_count;
 	VkSurfaceFormatKHR m_surface_format;
 	VkSharingMode m_image_sharing_mode;
