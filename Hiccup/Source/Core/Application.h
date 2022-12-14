@@ -30,6 +30,9 @@ public:
 
 	HC_API void on_event(Event& e);
 
+public:
+	HC_API Window* get_primary_window() { return m_primary_window.get(); }
+
 private:
 	static bool on_key_pressed_event(const class KeyPressedEvent& e);
 	static bool on_key_released_event(const class KeyReleasedEvent& e);
