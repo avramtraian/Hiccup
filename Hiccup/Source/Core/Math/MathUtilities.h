@@ -81,7 +81,7 @@ public:
 	template<typename T>
 	ALWAYS_INLINE static T abs_max(T a, T b)
 	{
-		return max<T>(abs<T>(a), abs<T>(b));
+		return Math::max<T>(Math::abs<T>(a), Math::abs<T>(b));
 	}
 
 	// Gets the minimum value between two numbers.
@@ -95,21 +95,21 @@ public:
 	template<typename T>
 	ALWAYS_INLINE static T abs_min(T a, T b)
 	{
-		return min<T>(abs<T>(a), abs<T>(b));
+		return Math::min<T>(Math::abs<T>(a), Math::abs<T>(b));
 	}
 
 	// Clamps a value between two numbers.
 	template<typename T>
-	ALWAYS_INLINE static T clamp(T x, T min, T max)
+	ALWAYS_INLINE static T clamp(T x, T in_min, T in_max)
 	{
-		return min<T>(max<T>(x, min), max);
+		return Math::min<T>(Math::max<T>(x, in_min), in_max);
 	}
 
 	// Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
 	template<typename T>
 	ALWAYS_INLINE static bool are_nearly_equal(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
 	{
-		return abs<T>(a - b) <= tolerance;
+		return Math::abs<T>(a - b) <= tolerance;
 	}
 
 public:
