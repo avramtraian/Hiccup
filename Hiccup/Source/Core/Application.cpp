@@ -6,6 +6,8 @@
 #include "Engine/MouseEvents.h"
 #include "Engine/WindowEvents.h"
 
+#include "Renderer/Renderer.h"
+
 namespace HC
 {
 
@@ -21,10 +23,16 @@ Application::Application(const ApplicationDescription& description)
 		m_description.window_description.event_callback = [](Event& e) { Application::get()->on_event(e); };
 	}
 	m_primary_window = Window::create(m_description.window_description);
+
+	RendererDescription renderer_desc = {};
+	renderer_desc.rhi = RHI::vulkan;
+	HC_VERIFYF(Renderer::initialize(renderer_desc), "Failed to initialize the renderer!");
 }
 
 Application::~Application()
 {
+	Renderer::shutdown();
+
 	m_primary_window.release();
 	s_instance = nullptr;
 }
