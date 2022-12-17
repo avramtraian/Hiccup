@@ -153,7 +153,7 @@ bool VulkanRenderer::initialize(const RendererDescription& description)
 
 	if (!Renderer::create_render_contexts())
 	{
-		// The error is logged during enderer::create_render_contexts().
+		// The error is logged during Renderer::create_render_contexts().
 		return false;
 	}
 	if (s_vulkan_data->primary_render_context_index == 0xFFFFFFFF)
@@ -176,7 +176,7 @@ bool VulkanRenderer::initialize(const RendererDescription& description)
 
 	if (!Renderer::create_swapchains())
 	{
-		// The error is logged during enderer::create_swapchains().
+		// The error is logged during Renderer::create_swapchains().
 		return false;
 	}
 
