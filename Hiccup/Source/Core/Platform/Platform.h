@@ -31,12 +31,12 @@ public:
 	// All available colors for the console text.
 	enum class ConsoleColor
 	{
-		black     = 0,  blue         = 1,  green        = 2,  aqua       = 3,
-		red       = 4,  purple       = 5,  yellow       = 6,  light_gray = 7,
-		gray      = 8,  light_blue   = 9,  light_green  = 10, LightAqua  = 11,
-		light_red = 12, light_purple = 13, light_yellow = 14, white      = 15,
+		Black     = 0, Blue        = 1,  Green       = 2,  Aqua      = 3,
+		Red       = 4, Purple      = 5,  Yellow      = 6,  LightGray = 7,
+		Gray      = 8, LightBlue   = 9,  LightGreen  = 10, LightAqua = 11,
+		LightRed = 12, LightPurple = 13, LightYellow = 14, White     = 15,
 
-		max_enum_value
+		MaxEnumValue
 	};
 
 	struct SystemTime

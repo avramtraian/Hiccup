@@ -11,7 +11,7 @@ namespace HC
 class WindowClosedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::window_closed; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::WindowClosed; }
 
 public:
 	WindowClosedEvent()
@@ -22,7 +22,7 @@ public:
 class WindowResizedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::window_resized; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::WindowResized; }
 
 public:
 	WindowResizedEvent(uint32 width, uint32 height)
@@ -43,7 +43,7 @@ private:
 class WindowMovedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::window_moved; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::WindowMoved; }
 
 public:
 	WindowMovedEvent(int32 position_x, int32 position_y)

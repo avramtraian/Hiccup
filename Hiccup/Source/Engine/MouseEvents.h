@@ -13,7 +13,7 @@ namespace HC
 class MouseMovedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::mouse_moved; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseMoved; }
 
 public:
 	MouseMovedEvent(int32 position_x, int32 position_y)
@@ -34,7 +34,7 @@ private:
 class MouseButtonPressed : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::mouse_button_pressed; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseButtonPressed; }
 
 public:
 	MouseButtonPressed(MouseButton button)
@@ -52,7 +52,7 @@ private:
 class MouseButtonReleased : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::mouse_button_released; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseButtonReleased; }
 
 public:
 	MouseButtonReleased(MouseButton button)
@@ -70,7 +70,7 @@ private:
 class MouseWheelScrolledEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::mouse_wheel_scrolled; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseWheelScrolled; }
 
 public:
 	MouseWheelScrolledEvent(int32 delta)

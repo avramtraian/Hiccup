@@ -9,17 +9,17 @@ namespace HC
 
 enum class EventType : uint16
 {
-	window_closed,
-	window_resized,
-	window_moved,
+	WindowClosed,
+	WindowResized,
+	WindowMoved,
 
-	mouse_moved,
-	mouse_button_pressed,
-	mouse_button_released,
-	mouse_wheel_scrolled,
+	MouseMoved,
+	MouseButtonPressed,
+	MouseButtonReleased,
+	MouseWheelScrolled,
 
-	key_pressed,
-	key_released
+	KeyPressed,
+	KeyReleased
 };
 
 class Event

@@ -45,9 +45,9 @@ bool Platform::initialize(const PlatformDescription& description)
 	if (s_platform_data->description.is_console_attached)
 	{
 		s_platform_data->console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
-		s_platform_data->console_foreground = ConsoleColor::max_enum_value;
-		s_platform_data->console_background = ConsoleColor::max_enum_value;
-		set_console_color(ConsoleColor::light_gray, ConsoleColor::black);
+		s_platform_data->console_foreground = ConsoleColor::MaxEnumValue;
+		s_platform_data->console_background = ConsoleColor::MaxEnumValue;
+		set_console_color(ConsoleColor::LightGray, ConsoleColor::Black);
 	}
 
 	return true;
@@ -57,7 +57,7 @@ void Platform::shutdown()
 {
 	if (s_platform_data->description.is_console_attached)
 	{
-		set_console_color(ConsoleColor::light_gray, ConsoleColor::black);
+		set_console_color(ConsoleColor::LightGray, ConsoleColor::Black);
 	}
 
 	s_platform_data->~WindowsPlatformData();

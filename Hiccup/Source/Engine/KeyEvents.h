@@ -13,7 +13,7 @@ namespace HC
 class KeyPressedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::key_pressed; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
 
 public:
 	KeyPressedEvent(KeyCode key)
@@ -31,7 +31,7 @@ private:
 class KeyReleasedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::key_pressed; }
+	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
 
 public:
 	KeyReleasedEvent(KeyCode key)

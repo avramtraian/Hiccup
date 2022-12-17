@@ -17,7 +17,7 @@ struct LoggerData
 {
 	LoggerDescription description;
 
-	const char* log_type_strings[(uint8)Logger::LogType::max_enum_value] =
+	const char* log_type_strings[(uint8)Logger::LogType::MaxEnumValue] =
 	{
 		"[DEBUG]:",
 		"[TRACE]:",
@@ -27,24 +27,24 @@ struct LoggerData
 		"[FATAL]:"
 	};
 
-	Platform::ConsoleColor log_type_color_FG[(uint8)Logger::LogType::max_enum_value] =
+	Platform::ConsoleColor log_type_color_FG[(uint8)Logger::LogType::MaxEnumValue] =
 	{
-		Platform::ConsoleColor::purple,         // DEBUG
-		Platform::ConsoleColor::gray,           // TRACE
-		Platform::ConsoleColor::green,          // INFO
-		Platform::ConsoleColor::light_yellow,   // WARN
-		Platform::ConsoleColor::light_red,      // ERROR
-		Platform::ConsoleColor::white           // FATAL
+		Platform::ConsoleColor::Purple,         // DEBUG
+		Platform::ConsoleColor::Gray,           // TRACE
+		Platform::ConsoleColor::Green,          // INFO
+		Platform::ConsoleColor::LightYellow,   // WARN
+		Platform::ConsoleColor::LightRed,      // ERROR
+		Platform::ConsoleColor::White           // FATAL
 	};
 
-	Platform::ConsoleColor log_type_color_BG[(uint8)Logger::LogType::max_enum_value] =
+	Platform::ConsoleColor log_type_color_BG[(uint8)Logger::LogType::MaxEnumValue] =
 	{
-		Platform::ConsoleColor::black,  // DEBUG
-		Platform::ConsoleColor::black,  // TRACE
-		Platform::ConsoleColor::black,  // INFO
-		Platform::ConsoleColor::black,  // WARN
-		Platform::ConsoleColor::black,  // ERROR
-		Platform::ConsoleColor::red     // FATAL
+		Platform::ConsoleColor::Black,  // DEBUG
+		Platform::ConsoleColor::Black,  // TRACE
+		Platform::ConsoleColor::Black,  // INFO
+		Platform::ConsoleColor::Black,  // WARN
+		Platform::ConsoleColor::Black,  // ERROR
+		Platform::ConsoleColor::Red     // FATAL
 	};
 
 #if HC_ENABLE_LOGS

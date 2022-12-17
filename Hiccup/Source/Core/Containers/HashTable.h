@@ -30,7 +30,7 @@ public:
 	// The state that a bucket can have.
 	enum class BucketState : uint8
 	{
-		empty = 0x00, deleted = 0xDD, occupied = 0xFF
+		Empty = 0x00, Deleted = 0xDD, Occupied = 0xFF
 	};
 
 	// The maximum allowed table load factor.
@@ -374,7 +374,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(cons
 
 	for (usize i = 0; i < other.m_capacity; ++i)
 	{
-		if (other.m_states[i] == BucketState::occupied)
+		if (other.m_states[i] == BucketState::Occupied)
 		{
 			const KeyValue& key_value = other.m_key_values[i];
 			internal_insert(key_value.key, key_value.value);
@@ -408,7 +408,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 
 		for (usize i = 0; i < other.m_capacity; ++i)
 		{
-			if (other.m_states[i] == BucketState::occupied)
+			if (other.m_states[i] == BucketState::Occupied)
 			{
 				KeyValue& key_value = other.m_key_values[i];
 				internal_insert(Types::move(key_value.key), Types::move(key_value.value));
@@ -417,7 +417,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 			}
 
 			other.m_size = 0;
-			Memory::set(other.m_states, (uint8)BucketState::empty, other.m_capacity * sizeof(BucketState));
+			Memory::set(other.m_states, (uint8)BucketState::Empty, other.m_capacity * sizeof(BucketState));
 		}
 	}
 }
@@ -442,7 +442,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 
 	for (usize i = 0; i < other.m_capacity; ++i)
 	{
-		if (other.m_states[i] == BucketState::occupied)
+		if (other.m_states[i] == BucketState::Occupied)
 		{
 			const KeyValue& key_value = other.m_key_values[i];
 			internal_insert(key_value.key, key_value.value);
@@ -483,7 +483,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 
 		for (usize i = 0; i < other.m_capacity; ++i)
 		{
-			if (other.m_states[i] == BucketState::occupied)
+			if (other.m_states[i] == BucketState::Occupied)
 			{
 				KeyValue& key_value = other.m_key_values[i];
 				internal_insert(Types::move(key_value.key), Types::move(key_value.value));
@@ -493,7 +493,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 		}
 
 		other.m_size = 0;
-		Memory::set(other.m_states, (uint8)BucketState::empty, other.m_capacity * sizeof(BucketState));
+		Memory::set(other.m_states, (uint8)BucketState::Empty, other.m_capacity * sizeof(BucketState));
 	}
 
 	return *this;
@@ -520,14 +520,14 @@ const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(usize index)
 {
-	HC_DASSERT(m_states[index] == BucketState::occupied); // No element is stored at the given index!
+	HC_DASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	return m_key_values[index].value;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(usize index) const
 {
-	HC_DASSERT(m_states[index] == BucketState::occupied); // No element is stored at the given index!
+	HC_DASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	return m_key_values[index].value;
 }
 
@@ -536,11 +536,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ope
 {
 	const usize index = find_index_of_first_unoccupied(key);
 
-	if (m_states[index] != BucketState::occupied)
+	if (m_states[index] != BucketState::Occupied)
 	{
 		new (&m_key_values[index].key)   KeyType(key);
 		new (&m_key_values[index].value) ValueType();
-		m_states[index] = BucketState::occupied;
+		m_states[index] = BucketState::Occupied;
 		m_size++;
 	}
 
@@ -552,11 +552,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ope
 {
 	const usize index = find_index_of_first_unoccupied(key);
 
-	if (m_states[index] != BucketState::occupied)
+	if (m_states[index] != BucketState::Occupied)
 	{
 		new (&m_key_values[index].key)   KeyType(Types::move(key));
 		new (&m_key_values[index].value) ValueType();
-		m_states[index] = BucketState::occupied;
+		m_states[index] = BucketState::Occupied;
 		m_size++;
 	}
 
@@ -580,11 +580,11 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find(con
 
 	for (usize i = 0; i < m_capacity; ++i)
 	{
-		if (m_states[index] == BucketState::occupied && Comparator::compare<KeyType>(key, m_key_values[index].key))
+		if (m_states[index] == BucketState::Occupied && Comparator::compare<KeyType>(key, m_key_values[index].key))
 		{
 			return index;
 		}
-		if (m_states[index] == BucketState::empty)
+		if (m_states[index] == BucketState::Empty)
 		{
 			break;
 		}
@@ -602,7 +602,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_exi
 
 	while (true)
 	{
-		if (m_states[index] == BucketState::occupied && Comparator::compare<KeyType>(key, m_key_values[index].key))
+		if (m_states[index] == BucketState::Occupied && Comparator::compare<KeyType>(key, m_key_values[index].key))
 		{
 			return index;
 		}
@@ -634,11 +634,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 #if HC_ENABLE_ASSERTS
 
 	const usize index = find_index_of_first_unoccupied(key);
-	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
+	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType  (key);
 	new (&m_key_values[index].value) ValueType(value);
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 	m_size++;
 
 #else
@@ -661,11 +661,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 #if HC_ENABLE_ASSERTS
 
 	const usize index = find_index_of_first_unoccupied(key);
-	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
+	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(key);
 	new (&m_key_values[index].value) ValueType(Types::move(value));
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 	m_size++;
 
 #else
@@ -688,11 +688,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 #if HC_ENABLE_ASSERTS
 
 	const usize index = find_index_of_first_unoccupied(key);
-	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
+	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(Types::move(key));
 	new (&m_key_values[index].value) ValueType(value);
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 	m_size++;
 
 #else
@@ -715,11 +715,11 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 #if HC_ENABLE_ASSERTS
 
 	const usize index = find_index_of_first_unoccupied(key);
-	HC_ASSERT(m_states[index] != BucketState::occupied); // Key already exists in the table!
+	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(Types::move(key));
 	new (&m_key_values[index].value) ValueType(Types::move(value));
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 	m_size++;
 
 #else
@@ -739,19 +739,19 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove(co
 	KeyValue& key_value = m_key_values[index];
 	key_value.key.~KeyType();
 	key_value.value.~ValueType();
-	m_states[index] = BucketState::deleted;
+	m_states[index] = BucketState::Deleted;
 	m_size--;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove_index(usize index)
 {
-	HC_ASSERT(m_states[index] == BucketState::occupied); // No element is stored at the given index!
+	HC_ASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	
 	KeyValue& key_value = m_key_values[index];
 	key_value.key.~KeyType();
 	key_value.value.~ValueType();
-	m_states[index] = BucketState::deleted;
+	m_states[index] = BucketState::Deleted;
 	m_size--;
 }
 
@@ -760,13 +760,13 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::clear()
 {
 	if (m_size == 0)
 	{
-		Memory::set(m_states, (uint8)BucketState::empty, m_capacity * sizeof(BucketState));
+		Memory::set(m_states, (uint8)BucketState::Empty, m_capacity * sizeof(BucketState));
 		return;
 	}
 
 	for (usize i = 0; i < m_capacity; ++i)
 	{
-		if (m_states[i] == BucketState::occupied)
+		if (m_states[i] == BucketState::Occupied)
 		{
 			m_key_values[i].key.~KeyType();
 			m_key_values[i].value.~ValueType();
@@ -774,7 +774,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::clear()
 	}
 
 	m_size = 0;
-	Memory::set(m_states, (uint8)BucketState::empty, m_capacity * sizeof(BucketState));
+	Memory::set(m_states, (uint8)BucketState::Empty, m_capacity * sizeof(BucketState));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -788,7 +788,7 @@ ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparat
 
 	for (usize i = 0; i < m_capacity; ++i)
 	{
-		if (m_states[i] == BucketState::occupied)
+		if (m_states[i] == BucketState::Occupied)
 		{
 			KeyValue& key_value = m_key_values[i];
 			if (!func(key_value.key, key_value.value))
@@ -810,7 +810,7 @@ ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparat
 
 	for (usize i = 0; i < m_capacity; ++i)
 	{
-		if (m_states[i] == BucketState::occupied)
+		if (m_states[i] == BucketState::Occupied)
 		{
 			const KeyValue& key_value = m_key_values[i];
 			if (!func(key_value.key, key_value.value))
@@ -855,7 +855,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 	KeyValue* new_key_values = (KeyValue*)new_data;
 	BucketState* new_states = (BucketState*)(new_key_values + newCapacity);
 
-	Memory::set(new_states, (uint8)BucketState::empty, newCapacity * sizeof(BucketState));
+	Memory::set(new_states, (uint8)BucketState::Empty, newCapacity * sizeof(BucketState));
 
 	KeyValue* old_key_values = m_key_values;
 	BucketState* old_states = m_states;
@@ -868,7 +868,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 
 	for (usize i = 0; i < old_capacity; ++i)
 	{
-		if (old_states[i] == BucketState::occupied)
+		if (old_states[i] == BucketState::Occupied)
 		{
 			internal_insert(Types::move(old_key_values[i].key), Types::move(old_key_values[i].value));
 		}
@@ -884,7 +884,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 	{
 		for (usize i = 0; i < m_capacity; ++i)
 		{
-			if (m_states[i] == BucketState::occupied)
+			if (m_states[i] == BucketState::Occupied)
 			{
 				m_key_values[i].key.~KeyType();
 				m_key_values[i].value.~ValueType();
@@ -901,7 +901,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 	m_capacity = newCapacity;
 	m_size = 0;
 
-	Memory::set(m_States, BucketState::empty, m_Capacity * sizeof(BucketState));
+	Memory::set(m_States, BucketState::Empty, m_Capacity * sizeof(BucketState));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -909,7 +909,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_fir
 {
 	while (true)
 	{
-		if (m_states[index] != BucketState::occupied)
+		if (m_states[index] != BucketState::Occupied)
 		{
 			return index;
 		}
@@ -926,21 +926,21 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_ind
 
 	for (usize i = 0; i < m_capacity; ++i)
 	{
-		if (m_states[index] == BucketState::occupied)
+		if (m_states[index] == BucketState::Occupied)
 		{
 			if (Comparator::compare<KeyType>(key, m_key_values[index].key))
 			{
 				return index;
 			}
 		}
-		else if (m_states[index] == BucketState::deleted)
+		else if (m_states[index] == BucketState::Deleted)
 		{
 			if (firstIndex == static_cast<usize>(-1))
 			{
 				firstIndex = index;
 			}
 		}
-		else if (m_states[index] == BucketState::empty)
+		else if (m_states[index] == BucketState::Empty)
 		{
 			if (firstIndex == static_cast<usize>(-1))
 			{
@@ -962,7 +962,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 
 	new (&m_key_values[index].key)   KeyType  (key);
 	new (&m_key_values[index].value) ValueType(value);
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 
 	m_size++;
 	return index;
@@ -975,7 +975,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 
 	new (&m_key_values[index].key)   KeyType  (key);
 	new (&m_key_values[index].value) ValueType(Types::move(value));
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 
 	m_size++;
 	return index;
@@ -988,7 +988,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 
 	new (&m_key_values[index].key)   KeyType  (Types::move(key));
 	new (&m_key_values[index].value) ValueType(value);
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 
 	m_size++;
 	return index;
@@ -1001,7 +1001,7 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 
 	new (&m_key_values[index].key)   KeyType  (Types::move(key));
 	new (&m_key_values[index].value) ValueType(Types::move(value));
-	m_states[index] = BucketState::occupied;
+	m_states[index] = BucketState::Occupied;
 
 	m_size++;
 	return index;

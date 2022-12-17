@@ -104,7 +104,7 @@ Window::Window(const WindowDescription& description)
 
 	// We immediately show the window, so the WS_VISIBLE flag will always be specified.
 	DWORD window_style = WS_VISIBLE;
-	if (m_view_mode == WindowViewMode::windowed)
+	if (m_view_mode == WindowViewMode::Windowed)
 	{
 		window_style |= WS_OVERLAPPEDWINDOW;
 		m_border = WindowInternalCalls::calculate_border(window_style);
@@ -120,7 +120,7 @@ Window::Window(const WindowDescription& description)
 		create_window_position_x = m_position_x;
 		create_window_position_y = m_position_y;
 
-		if (description.start_mode == WindowStartMode::maximized)
+		if (description.start_mode == WindowStartMode::Maximized)
 		{
 			window_style |= WS_MAXIMIZE;
 
@@ -144,7 +144,7 @@ Window::Window(const WindowDescription& description)
 			m_position_x = monitor_info.rcWork.left - (int32)m_border.left;
 			m_position_y = monitor_info.rcWork.top - (int32)m_border.bottom;
 		}
-		else if (description.start_mode == WindowStartMode::minimized)
+		else if (description.start_mode == WindowStartMode::Minimized)
 		{
 			window_style |= WS_MINIMIZE;
 
@@ -299,9 +299,9 @@ void Window::update_window()
 
 	if (m_is_pending_view_mode_switch)
 	{
-		if (m_view_mode == WindowViewMode::windowed)
+		if (m_view_mode == WindowViewMode::Windowed)
 		{
-			m_view_mode = WindowViewMode::fullscreen;
+			m_view_mode = WindowViewMode::Fullscreen;
 
 			// Save the current window parameters. They will be restored when the window will exit fullscreen.
 			m_saved_width = m_width;
@@ -333,7 +333,7 @@ void Window::update_window()
 		}
 		else
 		{
-			m_view_mode = WindowViewMode::windowed;
+			m_view_mode = WindowViewMode::Windowed;
 
 			const DWORD new_window_style = WS_VISIBLE | WS_OVERLAPPEDWINDOW;
 			m_border = WindowInternalCalls::calculate_border(new_window_style);

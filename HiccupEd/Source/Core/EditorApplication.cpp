@@ -12,8 +12,8 @@ bool create_application_desc(ApplicationDescription* out_application_desc)
 	out_application_desc->window_description.height = 720;
 	out_application_desc->window_description.position_x = 300;
 	out_application_desc->window_description.position_y = 200;
-	out_application_desc->window_description.view_mode = WindowViewMode::windowed;
-	out_application_desc->window_description.start_mode = WindowStartMode::maximized;
+	out_application_desc->window_description.view_mode = WindowViewMode::Windowed;
+	out_application_desc->window_description.start_mode = WindowStartMode::Maximized;
 
 #if HC_CONFIGURATION_DEBUG
 	out_application_desc->window_description.title = "Hiccup Editor --- Platform: Win64, Configuration: Debug --- Untitled*"sv;

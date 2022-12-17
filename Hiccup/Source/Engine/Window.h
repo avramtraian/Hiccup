@@ -15,12 +15,12 @@ using PFN_WindowEventCallback = void(*)(Event&);
 
 enum class WindowViewMode : uint8
 {
-	fullscreen = 0, windowed = 1
+	Fullscreen = 0, Windowed = 1
 };
 
 enum class WindowStartMode : uint8
 {
-	undefined = 0, maximized = 1, minimized = 2
+	Undefined = 0, Maximized = 1, Minimized = 2
 };
 
 struct WindowDescription
@@ -35,8 +35,8 @@ struct WindowDescription
 
 	StringView title = "Untitled"sv;
 
-	WindowViewMode view_mode = WindowViewMode::windowed;
-	WindowStartMode start_mode = WindowStartMode::undefined;
+	WindowViewMode view_mode = WindowViewMode::Windowed;
+	WindowStartMode start_mode = WindowStartMode::Undefined;
 
 	PFN_WindowEventCallback event_callback = nullptr;
 };
@@ -89,7 +89,7 @@ public:
 
 	ALWAYS_INLINE void toggle_view_mode()
 	{
-		set_view_mode(m_view_mode == WindowViewMode::windowed ? WindowViewMode::fullscreen : WindowViewMode::windowed);
+		set_view_mode(m_view_mode == WindowViewMode::Windowed ? WindowViewMode::Fullscreen : WindowViewMode::Windowed);
 	}
 
 	// Destroying a window, programmatically or by closing the window (by pressing the X button), will not happen
