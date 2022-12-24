@@ -7,12 +7,12 @@
 namespace HC
 {
 
-enum class MouseButton : uint8
+enum class MouseButton : uint8_t
 {
 	Left, Right, Middle
 };
 
-enum class KeyCode : uint16
+enum class KeyCode : uint16_t
 {
 };
 

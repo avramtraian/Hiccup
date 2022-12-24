@@ -13,12 +13,12 @@ namespace HC
 //   is fired, propagating the event across the engine.
 using PFN_WindowEventCallback = void(*)(Event&);
 
-enum class WindowViewMode : uint8
+enum class WindowViewMode : uint8_t
 {
 	Fullscreen = 0, Windowed = 1
 };
 
-enum class WindowStartMode : uint8
+enum class WindowStartMode : uint8_t
 {
 	Undefined = 0, Maximized = 1, Minimized = 2
 };
@@ -26,12 +26,12 @@ enum class WindowStartMode : uint8
 struct WindowDescription
 {
 	// The client size of the window.
-	uint32 width = 0;
-	uint32 height = 0;
+	uint32_t width = 0;
+	uint32_t height = 0;
 
 	// The position of the top-left window (not the client area) corner.
-	int32 position_x = 0;
-	int32 position_y = 0;
+	int32_t position_x = 0;
+	int32_t position_y = 0;
 
 	StringView title = "Untitled"sv;
 
@@ -51,26 +51,26 @@ public:
 	HC_API ~Window();
 
 	// Size of the window's client area.
-	ALWAYS_INLINE NODISCARD uint32 get_width() const { return m_width; }
-	ALWAYS_INLINE NODISCARD uint32 get_height() const { return m_height; }
+	ALWAYS_INLINE NODISCARD uint32_t get_width() const { return m_width; }
+	ALWAYS_INLINE NODISCARD uint32_t get_height() const { return m_height; }
 
-	HC_API void set_width(uint32 new_width);
-	HC_API void set_height(uint32 new_height);
+	HC_API void set_width(uint32_t new_width);
+	HC_API void set_height(uint32_t new_height);
 
-	ALWAYS_INLINE void set_size(uint32 new_width, uint32 new_height)
+	ALWAYS_INLINE void set_size(uint32_t new_width, uint32_t new_height)
 	{
 		set_width(new_width);
 		set_height(new_height);
 	}
 
 	// Position of the window's top-left corner (not the window's client area).
-	ALWAYS_INLINE NODISCARD uint32 get_position_x() const { return m_position_x; }
-	ALWAYS_INLINE NODISCARD uint32 get_position_y() const { return m_position_y; }
+	ALWAYS_INLINE NODISCARD uint32_t get_position_x() const { return m_position_x; }
+	ALWAYS_INLINE NODISCARD uint32_t get_position_y() const { return m_position_y; }
 
-	HC_API void set_position_x(int32 new_position_x);
-	HC_API void set_position_y(int32 new_position_y);
+	HC_API void set_position_x(int32_t new_position_x);
+	HC_API void set_position_y(int32_t new_position_y);
 
-	ALWAYS_INLINE void set_position(int32 new_position_x, int32 new_position_y)
+	ALWAYS_INLINE void set_position(int32_t new_position_x, int32_t new_position_y)
 	{
 		set_position_x(new_position_x);
 		set_position_y(new_position_y);
@@ -116,39 +116,39 @@ private:
 	void update_window();
 
 	void on_closed();
-	void on_resized(uint32 width, uint32 height);
-	void on_moved(int32 position_x, int32 position_y);
+	void on_resized(uint32_t width, uint32_t height);
+	void on_moved(int32_t position_x, int32_t position_y);
 
 private:
 	void* m_native_handle;
 	PFN_WindowEventCallback m_event_callback;
 
 	// The dimensions of the window's client area.
-	uint32 m_width;
-	uint32 m_height;
+	uint32_t m_width;
+	uint32_t m_height;
 
 	// The position of the top-left window corner (including the border), in screen coordinates.
-	int32 m_position_x;
-	int32 m_position_y;
+	int32_t m_position_x;
+	int32_t m_position_y;
 
 	// The window's parameters (width, height and position) are only modified during update_window(),
 	//   which is called at the beginning of a frame, updating the window to the state set by the last frame.
 	// When a parameter change is programmatically requested, such as resize or move, via set_size() for
 	//   example, the action is recorded in these 'dirty' values. At the beginning of the new frame, if
 	//   any of them are different than the actual current values, the window will be updated to use them.
-	uint32 m_dirty_width;
-	uint32 m_dirty_height;
-	int32 m_dirty_position_x;
-	int32 m_dirty_position_y;
+	uint32_t m_dirty_width;
+	uint32_t m_dirty_height;
+	int32_t m_dirty_position_x;
+	int32_t m_dirty_position_y;
 
 	// Used when switching between modes (fullscreen or windowed).
 	// They save the state of the window in windowed mode, right before transitioning to fullscreen. Later,
 	//   if the window is requested to go back to the windowed mode, these values will be set as the window's
 	//   parameters, essentially restoring them to their previous values.
-	uint32 m_saved_width;
-	uint32 m_saved_height;
-	int32 m_saved_position_x;
-	int32 m_saved_position_y;
+	uint32_t m_saved_width;
+	uint32_t m_saved_height;
+	int32_t m_saved_position_x;
+	int32_t m_saved_position_y;
 
 	String m_title;
 
@@ -171,10 +171,10 @@ private:
 
 	struct WindowBorder
 	{
-		uint32 left;
-		uint32 right;
-		uint32 top;
-		uint32 bottom;
+		uint32_t left;
+		uint32_t right;
+		uint32_t top;
+		uint32_t bottom;
 	};
 
 	// Currently, only used by the Windows implementation. Useful for converting between client and window space.

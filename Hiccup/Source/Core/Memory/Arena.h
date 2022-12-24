@@ -40,7 +40,7 @@ public:
 	 * 
 	 * @param size The number of bytes the arena can store.
 	 */
-	ALWAYS_INLINE LinearMemoryArena(usize size)
+	ALWAYS_INLINE LinearMemoryArena(size_t size)
 		: m_buffer(size)
 		, m_allocated(0)
 	{}
@@ -53,19 +53,19 @@ public:
 
 public:
 	/** @return Pointer to the arena's memory block. */
-	ALWAYS_INLINE uint8* data() const { return m_buffer.data; }
+	ALWAYS_INLINE uint8_t* data() const { return m_buffer.data; }
 
 	/** @return The number of bytes the arena can store. */
-	ALWAYS_INLINE usize size() const { return m_buffer.size; }
+	ALWAYS_INLINE size_t size() const { return m_buffer.size; }
 
 	/** @return The number of currently allocated bytes. */
-	ALWAYS_INLINE usize allocated() const { return m_allocated; }
+	ALWAYS_INLINE size_t allocated() const { return m_allocated; }
 
 	ALWAYS_INLINE bool is_valid() const { return (m_buffer.data != nullptr); }
 
 public:
 	/** @return True if the arena can store the given number of bytes; False otherwise. */
-	ALWAYS_INLINE bool is_able_to_store(usize bytes_count)
+	ALWAYS_INLINE bool is_able_to_store(size_t bytes_count)
 	{
 		return (m_allocated + bytes_count <= m_buffer.size);
 	}
@@ -79,7 +79,7 @@ public:
 
 	/** @return True if the arena can store an array of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool is_able_to_store_array(usize count)
+	ALWAYS_INLINE bool is_able_to_store_array(size_t count)
 	{
 		return is_able_to_store(count * sizeof(T));
 	}
@@ -93,14 +93,14 @@ public:
 	 * 
 	 * @return Pointer to the allocated memory block, or nullptr on failure.
 	 */
-	uint8* allocate(usize bytes_count)
+	uint8_t* allocate(size_t bytes_count)
 	{
 		if ((bytes_count == 0) || !is_able_to_store(bytes_count))
 		{
 			return nullptr;
 		}
 
-		uint8* memory = m_buffer.data + m_allocated;
+		uint8_t* memory = m_buffer.data + m_allocated;
 		m_allocated += bytes_count;
 		return memory;
 	}
@@ -115,7 +115,7 @@ public:
 	 * @return Pointer to the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	ALWAYS_INLINE T* allocate_as(usize bytes_count)
+	ALWAYS_INLINE T* allocate_as(size_t bytes_count)
 	{
 		return (T*)allocate(bytes_count);
 	}
@@ -141,7 +141,7 @@ public:
 	 * @retirm Pointer the allocated memory block, casted to the given type.
 	 */
 	template<typename T>
-	ALWAYS_INLINE T* allocate_array(usize count)
+	ALWAYS_INLINE T* allocate_array(size_t count)
 	{
 		return (T*)allocate(count * sizeof(T));
 	}
@@ -177,7 +177,7 @@ public:
 	 * 
 	 * @param bytesCount The number of bytes the arena can store.
 	 */
-	void allocate_memory(usize bytes_count)
+	void allocate_memory(size_t bytes_count)
 	{
 		reset();
 		m_buffer.allocate(bytes_count);
@@ -198,7 +198,7 @@ private:
 	Buffer m_buffer;
 
 	// The number of bytes currently allocated.
-	usize m_allocated;
+	size_t m_allocated;
 };
 
 /**
@@ -227,7 +227,7 @@ public:
 	 * 
 	 * @param size The number of bytes the arena can store.
 	 */
-	ALWAYS_INLINE StackMemoryArena(usize size)
+	ALWAYS_INLINE StackMemoryArena(size_t size)
 		: m_buffer(size)
 		, m_allocated(0)
 	{}
@@ -240,19 +240,19 @@ public:
 
 public:
 	/** @return Pointer to the arena's memory block. */
-	ALWAYS_INLINE uint8* data() const { return m_buffer.data; }
+	ALWAYS_INLINE uint8_t* data() const { return m_buffer.data; }
 
 	/** @return The number of bytes the arena can store. */
-	ALWAYS_INLINE usize size() const { return m_buffer.size; }
+	ALWAYS_INLINE size_t size() const { return m_buffer.size; }
 
 	/** @return The number of currently allocated bytes. */
-	ALWAYS_INLINE usize allocated() const { return m_allocated; }
+	ALWAYS_INLINE size_t allocated() const { return m_allocated; }
 
 	ALWAYS_INLINE bool is_valid() const { return (m_buffer.data != nullptr); }
 
 public:
 	/** @return True if the arena can store the given number of bytes; False otherwise. */
-	ALWAYS_INLINE bool is_able_to_store(usize bytes_count)
+	ALWAYS_INLINE bool is_able_to_store(size_t bytes_count)
 	{
 		return (m_allocated + bytes_count <= m_buffer.size);
 	}
@@ -266,26 +266,26 @@ public:
 
 	/** @return True if the arena can store an array of the given type; False otherwise. */
 	template<typename T>
-	ALWAYS_INLINE bool is_able_to_store_array(usize count)
+	ALWAYS_INLINE bool is_able_to_store_array(size_t count)
 	{
 		return is_able_to_store(count * sizeof(T));
 	}
 
 public:
-	uint8* push(usize bytes_count)
+	uint8_t* push(size_t bytes_count)
 	{
 		if ((bytes_count == 0) || !is_able_to_store(bytes_count))
 		{
 			return nullptr;
 		}
 
-		uint8* memory = m_buffer.data + m_allocated;
+		uint8_t* memory = m_buffer.data + m_allocated;
 		m_allocated += bytes_count;
 		return memory;
 	}
 
 	template<typename T>
-	ALWAYS_INLINE T* push_as(usize bytes_count)
+	ALWAYS_INLINE T* push_as(size_t bytes_count)
 	{
 		return (T*)push(bytes_count);
 	}
@@ -297,12 +297,12 @@ public:
 	}
 
 	template<typename T>
-	ALWAYS_INLINE T* push_array(usize count)
+	ALWAYS_INLINE T* push_array(size_t count)
 	{
 		return (T*)push(count * sizeof(T));
 	}
 
-	void pop(usize bytes_count)
+	void pop(size_t bytes_count)
 	{
 		HC_ASSERT(m_allocated >= bytes_count); // Trying to pop too much from the stack!
 		m_allocated -= bytes_count;
@@ -315,14 +315,14 @@ public:
 	}
 
 	template<typename T>
-	ALWAYS_INLINE void pop_array(usize count)
+	ALWAYS_INLINE void pop_array(size_t count)
 	{
 		pop(count * sizeof(T));
 	}
 
 	void pop(void* memory_address)
 	{
-		uint8* memory = (uint8*)memory_address;
+		uint8_t* memory = (uint8_t*)memory_address;
 
 		// Memory address doesn't belong to the stack!
 		HC_ASSERT(m_buffer.data <= memory_address && memory_address < m_buffer.data + m_allocated);
@@ -361,7 +361,7 @@ public:
 	 * 
 	 * @param bytesCount The number of bytes the arena can store.
 	 */
-	void allocate_memory(usize bytes_count)
+	void allocate_memory(size_t bytes_count)
 	{
 		reset();
 		m_buffer.allocate(bytes_count);
@@ -382,7 +382,7 @@ private:
 	Buffer m_buffer;
 
 	// The number of bytes currently allocated.
-	usize m_allocated;
+	size_t m_allocated;
 };
 
 } // namespace HC

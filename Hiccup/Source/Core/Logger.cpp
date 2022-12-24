@@ -17,7 +17,7 @@ struct LoggerData
 {
 	LoggerDescription description;
 
-	const char* log_type_strings[(uint8)Logger::LogType::MaxEnumValue] =
+	const char* log_type_strings[(uint8_t)Logger::LogType::MaxEnumValue] =
 	{
 		"[DEBUG]:",
 		"[TRACE]:",
@@ -27,7 +27,7 @@ struct LoggerData
 		"[FATAL]:"
 	};
 
-	Platform::ConsoleColor log_type_color_FG[(uint8)Logger::LogType::MaxEnumValue] =
+	Platform::ConsoleColor log_type_color_FG[(uint8_t)Logger::LogType::MaxEnumValue] =
 	{
 		Platform::ConsoleColor::Purple,         // DEBUG
 		Platform::ConsoleColor::Gray,           // TRACE
@@ -37,7 +37,7 @@ struct LoggerData
 		Platform::ConsoleColor::White           // FATAL
 	};
 
-	Platform::ConsoleColor log_type_color_BG[(uint8)Logger::LogType::MaxEnumValue] =
+	Platform::ConsoleColor log_type_color_BG[(uint8_t)Logger::LogType::MaxEnumValue] =
 	{
 		Platform::ConsoleColor::Black,  // DEBUG
 		Platform::ConsoleColor::Black,  // TRACE
@@ -110,17 +110,17 @@ void Logger::log(LogType type, const char* tag, const char* message, ...)
 		"[%02u:%02u:%02u][%s]%s %s\n",
 		systemTime.hour, systemTime.minute, systemTime.second,
 		tag,
-		s_logger_data->log_type_strings[(uint8)type],
+		s_logger_data->log_type_strings[(uint8_t)type],
 		s_logger_data->format_buffer.as<const char>()
 	);
 
 	va_end(argList);
 
 	Platform::set_console_color(
-		s_logger_data->log_type_color_FG[(uint8)type],
-		s_logger_data->log_type_color_BG[(uint8)type]
+		s_logger_data->log_type_color_FG[(uint8_t)type],
+		s_logger_data->log_type_color_BG[(uint8_t)type]
 	);
-	Platform::write_to_console(s_logger_data->log_buffer.as<const char>(), (usize)logLength);
+	Platform::write_to_console(s_logger_data->log_buffer.as<const char>(), (size_t)logLength);
 }
 
 #endif // HC_ENABLE_LOGS

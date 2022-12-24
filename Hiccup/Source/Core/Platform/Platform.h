@@ -41,16 +41,16 @@ public:
 
 	struct SystemTime
 	{
-		uint16 year;
-		uint16 month;
-		uint16 day;
-		uint16 hour;
-		uint16 minute;
-		uint16 second;
-		uint16 millisecond;
+		uint16_t year;
+		uint16_t month;
+		uint16_t day;
+		uint16_t hour;
+		uint16_t minute;
+		uint16_t second;
+		uint16_t millisecond;
 	};
 
-	enum PopupFlagsEnum : uint32
+	enum PopupFlagsEnum : uint32_t
 	{
 		POPUP_FLAG_NONE             = 0,
 
@@ -80,28 +80,28 @@ public:
 	static void shutdown();
 
 public:
-	static void* allocate_memory(usize bytes_count);
+	static void* allocate_memory(size_t bytes_count);
 
 	static void free_memory(void* memory_block);
 
 public:
-	static uint64 get_performance_tick_count();
-	static uint64 get_performance_tick_frequency();
+	static uint64_t get_performance_tick_count();
+	static uint64_t get_performance_tick_frequency();
 
-	static uint64 get_nanoseconds();
-	static uint64 get_nanoseconds_since_initialization();
+	static uint64_t get_nanoseconds();
+	static uint64_t get_nanoseconds_since_initialization();
 
 public:
 	static void set_console_color(ConsoleColor foreground, ConsoleColor background);
 
-	static void write_to_console(const char* message, usize message_length);
+	static void write_to_console(const char* message, size_t message_length);
 
 public:
 	static void get_local_system_time(SystemTime* out_system_time);
 	static void get_global_system_time(SystemTime* out_system_time);
 
 public:
-	static uint32 open_popup(const char* title, const char* message, uint32 flags);
+	static uint32_t open_popup(const char* title, const char* message, uint32_t flags);
 };
 
 } // namespace HC

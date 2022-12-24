@@ -7,7 +7,7 @@ void* operator new(size_t bytes_count)
 	return HC::Memory::allocate(bytes_count);
 }
 
-void* operator new(size_t bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number)
+void* operator new(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 {
 	return HC::Memory::allocate_tagged(bytes_count, filename, function_sig, line_number);
 }

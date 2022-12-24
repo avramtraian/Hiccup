@@ -14,7 +14,7 @@ namespace HC
 #define HC_INITIALIZE(SYSTEM_NAME, SYSTEM_DESCRIPTION)          \
 	if (!SYSTEM_NAME::initialize(SYSTEM_DESCRIPTION))           \
 	{	                                                        \
-		for (int32 i = system_shutdowns_count - 1; i >= 0; --i) \
+		for (int32_t i = system_shutdowns_count - 1; i >= 0; --i) \
 		{                                                       \
 			system_shutdowns[i]();                              \
 		}                                                       \
@@ -22,12 +22,12 @@ namespace HC
 	}                                                           \
 	system_shutdowns[system_shutdowns_count++] = SYSTEM_NAME::shutdown;
 
-HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDescription*), char** cmd_args, uint32 cmd_args_count)
+HC_API int32_t guarded_main(bool(*create_application_desc_callback)(ApplicationDescription*), char** cmd_args, uint32_t cmd_args_count)
 {
 	// Shutdown graph.
 	using PFN_Shutdown = void(*)(void);
 	PFN_Shutdown system_shutdowns[4] = {};
-	uint16 system_shutdowns_count = 0;
+	uint16_t system_shutdowns_count = 0;
 
 	//---------------- Initializing the Platform system ----------------
 	PlatformDescription platform_desc = {};
@@ -83,7 +83,7 @@ HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDes
 	hc_delete application;
 
 	// Shutting down the core systems.
-	for (int32 i = system_shutdowns_count - 1; i >= 0; --i)
+	for (int32_t i = system_shutdowns_count - 1; i >= 0; --i)
 	{
 		system_shutdowns[i]();
 	}

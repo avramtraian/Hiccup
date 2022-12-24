@@ -61,7 +61,7 @@ public:
 
 	private:
 		const char* m_name;
-		uint64 m_entering_time;
+		uint64_t m_entering_time;
 	};
 };
 

@@ -8,7 +8,7 @@
 namespace HC
 {
 
-HC_API int32 guarded_main(bool(*create_application_desc_callback)(ApplicationDescription*), char** cmd_args, uint32 cmd_args_count);
+HC_API int32_t guarded_main(bool(*create_application_desc_callback)(ApplicationDescription*), char** cmd_args, uint32_t cmd_args_count);
 
 bool create_application_desc(ApplicationDescription* out_application_desc);
 
@@ -19,11 +19,11 @@ bool create_application_desc(ApplicationDescription* out_application_desc);
 
 	INT WinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPSTR lpCmdLine, _In_ int nShowCmd)
 	{
-		return (INT)HC::guarded_main(HC::create_application_desc, __argv, (HC::uint32)(__argc));
+		return (INT)HC::guarded_main(HC::create_application_desc, __argv, (uint32_t)(__argc));
 	}
 #else
 	int main(int cmd_args_count, char** cmd_args)
 	{
-		return (int)HC::guarded_main(HC::create_application_desc, cmd_args, (HC::uint32)cmd_args_count);
+		return (int)HC::guarded_main(HC::create_application_desc, cmd_args, (uint32_t)cmd_args_count);
 	}
 #endif // HC_CONFIGURATION_SHIPPING

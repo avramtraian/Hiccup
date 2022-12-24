@@ -29,7 +29,7 @@ public:
 	// This will return nullptr if the calling is during the window creation or destruction.
 	ALWAYS_INLINE static Window* find_window_by_handle(void* window_handle)
 	{
-		for (usize i = 0; i < s_windows.size(); ++i)
+		for (size_t i = 0; i < s_windows.size(); ++i)
 		{
 			if (s_windows[i]->get_native_handle() == window_handle)
 			{
@@ -141,8 +141,8 @@ Window::Window(const WindowDescription& description)
 
 			// Because a maximized window has an invisible border, the window position is the monitor's
 			//   top-left available corner, minus the border size.
-			m_position_x = monitor_info.rcWork.left - (int32)m_border.left;
-			m_position_y = monitor_info.rcWork.top - (int32)m_border.bottom;
+			m_position_x = monitor_info.rcWork.left - (int32_t)m_border.left;
+			m_position_y = monitor_info.rcWork.top - (int32_t)m_border.bottom;
 		}
 		else if (description.start_mode == WindowStartMode::Minimized)
 		{
@@ -203,7 +203,7 @@ Window::Window(const WindowDescription& description)
 
 Window::~Window()
 {
-	usize index;
+	size_t index;
 	for (index = 0; index < s_windows.size(); ++index)
 	{
 		if (s_windows[index] == this)
@@ -220,7 +220,7 @@ Window::~Window()
 	DestroyWindow((HWND)m_native_handle);
 }
 
-void Window::set_width(uint32 new_width)
+void Window::set_width(uint32_t new_width)
 {
 	if (new_width != m_dirty_width)
 	{
@@ -229,7 +229,7 @@ void Window::set_width(uint32 new_width)
 	}
 }
 
-void Window::set_height(uint32 new_height)
+void Window::set_height(uint32_t new_height)
 {
 	if (new_height != m_dirty_height)
 	{
@@ -238,7 +238,7 @@ void Window::set_height(uint32 new_height)
 	}
 }
 
-void Window::set_position_x(int32 new_position_x)
+void Window::set_position_x(int32_t new_position_x)
 {
 	if (new_position_x != m_dirty_position_x)
 	{
@@ -247,7 +247,7 @@ void Window::set_position_x(int32 new_position_x)
 	}
 }
 
-void Window::set_position_y(int32 new_position_y)
+void Window::set_position_y(int32_t new_position_y)
 {
 	if (new_position_y != m_dirty_position_y)
 	{
@@ -386,8 +386,8 @@ LRESULT WindowInternalCalls::event_procedure(HWND window_handle, UINT message, W
 
 		case WM_SIZE:
 		{
-			const uint32 width = (uint32)(LOWORD(l_param));
-			const uint32 height = (uint32)(HIWORD(l_param));
+			const uint32_t width = (uint32_t)(LOWORD(l_param));
+			const uint32_t height = (uint32_t)(HIWORD(l_param));
 
 			Window* window = HC_GET_WINDOW_INSTANCE();
 			window->on_resized(width, height);

@@ -28,15 +28,15 @@ public:
 	};
 
 	// The state that a bucket can have.
-	enum class BucketState : uint8
+	enum class BucketState : uint8_t
 	{
 		Empty = 0x00, Deleted = 0xDD, Occupied = 0xFF
 	};
 
 	// The maximum allowed table load factor.
-	static constexpr float64 MaxLoadFactor = 0.75;
+	static constexpr float64_t MaxLoadFactor = 0.75;
 
-	static constexpr usize EndOfTable = static_cast<usize>(-1);
+	static constexpr size_t EndOfTable = static_cast<size_t>(-1);
 
 public:
 	/**
@@ -83,7 +83,7 @@ public:
 
 public:
 	/** @return The load factor of the table. */
-	ALWAYS_INLINE float64 get_load_factor() const;
+	ALWAYS_INLINE float64_t get_load_factor() const;
 
 public:
 	/**
@@ -112,7 +112,7 @@ public:
 	 * 
 	 * @return Reference to the value stored at the given index.
 	 */
-	ValueType& at_index(usize index);
+	ValueType& at_index(size_t index);
 
 	/**
 	 * Gets the value stored at the given index in the table's internal array.
@@ -122,7 +122,7 @@ public:
 	 * 
 	 * @return Reference to the value stored at the given index.
 	 */
-	const ValueType& at_index(usize index) const;
+	const ValueType& at_index(size_t index) const;
 
 	/**
 	 * Index operator. If the key exists, its associated value is returned. Otherwise,
@@ -166,7 +166,7 @@ public:
 	 * @return The index where the given key is stored, if it exists. If it doesn't exist,
 	 *   it returns 'EndOfTable'.
 	 */
-	usize find(const KeyType& key) const;
+	size_t find(const KeyType& key) const;
 
 	/**
 	 * Finds the index where the given key is stored.
@@ -176,7 +176,7 @@ public:
 	 *
 	 * @return The index where the given key is stored.
 	 */
-	usize find_existing_index(const KeyType& key) const;
+	size_t find_existing_index(const KeyType& key) const;
 
 	/**
 	 * Finds the value associated with the given key.
@@ -269,7 +269,7 @@ public:
 	 * 
 	 * @param key The key to remove.
 	 */
-	void remove_index(usize index);
+	void remove_index(size_t index);
 
 public:
 	/**
@@ -302,37 +302,37 @@ private:
 	ALWAYS_INLINE bool is_over_load_factor() const;
 
 	// Computes the table's natural next capacity.
-	ALWAYS_INLINE usize calculate_growth() const;
+	ALWAYS_INLINE size_t calculate_growth() const;
 
 	// Computes the table's next capacity, taking into the account the number of elements it must contain.
-	ALWAYS_INLINE usize calculate_growth(usize additional_required_size) const;
+	ALWAYS_INLINE size_t calculate_growth(size_t additional_required_size) const;
 
 	// Computes the capacity for which the table can store the required number of elements.
-	ALWAYS_INLINE usize required_capacity_for(usize required_size) const;
+	ALWAYS_INLINE size_t required_capacity_for(size_t required_size) const;
 
 	// It reallocates the table's internal memory buffer/array.
-	void re_allocate(usize new_capacity);
+	void re_allocate(size_t new_capacity);
 
 	// It reallocates the table's internal memory buffer/array, without copying the elements over.
-	void re_allocate_no_copy(usize new_capacity);
+	void re_allocate_no_copy(size_t new_capacity);
 
 	// Finds the first unoccupied index, starting with the given starting point/index.
-	usize find_first_unoccupied_index(usize index) const;
+	size_t find_first_unoccupied_index(size_t index) const;
 
 	// Finds the index where the given key is stored, or the first unoccupied index if it doesn't exist.
-	usize find_index_of_first_unoccupied(const KeyType& key) const;
+	size_t find_index_of_first_unoccupied(const KeyType& key) const;
 
 	// Inserts an element in the table.
-	usize internal_insert(const KeyType& key, const ValueType& value);
+	size_t internal_insert(const KeyType& key, const ValueType& value);
 
 	// Inserts an element in the table.
-	usize internal_insert(const KeyType& key, ValueType&& value);
+	size_t internal_insert(const KeyType& key, ValueType&& value);
 
 	// Inserts an element in the table.
-	usize internal_insert(KeyType&& key, const ValueType& value);
+	size_t internal_insert(KeyType&& key, const ValueType& value);
 
 	// Inserts an element in the table.
-	usize internal_insert(KeyType&& key, ValueType&& value);
+	size_t internal_insert(KeyType&& key, ValueType&& value);
 
 private:
 	// Pointer to the memory block that stores the key-value pairs.
@@ -342,10 +342,10 @@ private:
 	BucketState* m_states;
 
 	// The capacity (in elements) of the key-value memory block.
-	usize m_capacity;
+	size_t m_capacity;
 
 	// The number of valid elements currently stored in the container.
-	usize m_size;
+	size_t m_size;
 
 	// The allocator instance used to performs all memory allocations/deallocations.
 	AllocatorType m_allocator_instance;
@@ -372,7 +372,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(cons
 {
 	re_allocate_no_copy(required_capacity_for(other.m_size));
 
-	for (usize i = 0; i < other.m_capacity; ++i)
+	for (size_t i = 0; i < other.m_capacity; ++i)
 	{
 		if (other.m_states[i] == BucketState::Occupied)
 		{
@@ -406,7 +406,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 	{
 		re_allocate_no_copy(required_capacity_for(other.m_size));
 
-		for (usize i = 0; i < other.m_capacity; ++i)
+		for (size_t i = 0; i < other.m_capacity; ++i)
 		{
 			if (other.m_states[i] == BucketState::Occupied)
 			{
@@ -417,7 +417,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::HashTable(Hash
 			}
 
 			other.m_size = 0;
-			Memory::set(other.m_states, (uint8)BucketState::Empty, other.m_capacity * sizeof(BucketState));
+			Memory::set(other.m_states, (uint8_t)BucketState::Empty, other.m_capacity * sizeof(BucketState));
 		}
 	}
 }
@@ -434,13 +434,13 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 {
 	clear();
 
-	const usize requiredCapacity = required_capacity_for(other.m_size);
+	const size_t requiredCapacity = required_capacity_for(other.m_size);
 	if (requiredCapacity > m_capacity)
 	{
 		re_allocate_no_copy(requiredCapacity);
 	}
 
-	for (usize i = 0; i < other.m_capacity; ++i)
+	for (size_t i = 0; i < other.m_capacity; ++i)
 	{
 		if (other.m_states[i] == BucketState::Occupied)
 		{
@@ -461,7 +461,7 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 	{
 		KeyValue* tempKeyValues = m_key_values;
 		BucketState* tempStates = m_states;
-		usize tempCapacity = m_capacity;
+		size_t tempCapacity = m_capacity;
 
 		m_key_values = other.m_key_values;
 		m_states = other.m_states;
@@ -475,13 +475,13 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 	}
 	else
 	{
-		const usize requiredCapacity = required_capacity_for(other.m_size);
+		const size_t requiredCapacity = required_capacity_for(other.m_size);
 		if (requiredCapacity > m_capacity)
 		{
 			re_allocate_no_copy(requiredCapacity);
 		}
 
-		for (usize i = 0; i < other.m_capacity; ++i)
+		for (size_t i = 0; i < other.m_capacity; ++i)
 		{
 			if (other.m_states[i] == BucketState::Occupied)
 			{
@@ -493,16 +493,16 @@ HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>& HashTable<KeyT
 		}
 
 		other.m_size = 0;
-		Memory::set(other.m_states, (uint8)BucketState::Empty, other.m_capacity * sizeof(BucketState));
+		Memory::set(other.m_states, (uint8_t)BucketState::Empty, other.m_capacity * sizeof(BucketState));
 	}
 
 	return *this;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-ALWAYS_INLINE float64 HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::get_load_factor() const
+ALWAYS_INLINE float64_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::get_load_factor() const
 {
-	return (float64)m_size / (float64)m_capacity;
+	return (float64_t)m_size / (float64_t)m_capacity;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -518,14 +518,14 @@ const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(usize index)
+ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(size_t index)
 {
 	HC_DASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	return m_key_values[index].value;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(usize index) const
+const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::at_index(size_t index) const
 {
 	HC_DASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	return m_key_values[index].value;
@@ -534,7 +534,7 @@ const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::operator[](const KeyType& key)
 {
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 
 	if (m_states[index] != BucketState::Occupied)
 	{
@@ -550,7 +550,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ope
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::operator[](KeyType&& key)
 {
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 
 	if (m_states[index] != BucketState::Occupied)
 	{
@@ -570,15 +570,15 @@ const ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find(const KeyType& key) const
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find(const KeyType& key) const
 {
 	if (m_capacity == 0)
 	{
 		return EndOfTable;
 	}
-	usize index = Hasher::compute<KeyType>(key) % m_capacity;
+	size_t index = Hasher::compute<KeyType>(key) % m_capacity;
 
-	for (usize i = 0; i < m_capacity; ++i)
+	for (size_t i = 0; i < m_capacity; ++i)
 	{
 		if (m_states[index] == BucketState::Occupied && Comparator::compare<KeyType>(key, m_key_values[index].key))
 		{
@@ -596,9 +596,9 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find(con
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_existing_index(const KeyType& key) const
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_existing_index(const KeyType& key) const
 {
-	usize index = Hasher::compute<KeyType>(key) % m_capacity;
+	size_t index = Hasher::compute<KeyType>(key) % m_capacity;
 
 	while (true)
 	{
@@ -633,7 +633,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #if HC_ENABLE_ASSERTS
 
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType  (key);
@@ -643,7 +643,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #else
 
-	const usize index = internal_insert(key, value);
+	const size_t index = internal_insert(key, value);
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -660,7 +660,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #if HC_ENABLE_ASSERTS
 
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(key);
@@ -670,7 +670,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #else
 
-	const usize index = internal_insert(key, Types::move(value));
+	const size_t index = internal_insert(key, Types::move(value));
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -687,7 +687,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #if HC_ENABLE_ASSERTS
 
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(Types::move(key));
@@ -697,7 +697,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #else
 
-	const usize index = internal_insert(Types::move(key), value);
+	const size_t index = internal_insert(Types::move(key), value);
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -714,7 +714,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #if HC_ENABLE_ASSERTS
 
-	const usize index = find_index_of_first_unoccupied(key);
+	const size_t index = find_index_of_first_unoccupied(key);
 	HC_ASSERT(m_states[index] != BucketState::Occupied); // Key already exists in the table!
 
 	new (&m_key_values[index].key)   KeyType(Types::move(key));
@@ -724,7 +724,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 
 #else
 
-	const usize index = internal_insert(Types::move(key), Types::move(value));
+	const size_t index = internal_insert(Types::move(key), Types::move(value));
 
 #endif // HC_ENABLE_ASSERTS
 
@@ -734,7 +734,7 @@ ValueType& HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::ins
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
 void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove(const KeyType& key)
 {
-	const usize index = FindExistingIndex(key);
+	const size_t index = FindExistingIndex(key);
 
 	KeyValue& key_value = m_key_values[index];
 	key_value.key.~KeyType();
@@ -744,7 +744,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove(co
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove_index(usize index)
+void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::remove_index(size_t index)
 {
 	HC_ASSERT(m_states[index] == BucketState::Occupied); // No element is stored at the given index!
 	
@@ -760,11 +760,11 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::clear()
 {
 	if (m_size == 0)
 	{
-		Memory::set(m_states, (uint8)BucketState::Empty, m_capacity * sizeof(BucketState));
+		Memory::set(m_states, (uint8_t)BucketState::Empty, m_capacity * sizeof(BucketState));
 		return;
 	}
 
-	for (usize i = 0; i < m_capacity; ++i)
+	for (size_t i = 0; i < m_capacity; ++i)
 	{
 		if (m_states[i] == BucketState::Occupied)
 		{
@@ -774,7 +774,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::clear()
 	}
 
 	m_size = 0;
-	Memory::set(m_states, (uint8)BucketState::Empty, m_capacity * sizeof(BucketState));
+	Memory::set(m_states, (uint8_t)BucketState::Empty, m_capacity * sizeof(BucketState));
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
@@ -786,7 +786,7 @@ ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparat
 		return;
 	}
 
-	for (usize i = 0; i < m_capacity; ++i)
+	for (size_t i = 0; i < m_capacity; ++i)
 	{
 		if (m_states[i] == BucketState::Occupied)
 		{
@@ -808,7 +808,7 @@ ALWAYS_INLINE void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparat
 		return;
 	}
 
-	for (usize i = 0; i < m_capacity; ++i)
+	for (size_t i = 0; i < m_capacity; ++i)
 	{
 		if (m_states[i] == BucketState::Occupied)
 		{
@@ -828,45 +828,45 @@ ALWAYS_INLINE bool HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparat
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::calculate_growth() const
+ALWAYS_INLINE size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::calculate_growth() const
 {
 	return m_capacity * 2 + 2;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::calculate_growth(usize additionalRequiredSize) const
+ALWAYS_INLINE size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::calculate_growth(size_t additionalRequiredSize) const
 {
-	const usize nextCapacity = calculate_growth();
-	const usize requiredCapacity = (usize)((float64)(m_size + additionalRequiredSize) / MaxLoadFactor) + 1;
+	const size_t nextCapacity = calculate_growth();
+	const size_t requiredCapacity = (size_t)((float64_t)(m_size + additionalRequiredSize) / MaxLoadFactor) + 1;
 	return nextCapacity > requiredCapacity ? nextCapacity : requiredCapacity;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-ALWAYS_INLINE usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::required_capacity_for(usize requiredSize) const
+ALWAYS_INLINE size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::required_capacity_for(size_t requiredSize) const
 {
-	return (usize)((float64)requiredSize / MaxLoadFactor) + 1;
+	return (size_t)((float64_t)requiredSize / MaxLoadFactor) + 1;
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_allocate(usize newCapacity)
+void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_allocate(size_t newCapacity)
 {
 	void* new_data = m_allocator_instance.allocate_tagged_i(newCapacity * (sizeof(KeyValue) + sizeof(BucketState)));
 
 	KeyValue* new_key_values = (KeyValue*)new_data;
 	BucketState* new_states = (BucketState*)(new_key_values + newCapacity);
 
-	Memory::set(new_states, (uint8)BucketState::Empty, newCapacity * sizeof(BucketState));
+	Memory::set(new_states, (uint8_t)BucketState::Empty, newCapacity * sizeof(BucketState));
 
 	KeyValue* old_key_values = m_key_values;
 	BucketState* old_states = m_states;
-	usize old_capacity = m_capacity;
+	size_t old_capacity = m_capacity;
 
 	m_key_values = new_key_values;
 	m_states = new_states;
 	m_capacity = newCapacity;
 	m_size = 0;
 
-	for (usize i = 0; i < old_capacity; ++i)
+	for (size_t i = 0; i < old_capacity; ++i)
 	{
 		if (old_states[i] == BucketState::Occupied)
 		{
@@ -878,11 +878,11 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_allocate_no_copy(usize newCapacity)
+void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_allocate_no_copy(size_t newCapacity)
 {
 	if (m_size > 0)
 	{
-		for (usize i = 0; i < m_capacity; ++i)
+		for (size_t i = 0; i < m_capacity; ++i)
 		{
 			if (m_states[i] == BucketState::Occupied)
 			{
@@ -905,7 +905,7 @@ void HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::re_alloca
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_first_unoccupied_index(usize index) const
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_first_unoccupied_index(size_t index) const
 {
 	while (true)
 	{
@@ -919,12 +919,12 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_fir
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_index_of_first_unoccupied(const KeyType& key) const
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_index_of_first_unoccupied(const KeyType& key) const
 {
-	usize index = Hasher::compute<KeyType>(key) % m_capacity;
-	usize firstIndex = static_cast<usize>(-1);
+	size_t index = Hasher::compute<KeyType>(key) % m_capacity;
+	size_t firstIndex = static_cast<size_t>(-1);
 
-	for (usize i = 0; i < m_capacity; ++i)
+	for (size_t i = 0; i < m_capacity; ++i)
 	{
 		if (m_states[index] == BucketState::Occupied)
 		{
@@ -935,14 +935,14 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_ind
 		}
 		else if (m_states[index] == BucketState::Deleted)
 		{
-			if (firstIndex == static_cast<usize>(-1))
+			if (firstIndex == static_cast<size_t>(-1))
 			{
 				firstIndex = index;
 			}
 		}
 		else if (m_states[index] == BucketState::Empty)
 		{
-			if (firstIndex == static_cast<usize>(-1))
+			if (firstIndex == static_cast<size_t>(-1))
 			{
 				firstIndex = index;
 			}
@@ -956,9 +956,9 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::find_ind
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(const KeyType& key, const ValueType& value)
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(const KeyType& key, const ValueType& value)
 {
-	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
+	const size_t index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
 	new (&m_key_values[index].key)   KeyType  (key);
 	new (&m_key_values[index].value) ValueType(value);
@@ -969,9 +969,9 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(const KeyType& key, ValueType&& value)
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(const KeyType& key, ValueType&& value)
 {
-	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
+	const size_t index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
 	new (&m_key_values[index].key)   KeyType  (key);
 	new (&m_key_values[index].value) ValueType(Types::move(value));
@@ -982,9 +982,9 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(KeyType&& key, const ValueType& value)
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(KeyType&& key, const ValueType& value)
 {
-	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
+	const size_t index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
 	new (&m_key_values[index].key)   KeyType  (Types::move(key));
 	new (&m_key_values[index].value) ValueType(value);
@@ -995,9 +995,9 @@ usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal
 }
 
 template<typename KeyType, typename ValueType, typename AllocatorType, typename Hasher, typename Comparator>
-usize HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(KeyType&& key, ValueType&& value)
+size_t HashTable<KeyType, ValueType, AllocatorType, Hasher, Comparator>::internal_insert(KeyType&& key, ValueType&& value)
 {
-	const usize index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
+	const size_t index = find_first_unoccupied_index(Hasher::compute<KeyType>(key) % m_capacity);
 
 	new (&m_key_values[index].key)   KeyType  (Types::move(key));
 	new (&m_key_values[index].value) ValueType(Types::move(value));

@@ -58,7 +58,7 @@ class Logger
 {
 public:
 	// All types that a log can be.
-	enum class LogType : uint8
+	enum class LogType : uint8_t
 	{
 		Debug = 0, Trace = 1, Info = 2, Warn = 3, Error = 4, Fatal = 5,
 

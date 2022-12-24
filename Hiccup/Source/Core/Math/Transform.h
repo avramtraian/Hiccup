@@ -39,10 +39,10 @@ public:
 	ALWAYS_INLINE static Matrix3T<T> identity();
 };
 
-using Matrix3f  = Matrix3T<float32>;
-using Matrix3d  = Matrix3T<float64>;
-using Matrix3u  = Matrix3T<uint32>;
-using Matrix3i  = Matrix3T<int32>;
+using Matrix3f  = Matrix3T<float32_t>;
+using Matrix3d  = Matrix3T<float64_t>;
+using Matrix3u  = Matrix3T<uint32_t>;
+using Matrix3i  = Matrix3T<int32_t>;
 
 using Matrix3   = Matrix3f;
 
@@ -78,10 +78,10 @@ public:
 	ALWAYS_INLINE static Matrix4T<T> identity();
 };
 
-using Matrix4f  = Matrix4T<float32>;
-using Matrix4d  = Matrix4T<float64>;
-using Matrix4u  = Matrix4T<uint32>;
-using Matrix4i  = Matrix4T<int32>;
+using Matrix4f  = Matrix4T<float32_t>;
+using Matrix4d  = Matrix4T<float64_t>;
+using Matrix4u  = Matrix4T<uint32_t>;
+using Matrix4i  = Matrix4T<int32_t>;
 
 using Matrix4   = Matrix4f;
 

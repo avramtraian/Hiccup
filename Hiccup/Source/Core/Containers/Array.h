@@ -34,7 +34,7 @@ public:
 		re_allocate_no_copy(other.m_size);
 		m_size = other.m_size;
 
-		for (usize i = 0; i < m_size; ++i) {
+		for (size_t i = 0; i < m_size; ++i) {
 			new (m_data + i) T(other.m_data[i]);
 		}
 	}
@@ -65,7 +65,7 @@ public:
 		}
 
 		m_size = other.m_size;
-		for (usize i = 0; i < m_size; ++i) {
+		for (size_t i = 0; i < m_size; ++i) {
 			new (m_data + i) T(other.m_data[i]);
 		}
 
@@ -77,7 +77,7 @@ public:
 		clear();
 
 		T* temp_data = m_data;
-		usize temp_capacity = m_capacity;
+		size_t temp_capacity = m_capacity;
 
 		m_data = other.m_data;
 		m_capacity = other.m_capacity;
@@ -93,34 +93,34 @@ public:
 public:
 	ALWAYS_INLINE T* data() const { return m_data }
 
-	ALWAYS_INLINE usize size() const { return m_size; }
+	ALWAYS_INLINE size_t size() const { return m_size; }
 
-	ALWAYS_INLINE usize capacity() const { return m_capacity; }
+	ALWAYS_INLINE size_t capacity() const { return m_capacity; }
 
 	ALWAYS_INLINE bool is_empty() const { return (m_size == 0); }
 
 	ALWAYS_INLINE NODISCARD Span<T> span() const { return Span<T>(m_data, m_size); }
 
 public:
-	ALWAYS_INLINE T& operator[](usize index)
+	ALWAYS_INLINE T& operator[](size_t index)
 	{
 		HC_ASSERT(index < m_size); // Index out of range!
 		return m_data[index];
 	}
 
-	ALWAYS_INLINE const T& operator[](usize index) const
+	ALWAYS_INLINE const T& operator[](size_t index) const
 	{
 		HC_ASSERT(index < m_size); // Index out of range!
 		return m_data[index];
 	}
 
-	ALWAYS_INLINE T& at(usize index)
+	ALWAYS_INLINE T& at(size_t index)
 	{
 		HC_ASSERT(index < m_size); // Index out of range!
 		return m_data[index];
 	}
 
-	ALWAYS_INLINE const T& at(usize index) const
+	ALWAYS_INLINE const T& at(size_t index) const
 	{
 		HC_ASSERT(index < m_size); // Index out of range!
 		return m_data[index];
@@ -183,23 +183,23 @@ public:
 		return m_data[m_size++];
 	}
 
-	usize add_defaulted(usize count)
+	size_t add_defaulted(size_t count)
 	{
 		if (should_grow(count)) {
 			re_allocate(calculate_growth(count));
 		}
 
-		const usize old_size = m_size;
+		const size_t old_size = m_size;
 		m_size += count;
 
-		for (usize i = old_size; i < m_size; ++i) {
+		for (size_t i = old_size; i < m_size; ++i) {
 			new (m_data + i) T();
 		}
 
 		return old_size;
 	}
 
-	usize add_zeroed()
+	size_t add_zeroed()
 	{
 		if (should_grow(1)) {
 			re_allocate(calculate_growth());
@@ -209,19 +209,19 @@ public:
 		return (m_size++);
 	}
 
-	usize add_zeroed(usize count)
+	size_t add_zeroed(size_t count)
 	{
 		if (should_grow(count)) {
 			re_allocate(calculate_growth(count));
 		}
 
 		Memory::zero(m_data + m_size, count * sizeof(T));
-		const usize old_size = m_size;
+		const size_t old_size = m_size;
 		m_size += count;
 		return old_size;
 	}
 
-	usize add_uninitialized()
+	size_t add_uninitialized()
 	{
 		if (should_grow(1)) {
 			re_allocate(calculate_growth());
@@ -230,13 +230,13 @@ public:
 		return (m_size++);
 	}
 
-	usize add_uninitialized(usize count)
+	size_t add_uninitialized(size_t count)
 	{
 		if (should_grow(count)) {
 			re_allocate(calculate_growth(count));
 		}
 
-		const usize old_size = m_size;
+		const size_t old_size = m_size;
 		m_size += count;
 		return old_size;
 	}
@@ -249,11 +249,11 @@ public:
 		m_data[--m_size].~T();
 	}
 
-	void pop(usize count)
+	void pop(size_t count)
 	{
 		HC_ASSERT(m_size >= count); // Trying to pop too many elements!
 
-		for (usize i = 0; i < count; ++i) {
+		for (size_t i = 0; i < count; ++i) {
 			m_data[m_size - count - 1].~T();
 		}
 		m_size -= count;
@@ -263,23 +263,23 @@ public:
 	// Resizes the array. If the given size is greater than the current size, all newly included elements
 	//   are initialized with their default constructor.
 	// This function will cause a reallocation if the array's internal buffer is not big enough.
-	void set_size_defaulted(usize new_size)
+	void set_size_defaulted(size_t new_size)
 	{
 		// Save the current number of elements in the array.
-		const usize old_size = m_size;
+		const size_t old_size = m_size;
 
 		// Perform the actual resizing.
 		set_size_uninitialized(new_size);
 
 		// Construct the newly included elements in the array.
-		for (usize index = old_size; index < m_size; ++index) {
+		for (size_t index = old_size; index < m_size; ++index) {
 			new (m_data + index) T();
 		}
 	}
 
-	void set_size_zeroed(usize new_size)
+	void set_size_zeroed(size_t new_size)
 	{
-		const usize old_size = m_size;
+		const size_t old_size = m_size;
 		set_size_uninitialized(new_size);
 
 		if (m_size > old_size) {
@@ -287,13 +287,13 @@ public:
 		}
 	}
 
-	void set_size_uninitialized(usize new_size)
+	void set_size_uninitialized(size_t new_size)
 	{
 		if (new_size > m_capacity) {
 			re_allocate(calculate_growth(new_size - m_size));
 		}
 		else {
-			for (usize index = new_size; index < m_size; ++index) {
+			for (size_t index = new_size; index < m_size; ++index) {
 				m_data[index].~T();
 			}
 		}
@@ -301,12 +301,12 @@ public:
 		m_size = new_size;
 	}
 
-	void set_size_internal(usize new_size)
+	void set_size_internal(size_t new_size)
 	{
 		m_size = new_size;
 	}
 
-	void set_capacity(usize new_capacity)
+	void set_capacity(size_t new_capacity)
 	{
 		if (new_capacity == m_capacity) {
 			return;
@@ -317,7 +317,7 @@ public:
 
 	void clear()
 	{
-		for (usize i = 0; i < m_size; ++i) {
+		for (size_t i = 0; i < m_size; ++i) {
 			m_data[i].~T();
 		}
 		m_size = 0;
@@ -325,38 +325,38 @@ public:
 
 private:
 	// Checks whether or not the container can store an additional number of elements, without reallocating.
-	ALWAYS_INLINE bool should_grow(usize required_additional_size) const
+	ALWAYS_INLINE bool should_grow(size_t required_additional_size) const
 	{
 		return (m_size + required_additional_size) > m_capacity;
 	}
 
 	// Calculates the array's natural growth.
-	ALWAYS_INLINE usize calculate_growth() const
+	ALWAYS_INLINE size_t calculate_growth() const
 	{
 		return m_capacity + m_capacity / 2 + 1;
 	}
 
 	// Whether the array's natural growth, or the minimum required size.
-	ALWAYS_INLINE usize calculate_growth(usize required_additional_size) const
+	ALWAYS_INLINE size_t calculate_growth(size_t required_additional_size) const
 	{
-		const usize natural_growth = calculate_growth();
-		const usize requiredCapacity = m_size + required_additional_size;
+		const size_t natural_growth = calculate_growth();
+		const size_t requiredCapacity = m_size + required_additional_size;
 		return natural_growth > requiredCapacity ? natural_growth : requiredCapacity;
 	}
 
-	void re_allocate(usize new_capacity)
+	void re_allocate(size_t new_capacity)
 	{
 		T* new_data = (T*)m_allocator_instance.allocate_tagged_i(new_capacity * sizeof(T));
 
 		if (m_size > new_capacity) {
-			for (usize i = new_capacity; i < m_size; ++i)
+			for (size_t i = new_capacity; i < m_size; ++i)
 			{
 				m_data[i].~T();
 			}
 			m_size = new_capacity;
 		}
 
-		for (usize i = 0; i < m_size; ++i) {
+		for (size_t i = 0; i < m_size; ++i) {
 			new (new_data + i) T(Types::move(m_data[i]));
 			m_data[i].~T();
 		}
@@ -367,7 +367,7 @@ private:
 		m_capacity = new_capacity;
 	}
 
-	void re_allocate_no_copy(usize new_capacity)
+	void re_allocate_no_copy(size_t new_capacity)
 	{
 		T* new_data = (T*)m_allocator_instance.allocate_tagged_i(new_capacity * sizeof(T));
 
@@ -388,10 +388,10 @@ private:
 	T* m_data;
 
 	// The capacity (in elements) of the memory block.
-	usize m_capacity;
+	size_t m_capacity;
 
 	// The number of valid elements currently stored in the array.
-	usize m_size;
+	size_t m_size;
 
 	// The allocator instance used to perform all memory allocations/deallocations.
 	AllocatorType m_allocator_instance;

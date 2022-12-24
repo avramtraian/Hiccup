@@ -16,19 +16,19 @@ public:
 	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseMoved; }
 
 public:
-	MouseMovedEvent(int32 position_x, int32 position_y)
+	MouseMovedEvent(int32_t position_x, int32_t position_y)
 		: Event(get_static_type())
 		, m_position_x(position_x)
 		, m_position_y(position_y)
 	{}
 
 public:
-	ALWAYS_INLINE int32 get_position_x() const { return m_position_x; }
-	ALWAYS_INLINE int32 get_position_y() const { return m_position_y; }
+	ALWAYS_INLINE int32_t get_position_x() const { return m_position_x; }
+	ALWAYS_INLINE int32_t get_position_y() const { return m_position_y; }
 
 private:
-	int32 m_position_x;
-	int32 m_position_y;
+	int32_t m_position_x;
+	int32_t m_position_y;
 };
 
 class MouseButtonPressed : public Event
@@ -73,16 +73,16 @@ public:
 	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::MouseWheelScrolled; }
 
 public:
-	MouseWheelScrolledEvent(int32 delta)
+	MouseWheelScrolledEvent(int32_t delta)
 		: Event(get_static_type())
 		, m_delta(delta)
 	{}
 
 public:
-	ALWAYS_INLINE int32 get_delta() const { return m_delta; }
+	ALWAYS_INLINE int32_t get_delta() const { return m_delta; }
 
 private:
-	int32 m_delta;
+	int32_t m_delta;
 };
 
 } // namespace HC

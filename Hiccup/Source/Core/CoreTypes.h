@@ -4,28 +4,6 @@
 
 #include <cstdint>
 
-namespace HC
-{
-
-using uint8     = uint8_t;
-using uint16    = uint16_t;
-using uint32    = uint32_t;
-using uint64    = uint64_t;
-
-using int8      = int8_t;
-using int16     = int16_t;
-using int32     = int32_t;
-using int64     = int64_t;
-
-using float32   = float;
-using float64   = double;
-
-using bool8     = int8;
-using bool32    = int32;
-
-using usize     = size_t;
-using uptr      = uintptr_t;
-
 // The type cannot be copied.
 #define HC_NON_COPIABLE(TYPE_NAME)          \
 	TYPE_NAME(const TYPE_NAME&) = delete;   \
@@ -35,6 +13,12 @@ using uptr      = uintptr_t;
 #define HC_NON_MOVABLE(TYPE_NAME)                           \
 	TYPE_NAME(TYPE_NAME&&) noexcept = delete;               \
 	TYPE_NAME& operator=(TYPE_NAME&&) noexcept = delete;
+
+namespace HC
+{
+
+using float32_t = float;
+using float64_t = double;
 
 /**
  *----------------------------------------------------------------
@@ -86,7 +70,7 @@ public:
 		using Type = T;
 	};
 
-	template<typename T, usize N>
+	template<typename T, size_t N>
 	struct ArrayToPointerDecay<T[N]>
 	{
 		using Type = T*;

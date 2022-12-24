@@ -26,7 +26,7 @@ public:
 		: m_view(Types::move(other.m_view))
 	{}
 
-	ALWAYS_INLINE constexpr StringView(const char* utf8_string, usize utf8_string_bytes_count)
+	ALWAYS_INLINE constexpr StringView(const char* utf8_string, size_t utf8_string_bytes_count)
 		: m_view(utf8_string, utf8_string_bytes_count)
 	{}
 
@@ -47,12 +47,12 @@ public:
 	// Allows easy compatibility with C libraries (or any library that uses raw strings).
 	ALWAYS_INLINE NODISCARD const char* c_str() const { return (const char*)bytes(); }
 
-	ALWAYS_INLINE NODISCARD uint8* bytes() const { return m_view.bytes(); }
+	ALWAYS_INLINE NODISCARD uint8_t* bytes() const { return m_view.bytes(); }
 
-	ALWAYS_INLINE NODISCARD usize bytes_count() const { return m_view.bytes_count(); }
+	ALWAYS_INLINE NODISCARD size_t bytes_count() const { return m_view.bytes_count(); }
 
 	// Wrapper around bytes() and bytes_count().
-	ALWAYS_INLINE NODISCARD Span<uint8> bytes_span() const { return Span<uint8>(bytes(), bytes_count()); }
+	ALWAYS_INLINE NODISCARD Span<uint8_t> bytes_span() const { return Span<uint8_t>(bytes(), bytes_count()); }
 
 public:
 	ALWAYS_INLINE NODISCARD Span<const char> to_span() const

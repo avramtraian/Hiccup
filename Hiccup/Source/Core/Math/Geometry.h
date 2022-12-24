@@ -244,16 +244,16 @@ public:
 };
 
 // 2-Component vector, with 32-bit floating point precision.
-using Vector2f  = Vector2T<float32>;
+using Vector2f  = Vector2T<float32_t>;
 
 // 2-Component vector, with 64-bit floating point precision.
-using Vector2d  = Vector2T<float64>;
+using Vector2d  = Vector2T<float64_t>;
 
 // 2-Component vector, with 32-bit unsigned integer precision.
-using Vector2u  = Vector2T<uint32>;
+using Vector2u  = Vector2T<uint32_t>;
 
 // 2-Component vector, with 32-bit signed integer precision.
-using Vector2i  = Vector2T<int32>;
+using Vector2i  = Vector2T<int32_t>;
 
 // 2-Component vector, with floating point precision.
 using Vector2   = Vector2f;
@@ -498,16 +498,16 @@ public:
 };
 
 // 3-Component vector, with 32-bit floating point precision.
-using Vector3f  = Vector3T<float32>;
+using Vector3f  = Vector3T<float32_t>;
 
 // 3-Component vector, with 64-bit floating point precision.
-using Vector3d  = Vector3T<float64>;
+using Vector3d  = Vector3T<float64_t>;
 
 // 3-Component vector, with 32-bit unsigned integer precision.
-using Vector3u  = Vector3T<uint32>;
+using Vector3u  = Vector3T<uint32_t>;
 
 // 3-Component vector, with 32-bit signed integer precision.
-using Vector3i  = Vector3T<int32>;
+using Vector3i  = Vector3T<int32_t>;
 
 // 3-Component vector, with floating point precision.
 using Vector3   = Vector3f;
@@ -687,16 +687,16 @@ public:
 };
 
 // 4-Component vector, with 32-bit floating point precision.
-using Vector4f  = Vector4T<float32>;
+using Vector4f  = Vector4T<float32_t>;
 
 // 4-Component vector, with 64-bit floating point precision.
-using Vector4d  = Vector4T<float64>;
+using Vector4d  = Vector4T<float64_t>;
 
 // 4-Component vector, with 32-bit unsigned integer precision.
-using Vector4u  = Vector4T<uint32>;
+using Vector4u  = Vector4T<uint32_t>;
 
 // 4-Component vector, with 32-bit signed integer precision.
-using Vector4i  = Vector4T<int32>;
+using Vector4i  = Vector4T<int32_t>;
 
 // 4-Component vector, with floating point precision.
 using Vector4   = Vector4f;
@@ -1274,16 +1274,16 @@ public:
 };
 
 // Ray, with 32-bit floating point precision.
-using Rayf = RayT<float32>;
+using Rayf = RayT<float32_t>;
 
 // Ray, with 64-bit floating point precision.
-using Rayd = RayT<float64>;
+using Rayd = RayT<float64_t>;
 
 // Ray, with 32-bit unsigned integer precision.
-using Rayu = RayT<uint32>;
+using Rayu = RayT<uint32_t>;
 
 // Ray, with 32-bit signed integer precision.
-using Rayi = RayT<int32>;
+using Rayi = RayT<int32_t>;
 
 // Ray, with floating point precision.
 using Ray = Rayf;
@@ -1329,10 +1329,10 @@ public:
 	ALWAYS_INLINE bool contains_point(const Vector2T<T>& point) const;
 };
 
-using AABB2f = AABB2T<float32>;
-using AABB2d = AABB2T<float64>;
-using AABB2u = AABB2T<uint32>;
-using AABB2i = AABB2T<int32>;
+using AABB2f = AABB2T<float32_t>;
+using AABB2d = AABB2T<float64_t>;
+using AABB2u = AABB2T<uint32_t>;
+using AABB2i = AABB2T<int32_t>;
 
 using AABB2 = AABB2f;
 
@@ -1366,10 +1366,10 @@ public:
 	ALWAYS_INLINE bool contains_point(const Vector3T<T>& point) const;
 };
 
-using AABB3f    = AABB3T<float32>;
-using AABB3d    = AABB3T<float64>;
-using AABB3u    = AABB3T<uint32>;
-using AABB3i    = AABB3T<int32>;
+using AABB3f    = AABB3T<float32_t>;
+using AABB3d    = AABB3T<float64_t>;
+using AABB3u    = AABB3T<uint32_t>;
+using AABB3i    = AABB3T<int32_t>;
 
 using AABB3     = AABB3f;
 

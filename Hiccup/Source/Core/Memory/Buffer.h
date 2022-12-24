@@ -21,10 +21,10 @@ struct HC_API Buffer
 {
 public:
 	// Pointer the buffer's memory block.
-	uint8* data;
+	uint8_t* data;
 
 	// The number of bytes the buffer can store.
-	usize size;
+	size_t size;
 
 public:
 	// Default constructor.
@@ -38,7 +38,7 @@ public:
 	 *
 	 * @param size The number of bytes the buffer can store.
 	 */
-	ALWAYS_INLINE Buffer(usize in_size)
+	ALWAYS_INLINE Buffer(size_t in_size)
 		: data(nullptr)
 		, size(0)
 	{
@@ -80,14 +80,14 @@ public:
 	 * 
 	 * @param size The number of bytes the buffer can store.
 	 */
-	ALWAYS_INLINE void allocate(usize in_size)
+	ALWAYS_INLINE void allocate(size_t in_size)
 	{
 		if (data)
 		{
 			release();
 		}
 
-		data = hc_new uint8[in_size];
+		data = hc_new uint8_t[in_size];
 		size = in_size;
 	}
 

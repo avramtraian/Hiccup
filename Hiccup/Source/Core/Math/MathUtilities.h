@@ -129,8 +129,8 @@ public:
 
 public:
 	/** @return The square root. */
-	HC_API static float32 sqrt(float32 x);
-	HC_API static float64 sqrt(float64 x);
+	HC_API static float32_t sqrt(float32_t x);
+	HC_API static float64_t sqrt(float64_t x);
 
 	/**
 	 * Calculates the sine of an angle.
@@ -139,8 +139,8 @@ public:
 	 * 
 	 * @return The sine of the angle.
 	 */
-	HC_API static float32 sin(float32 x);
-	HC_API static float64 sin(float64 x);
+	HC_API static float32_t sin(float32_t x);
+	HC_API static float64_t sin(float64_t x);
 
 	/**
 	 * Calculates the cosine of an angle.
@@ -149,8 +149,8 @@ public:
 	 *
 	 * @return The cosine of the angle.
 	 */
-	HC_API static float32 cos(float32 x);
-	HC_API static float64 cos(float64 x);
+	HC_API static float32_t cos(float32_t x);
+	HC_API static float64_t cos(float64_t x);
 
 	/**
 	 * Calculates the tangent of an angle.
@@ -159,8 +159,8 @@ public:
 	 *
 	 * @return The tangent of the angle.
 	 */
-	HC_API static float32 tan(float32 x);
-	HC_API static float64 tan(float64 x);
+	HC_API static float32_t tan(float32_t x);
+	HC_API static float64_t tan(float64_t x);
 
 	/**
 	 * Calculates the arcsine of an value.
@@ -169,8 +169,8 @@ public:
 	 *
 	 * @return The arcsine of the value, expressed in radians.
 	 */
-	HC_API static float32 asin(float32 x);
-	HC_API static float64 asin(float64 x);
+	HC_API static float32_t asin(float32_t x);
+	HC_API static float64_t asin(float64_t x);
 
 	/**
 	 * Calculates the arccosine of an value.
@@ -179,8 +179,8 @@ public:
 	 *
 	 * @return The arccosine of the value, expressed in radians.
 	 */
-	HC_API static float32 acos(float32 x);
-	HC_API static float64 acos(float64 x);
+	HC_API static float32_t acos(float32_t x);
+	HC_API static float64_t acos(float64_t x);
 
 	/**
 	 * Calculates the arctangent of an value.
@@ -189,8 +189,8 @@ public:
 	 *
 	 * @return The arctangent of the value, expressed in radians.
 	 */
-	HC_API static float32 atan(float32 x);
-	HC_API static float64 atan(float64 x);
+	HC_API static float32_t atan(float32_t x);
+	HC_API static float64_t atan(float64_t x);
 };
 
 // Converts kilobytes to bytes.

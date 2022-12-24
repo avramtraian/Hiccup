@@ -7,7 +7,7 @@
 namespace HC
 {
 
-enum class EventType : uint16
+enum class EventType : uint16_t
 {
 	WindowClosed,
 	WindowResized,

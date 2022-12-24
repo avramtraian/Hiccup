@@ -5,20 +5,20 @@
 namespace HC
 {
 
-usize utf8_string_bytes_count(const char* utf8_string)
+size_t utf8_string_bytes_count(const char* utf8_string)
 {
 	const char* s = utf8_string;
 	while (*(utf8_string++));
 	return utf8_string - s - 1;
 }
 
-usize utf8_string_length(const char* utf8_string)
+size_t utf8_string_length(const char* utf8_string)
 {
-	usize length = 0;
+	size_t length = 0;
 
-	for (usize i = 0; i < static_cast<usize>(-1); ++i, ++length)
+	for (size_t i = 0; i < static_cast<size_t>(-1); ++i, ++length)
 	{
-		int32 codepoint = (int32)utf8_string[i];
+		int32_t codepoint = (int32_t)utf8_string[i];
 		if (codepoint == 0)
 		{
 			break;

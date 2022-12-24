@@ -61,7 +61,7 @@ public:
 	 * @param source Where the memory will be copied from.
 	 * @param bytes_count The number of bytes to copy.
 	 */
-	HC_API static void copy(void* detination, const void* source, usize bytes_count);
+	HC_API static void copy(void* detination, const void* source, size_t bytes_count);
 
 	/**
 	 * Sets a block of memory to a given value.
@@ -71,7 +71,7 @@ public:
 	 * @param value The value for each byte.
 	 * @param bytes_count The number of bytes to set.
 	 */
-	HC_API static void set(void* detination, uint8 value, usize bytes_count);
+	HC_API static void set(void* detination, uint8_t value, size_t bytes_count);
 
 	/**
 	 * Zeros a block of memory.
@@ -80,7 +80,7 @@ public:
 	 * @param destination The address of the memory block to zero.
 	 * @param bytes_count The number of bytes to zero.
 	 */
-	HC_API static void zero(void* detination, usize bytes_count);
+	HC_API static void zero(void* detination, size_t bytes_count);
 
 public:
 	/**
@@ -93,7 +93,7 @@ public:
 	 * 
 	 * @return The address of the allocated memory block.
 	 */
-	HC_API static void* allocate_raw(usize bytes_count);
+	HC_API static void* allocate_raw(size_t bytes_count);
 
 	/**
 	 * Allocates a block of memory.
@@ -103,7 +103,7 @@ public:
 	 *
 	 * @return The address of the allocated memory block.
 	 */
-	HC_API static void* allocate(usize bytes_count);
+	HC_API static void* allocate(size_t bytes_count);
 
 	/**
 	 * Allocates a block of memory.
@@ -119,7 +119,7 @@ public:
 	 *
 	 * @return The address of the allocated memory block.
 	*/
-	HC_API static void* allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number);
+	HC_API static void* allocate_tagged(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number);
 
 	/**
 	 * Frees a memory block.
@@ -163,28 +163,28 @@ public:
 
 	public:
 		/** @return The total number of bytes allocated (from the global heap) during the application's lifetime. */
-		HC_API static usize get_total_allocated();
+		HC_API static size_t get_total_allocated();
 
 		/** @return The total number of allocations (from the global heap, of any size) during the application's lifetime. */
-		HC_API static usize get_total_allocations_count();
+		HC_API static size_t get_total_allocations_count();
 
 		/** @return The total number of bytes deallocated (from the global heap) during the application's lifetime. */
-		HC_API static usize get_total_deallocated();
+		HC_API static size_t get_total_deallocated();
 
 		/** @return The total number of deallocations (from the global heap, of any size) during the application's lifetime. */
-		HC_API static usize get_total_deallocations_count();
+		HC_API static size_t get_total_deallocations_count();
 
 		/** @return The number of bytes that are currently allocated (from the global heap). */
-		HC_API static usize get_current_allocated();
+		HC_API static size_t get_current_allocated();
 
 		/** @return The number of allocations (from the global heap, of any size) that are currently alive. */
-		HC_API static usize get_current_allocations_count();
+		HC_API static size_t get_current_allocations_count();
 
 		HC_API static void log_memory_usage();
 
 	private:
-		HC_API static void register_allocation(void* memory_block, usize bytes_count);
-		HC_API static void register_tagged_allocation(void* memory_block, usize bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number);
+		HC_API static void register_allocation(void* memory_block, size_t bytes_count);
+		HC_API static void register_tagged_allocation(void* memory_block, size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number);
 
 		HC_API static void register_deallocation(void* memory_block);
 
@@ -208,7 +208,7 @@ private:
 void* operator new(size_t bytes_count);
 
 // New operator, providing full memory tracking functionality.
-void* operator new(size_t bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number);
+void* operator new(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number);
 
 // Delete operator.
 void operator delete(void* memory_block) noexcept;
@@ -228,31 +228,31 @@ class HeapAllocator
 {
 public:
 	/** @see 'Memory::allocate_raw'. */
-	ALWAYS_INLINE void* allocate_raw(usize bytes_count)
+	ALWAYS_INLINE void* allocate_raw(size_t bytes_count)
 	{
 		return Memory::allocate(bytes_count);
 	}
 
 	/** @see 'Memory::allocate'. */
-	ALWAYS_INLINE void* allocate(usize bytes_count)
+	ALWAYS_INLINE void* allocate(size_t bytes_count)
 	{
 		return Memory::allocate(bytes_count);
 	}
 
 	/** @see 'Memory::allocate_tagged'. */
-	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
+	ALWAYS_INLINE void* allocate_tagged(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 	{
 		return Memory::allocate_tagged(bytes_count, filename, function_sig, line_number);
 	}
 
 	/** @see 'Memory::free_raw'. */
-	ALWAYS_INLINE void free_raw(void* memory_block, usize bytes_count)
+	ALWAYS_INLINE void free_raw(void* memory_block, size_t bytes_count)
 	{
 		Memory::free_raw(memory_block);
 	}
 
 	/** @see 'Memory::free'. */
-	ALWAYS_INLINE void free(void* memory_block, usize bytes_count)
+	ALWAYS_INLINE void free(void* memory_block, size_t bytes_count)
 	{
 		Memory::free(memory_block);
 	}
@@ -273,31 +273,31 @@ class UntrackedAllocator
 {
 public:
 	/** @see 'Memory::allocate_raw'. */
-	ALWAYS_INLINE void* allocate_raw(usize bytes_count)
+	ALWAYS_INLINE void* allocate_raw(size_t bytes_count)
 	{
 		return Memory::allocate_raw(bytes_count);
 	}
 
 	/** @see 'Memory::allocate'. */
-	ALWAYS_INLINE void* allocate(usize bytes_count)
+	ALWAYS_INLINE void* allocate(size_t bytes_count)
 	{
 		return Memory::allocate_raw(bytes_count);
 	}
 
 	/** @see 'Memory::allocate_tagged'. */
-	ALWAYS_INLINE void* allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
+	ALWAYS_INLINE void* allocate_tagged(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 	{
 		return Memory::allocate_raw(bytes_count);
 	}
 
 	/** @see 'Memory::free_raw'. */
-	ALWAYS_INLINE void free_raw(void* memory_block, usize bytes_count)
+	ALWAYS_INLINE void free_raw(void* memory_block, size_t bytes_count)
 	{
 		Memory::free_raw(memory_block);
 	}
 
 	/** @see 'Memory::free'. */
-	ALWAYS_INLINE void free(void* memory_block, usize bytes_count)
+	ALWAYS_INLINE void free(void* memory_block, size_t bytes_count)
 	{
 		Memory::free_raw(memory_block);
 	}

@@ -13,7 +13,7 @@ namespace HC
 struct ProfilerData
 {
 	ProfilerDescription   description;
-	uint64                frame_index;
+	uint64_t                frame_index;
 	bool                  is_in_frame;
 };
 static_internal ProfilerData* s_profiler_data = nullptr;
@@ -66,8 +66,8 @@ Profiler::ScopedTimer::ScopedTimer(const char* scope_name)
 
 Profiler::ScopedTimer::~ScopedTimer()
 {
-	const uint64 exitingTime = Platform::get_nanoseconds_since_initialization();
-	const uint64 scopeTime = exitingTime - m_entering_time;
+	const uint64_t exitingTime = Platform::get_nanoseconds_since_initialization();
+	const uint64_t scopeTime = exitingTime - m_entering_time;
 
 	// s_ProfilerData->ScopedTimerRecords[m_Name] += scopeTime;
 }

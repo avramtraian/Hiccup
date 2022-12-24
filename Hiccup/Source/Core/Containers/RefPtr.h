@@ -7,7 +7,7 @@
 
 #define HC_REFERENCED_COUNTED_OBJECT                    \
 	private:                                            \
-		::HC::uint64 m_reference_count_internal = 0;    \
+		::HC::uint64_t m_reference_count_internal = 0;    \
 		                                                \
 		template<typename T>                            \
 		friend class ::HC::RefPtr;

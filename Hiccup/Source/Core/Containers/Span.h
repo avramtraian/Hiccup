@@ -31,12 +31,12 @@ public:
 		other.m_count = 0;
 	}
 
-	ALWAYS_INLINE constexpr Span(T* values, usize count)
+	ALWAYS_INLINE constexpr Span(T* values, size_t count)
 		: m_values(values)
 		, m_count(count)
 	{}
 
-	template<usize Count>
+	template<size_t Count>
 	ALWAYS_INLINE constexpr Span(T (&values)[Count])
 		: m_values(values)
 		, m_count(Count)
@@ -64,7 +64,7 @@ public:
 		return *this;
 	}
 
-	template<usize Count>
+	template<size_t Count>
 	ALWAYS_INLINE constexpr Span<T>& operator=(T(&values)[Count])
 	{
 		m_values = values;
@@ -83,17 +83,17 @@ public:
 	ALWAYS_INLINE T* values() { return m_values; }
 	ALWAYS_INLINE const T* values() const { return m_values; }
 
-	ALWAYS_INLINE usize count() const { return m_count; }
+	ALWAYS_INLINE size_t count() const { return m_count; }
 
 	ALWAYS_INLINE bool is_empty() const { return (m_count == 0); }
 
-	ALWAYS_INLINE uint8* bytes() const { return (uint8*)m_values; }
+	ALWAYS_INLINE uint8_t* bytes() const { return (uint8_t*)m_values; }
 
-	ALWAYS_INLINE usize bytes_count() const { return m_count * sizeof(T); }
+	ALWAYS_INLINE size_t bytes_count() const { return m_count * sizeof(T); }
 
 private:
 	T* m_values;
-	usize m_count;
+	size_t m_count;
 };
 
 } // namespace HC

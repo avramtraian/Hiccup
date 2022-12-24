@@ -47,22 +47,22 @@ void Memory::shutdown()
 	s_memory_data = nullptr;
 }
 
-void Memory::copy(void* detination, const void* source, usize bytes_count)
+void Memory::copy(void* detination, const void* source, size_t bytes_count)
 {
 	std::memcpy(detination, source, bytes_count);
 }
 
-void Memory::set(void* detination, uint8 value, usize bytes_count)
+void Memory::set(void* detination, uint8_t value, size_t bytes_count)
 {
 	std::memset(detination, (int)value, bytes_count);
 }
 
-void Memory::zero(void* detination, usize bytes_count)
+void Memory::zero(void* detination, size_t bytes_count)
 {
 	Memory::set(detination, 0, bytes_count);
 }
 
-void* Memory::allocate_raw(usize bytes_count)
+void* Memory::allocate_raw(size_t bytes_count)
 {
 	if (bytes_count == 0)
 	{
@@ -72,7 +72,7 @@ void* Memory::allocate_raw(usize bytes_count)
 	return Platform::allocate_memory(bytes_count);
 }
 
-void* Memory::allocate(usize bytes_count)
+void* Memory::allocate(size_t bytes_count)
 {
 	if (bytes_count == 0)
 	{
@@ -89,7 +89,7 @@ void* Memory::allocate(usize bytes_count)
 	return memory_block;
 }
 
-void* Memory::allocate_tagged(usize bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number)
+void* Memory::allocate_tagged(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 {
 	if (bytes_count == 0)
 	{
@@ -134,18 +134,18 @@ using UntrackedHashTable = HashTable<KeyType, ValueType, UntrackedAllocator>;
 
 struct AllocationInfo
 {
-	usize       bytes_count;
+	size_t       bytes_count;
 	const char* filename;
 	const char* function_sig;
-	uint32      line_number;
+	uint32_t      line_number;
 };
 
 struct MemoryTrackerData
 {
-	usize allocated             = 0;
-	usize allocations_count     = 0;
-	usize deallocated           = 0;
-	usize deallocations_count   = 0;
+	size_t allocated             = 0;
+	size_t allocations_count     = 0;
+	size_t deallocated           = 0;
+	size_t deallocations_count   = 0;
 
 	UntrackedHashTable<void*, AllocationInfo> allocations_table;
 };
@@ -176,32 +176,32 @@ bool Memory::Tracker::is_active()
 	return s_tracker_data != nullptr;
 }
 
-usize Memory::Tracker::get_total_allocated()
+size_t Memory::Tracker::get_total_allocated()
 {
 	return s_tracker_data->allocated;
 }
 
-usize Memory::Tracker::get_total_allocations_count()
+size_t Memory::Tracker::get_total_allocations_count()
 {
 	return s_tracker_data->allocations_count;
 }
 
-usize Memory::Tracker::get_total_deallocated()
+size_t Memory::Tracker::get_total_deallocated()
 {
 	return s_tracker_data->deallocated;
 }
 
-usize Memory::Tracker::get_total_deallocations_count()
+size_t Memory::Tracker::get_total_deallocations_count()
 {
 	return s_tracker_data->deallocations_count;
 }
 
-usize Memory::Tracker::get_current_allocated()
+size_t Memory::Tracker::get_current_allocated()
 {
 	return s_tracker_data->allocated - s_tracker_data->deallocated;
 }
 
-usize Memory::Tracker::get_current_allocations_count()
+size_t Memory::Tracker::get_current_allocations_count()
 {
 	return s_tracker_data->allocations_count - s_tracker_data->deallocations_count;
 }
@@ -219,20 +219,20 @@ void Memory::Tracker::log_memory_usage()
 		});
 }
 
-void Memory::Tracker::register_allocation(void* memory_block, usize bytes_count)
+void Memory::Tracker::register_allocation(void* memory_block, size_t bytes_count)
 {
 	s_tracker_data->allocated += bytes_count;
 	s_tracker_data->allocations_count++;
 
 	// TODO(Traian): Maybe have a separate table for allocation sizes?
-	//   Seems a bit wasteful to have a full 'AllocationInfo' used for only a 'usize'.
+	//   Seems a bit wasteful to have a full 'AllocationInfo' used for only a 'size_t'.
 	AllocationInfo allocation = {};
 	allocation.bytes_count = bytes_count;
 
 	s_tracker_data->allocations_table.insert(memory_block, Types::move(allocation));
 }
 
-void Memory::Tracker::register_tagged_allocation(void* memory_block, usize bytes_count, const char* filename, const char* function_sig, uint32 line_number)
+void Memory::Tracker::register_tagged_allocation(void* memory_block, size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 {
 	s_tracker_data->allocated += bytes_count;
 	s_tracker_data->allocations_count++;
@@ -248,7 +248,7 @@ void Memory::Tracker::register_tagged_allocation(void* memory_block, usize bytes
 
 void Memory::Tracker::register_deallocation(void* memory_block)
 {
-	const usize allocationIndex = s_tracker_data->allocations_table.find_existing_index(memory_block);
+	const size_t allocationIndex = s_tracker_data->allocations_table.find_existing_index(memory_block);
 	const AllocationInfo& allocation = s_tracker_data->allocations_table.at_index(allocationIndex);
 
 	s_tracker_data->deallocated += allocation.bytes_count;
@@ -265,7 +265,7 @@ void* operator new(size_t bytes_count)
 	return HC::Memory::allocate(bytes_count);
 }
 
-void* operator new(size_t bytes_count, const char* filename, const char* function_sig, HC::uint32 line_number)
+void* operator new(size_t bytes_count, const char* filename, const char* function_sig, uint32_t line_number)
 {
 	return HC::Memory::allocate_tagged(bytes_count, filename, function_sig, line_number);
 }

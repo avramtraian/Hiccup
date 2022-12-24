@@ -13,8 +13,8 @@ namespace HC
 struct WindowsPlatformData
 {
 	PlatformDescription     description;
-	uint64                  performance_tick_frequency;
-	uint64                  initialization_nanoseconds;
+	uint64_t                  performance_tick_frequency;
+	uint64_t                  initialization_nanoseconds;
 	HANDLE                  console_handle;
 	Platform::ConsoleColor  console_foreground;
 	Platform::ConsoleColor  console_background;
@@ -65,7 +65,7 @@ void Platform::shutdown()
 	s_platform_data = nullptr;
 }
 
-void* Platform::allocate_memory(usize bytes_count)
+void* Platform::allocate_memory(size_t bytes_count)
 {
 	return std::malloc(bytes_count);
 }
@@ -75,28 +75,28 @@ void Platform::free_memory(void* memory_block)
 	std::free(memory_block);
 }
 
-uint64 Platform::get_performance_tick_count()
+uint64_t Platform::get_performance_tick_count()
 {
 	LARGE_INTEGER performance_counter;
 	QueryPerformanceCounter(&performance_counter);
 	return performance_counter.QuadPart;
 }
 
-uint64 Platform::get_performance_tick_frequency()
+uint64_t Platform::get_performance_tick_frequency()
 {
 	return s_platform_data->performance_tick_frequency;
 }
 
-uint64 Platform::get_nanoseconds()
+uint64_t Platform::get_nanoseconds()
 {
-	const uint64 ticks = get_performance_tick_count();
-	const uint64 ticks_freq = s_platform_data->performance_tick_frequency;
+	const uint64_t ticks = get_performance_tick_count();
+	const uint64_t ticks_freq = s_platform_data->performance_tick_frequency;
 
-	const float64 nanoseconds = ((float64)ticks * 1e9) / (float64)ticks_freq;
-	return (uint64)nanoseconds;
+	const float64_t nanoseconds = ((float64_t)ticks * 1e9) / (float64_t)ticks_freq;
+	return (uint64_t)nanoseconds;
 }
 
-uint64 Platform::get_nanoseconds_since_initialization()
+uint64_t Platform::get_nanoseconds_since_initialization()
 {
 	return get_nanoseconds() - s_platform_data->initialization_nanoseconds;
 }
@@ -120,7 +120,7 @@ void Platform::set_console_color(ConsoleColor foreground, ConsoleColor backgroun
 	SetConsoleTextAttribute(s_platform_data->console_handle, console_color);
 }
 
-void Platform::write_to_console(const char* message, usize message_length)
+void Platform::write_to_console(const char* message, size_t message_length)
 {
 	if (!s_platform_data->description.is_console_attached)
 	{
@@ -158,7 +158,7 @@ void Platform::get_global_system_time(SystemTime* out_system_time)
 	out_system_time->millisecond = systemTime.wMilliseconds;
 }
 
-uint32 Platform::open_popup(const char* title, const char* message, uint32 flags)
+uint32_t Platform::open_popup(const char* title, const char* message, uint32_t flags)
 {
 	UINT type = 0;
 

@@ -25,7 +25,7 @@
 namespace HC
 {
 
-HC_API void on_assert_failed(const char* expression, const char* category, const char* filename, const char* function_sig, uint32 line_number, const char* message, ...);
+HC_API void on_assert_failed(const char* expression, const char* category, const char* filename, const char* function_sig, uint32_t line_number, const char* message, ...);
 
 } // namespace HC
 

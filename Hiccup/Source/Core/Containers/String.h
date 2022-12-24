@@ -13,11 +13,11 @@ namespace HC
 
 // Gets the number of bytes an UTF-8 encoded, null-terminated string occupies.
 // The value returned doesn't include the null-termination byte/character.
-HC_API NODISCARD usize utf8_string_bytes_count(const char* utf8_string);
+HC_API NODISCARD size_t utf8_string_bytes_count(const char* utf8_string);
 
 // Gets the number of codepoints an UTF-8 encoded, null-terminated string has.
 // The value returned doesn't include the null-termination character.
-HC_API NODISCARD usize utf8_string_length(const char* utf8_string);
+HC_API NODISCARD size_t utf8_string_length(const char* utf8_string);
 
 // Checks if two UTF-8 encoded, null-terminated strings are equal.
 // Equality means that the strings are composed from the exact same sequence of characters,
@@ -37,7 +37,7 @@ ALWAYS_INLINE StringView constexpr operator""sv(const char* ascii_string, std::s
 class HC_API String
 {
 private:
-	constexpr static usize SSOSize = sizeof(char*);
+	constexpr static size_t SSOSize = sizeof(char*);
 
 public:
 	String()
@@ -116,15 +116,15 @@ public:
 	// This checks to see if the sso inlined buffer or the heap buffer is being used.
 	// So, if you already know where the data is stored, it is recommended that you
 	//   directly use m_heap_bytes or m_sso_bytes.
-	ALWAYS_INLINE NODISCARD uint8* bytes() const { return (uint8*)(is_using_sso() ? m_sso_bytes : m_heap_bytes); }
+	ALWAYS_INLINE NODISCARD uint8_t* bytes() const { return (uint8_t*)(is_using_sso() ? m_sso_bytes : m_heap_bytes); }
 
 	// Gets bytes_count.
 	// Should only be called by the end-user. For internal purposes, always use m_bytes_count.
-	ALWAYS_INLINE NODISCARD usize bytes_count() const { return m_bytes_count; }
+	ALWAYS_INLINE NODISCARD size_t bytes_count() const { return m_bytes_count; }
 
 	// Constructs a span from the String's buffer.
 	// It is a wrapper around bytes() and bytes_count().
-	ALWAYS_INLINE NODISCARD Span<uint8> bytes_span() const { return Span<uint8>(bytes(), bytes_count()); }
+	ALWAYS_INLINE NODISCARD Span<uint8_t> bytes_span() const { return Span<uint8_t>(bytes(), bytes_count()); }
 
 public:
 	ALWAYS_INLINE NODISCARD StringView to_view() const
@@ -224,7 +224,7 @@ private:
 	// Allocates a memory block on the heap for the string.
 	// It expects new_bytes_count to be greater than the maximum number of bytes that can be stored inlined.
 	//   Also, the new_bytes_count must be different than m_bytes_count, so we don't have unnecessary reallocations.
-	void allocate(usize new_bytes_count)
+	void allocate(size_t new_bytes_count)
 	{
 		HC_ASSERT(new_bytes_count != m_bytes_count && new_bytes_count > SSOSize);
 
@@ -265,7 +265,7 @@ private:
 	};
 
 	// The number of bytes the string occupies. This values includes the null-terminated byte/character.
-	usize m_bytes_count;
+	size_t m_bytes_count;
 };
 
 } // namespace HC
