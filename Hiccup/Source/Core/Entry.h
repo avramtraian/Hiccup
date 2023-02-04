@@ -1,4 +1,4 @@
-// Copyright (c) 2022-2022 Avram Traian. All rights reserved.
+// Copyright (c) 2022-2023 Avram Traian. All rights reserved.
 
 #pragma once
 
@@ -26,4 +26,4 @@ bool create_application_desc(ApplicationDescription* out_application_desc);
 	{
 		return (int)HC::guarded_main(HC::create_application_desc, cmd_args, (uint32_t)cmd_args_count);
 	}
-#endif // HC_CONFIGURATION_SHIPPING
+#endif // HC_CONFIGURATION_SHIPPING && HC_PLATFORM_WINDOWS
