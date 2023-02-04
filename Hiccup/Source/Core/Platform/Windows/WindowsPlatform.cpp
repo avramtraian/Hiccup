@@ -13,8 +13,8 @@ namespace HC
 struct WindowsPlatformData
 {
 	PlatformDescription     description;
-	uint64_t                  performance_tick_frequency;
-	uint64_t                  initialization_nanoseconds;
+	uint64_t                performance_tick_frequency;
+	uint64_t                initialization_nanoseconds;
 	HANDLE                  console_handle;
 	Platform::ConsoleColor  console_foreground;
 	Platform::ConsoleColor  console_background;
@@ -24,8 +24,7 @@ static_internal WindowsPlatformData* s_platform_data = nullptr;
 bool Platform::initialize(const PlatformDescription& description)
 {
 	s_platform_data = (WindowsPlatformData*)std::malloc(sizeof(WindowsPlatformData));
-	if (!s_platform_data)
-	{
+	if (!s_platform_data) {
 		return false;
 	}
 
@@ -34,16 +33,14 @@ bool Platform::initialize(const PlatformDescription& description)
 	s_platform_data->description = description;
 
 	LARGE_INTEGER performance_tick_frequency;
-	if (!QueryPerformanceFrequency(&performance_tick_frequency))
-	{
+	if (!QueryPerformanceFrequency(&performance_tick_frequency)) {
 		return false;
 	}
 	s_platform_data->performance_tick_frequency = performance_tick_frequency.QuadPart;
 
 	s_platform_data->initialization_nanoseconds = get_nanoseconds();
 
-	if (s_platform_data->description.is_console_attached)
-	{
+	if (s_platform_data->description.is_console_attached) {
 		s_platform_data->console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
 		s_platform_data->console_foreground = ConsoleColor::MaxEnumValue;
 		s_platform_data->console_background = ConsoleColor::MaxEnumValue;
@@ -55,8 +52,7 @@ bool Platform::initialize(const PlatformDescription& description)
 
 void Platform::shutdown()
 {
-	if (s_platform_data->description.is_console_attached)
-	{
+	if (s_platform_data->description.is_console_attached) {
 		set_console_color(ConsoleColor::LightGray, ConsoleColor::Black);
 	}
 
@@ -103,13 +99,11 @@ uint64_t Platform::get_nanoseconds_since_initialization()
 
 void Platform::set_console_color(ConsoleColor foreground, ConsoleColor background)
 {
-	if (!s_platform_data->description.is_console_attached)
-	{
+	if (!s_platform_data->description.is_console_attached) {
 		return;
 	}
 	 
-	if (s_platform_data->console_foreground == foreground && s_platform_data->console_background == background)
-	{
+	if (s_platform_data->console_foreground == foreground && s_platform_data->console_background == background) {
 		return;
 	}
 
@@ -122,8 +116,7 @@ void Platform::set_console_color(ConsoleColor foreground, ConsoleColor backgroun
 
 void Platform::write_to_console(const char* message, size_t message_length)
 {
-	if (!s_platform_data->description.is_console_attached)
-	{
+	if (!s_platform_data->description.is_console_attached) {
 		return;
 	}
 
@@ -162,40 +155,27 @@ uint32_t Platform::open_popup(const char* title, const char* message, uint32_t f
 {
 	UINT type = 0;
 
-	if (flags & POPUP_FLAG_BUTTON_OK)
-	{
+	if (flags & POPUP_FLAG_BUTTON_OK) {
 		type = MB_OK;
-	}
-	else if (flags & POPUP_FLAG_BUTTONS_CANCEL_TRY_CONTINUE)
-	{
+	} else if (flags & POPUP_FLAG_BUTTONS_CANCEL_TRY_CONTINUE) {
 		type = MB_CANCELTRYCONTINUE;
-	}
-	else if (flags & POPUP_FLAG_BUTTONS_RETRY_CANCEL)
-	{
+	} else if (flags & POPUP_FLAG_BUTTONS_RETRY_CANCEL) {
 		type = MB_RETRYCANCEL;
-	}
-	else if (flags & POPUP_FLAG_BUTTONS_YES_NO)
-	{
+	} else if (flags & POPUP_FLAG_BUTTONS_YES_NO) {
 		type = MB_YESNO;
-	}
-	else if (flags & POPUP_FLAG_BUTTONS_YES_NO_CANCEL)
-	{
+	} else if (flags & POPUP_FLAG_BUTTONS_YES_NO_CANCEL) {
 		type = MB_YESNOCANCEL;
-	}
-	else
-	{
+	} else {
 		HC_LOG_ERROR("Platform::OpenPopup - No valid combination of buttons was specified!");
 		return POPUP_FLAG_NONE;
 	}
 
-	if (flags & POPUP_FLAG_ICON_ERROR)
-	{
+	if (flags & POPUP_FLAG_ICON_ERROR) {
 		type |= MB_ICONERROR;
 	}
 
 	int button = MessageBoxA(NULL, message, title, type);
-	switch (button)
-	{
+	switch (button) {
 		case IDABORT:    return POPUP_FLAG_BUTTON_ABORT;
 		case IDCANCEL:   return POPUP_FLAG_BUTTON_CANCEL;
 		case IDCONTINUE: return POPUP_FLAG_BUTTON_CONTINUE;
