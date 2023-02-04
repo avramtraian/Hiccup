@@ -19,6 +19,7 @@
 //////// CONTAINERS ////////
 
 #include "Core/Containers/Array.h"
+#include "Core/Containers/FixedArray.h"
 #include "Core/Containers/String.h"
 #include "Core/Containers/StringView.h"
 #include "Core/Containers/Span.h"
