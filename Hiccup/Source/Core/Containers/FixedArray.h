@@ -95,7 +95,7 @@ public:
     ReverseConstIterator rend() const { return ReverseConstIterator(elements() - 1); }
 
 private:
-    // The elements stored of the array.
+    // The elements stored in the array.
     T m_elements[C];
 
     static_assert(C > 0, "A 'FixedArray' container must have a size greater 0!");
