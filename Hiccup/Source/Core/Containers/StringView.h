@@ -45,14 +45,27 @@ public:
 
 public:
 	// Allows easy compatibility with C libraries (or any library that uses raw strings).
-	ALWAYS_INLINE NODISCARD const char* c_str() const { return (const char*)bytes(); }
+	ALWAYS_INLINE const char* c_str() const { return (const char*)bytes(); }
 
-	ALWAYS_INLINE NODISCARD uint8_t* bytes() const { return m_view.bytes(); }
+	// The read/write modifiers of the bytes are given by the const-ness of the function.
+	ALWAYS_INLINE ReadonlyBytes bytes() const { return m_view.bytes(); }
+	ALWAYS_INLINE ReadWriteBytes bytes() { return m_view.bytes(); }
 
-	ALWAYS_INLINE NODISCARD size_t bytes_count() const { return m_view.bytes_count(); }
+	// Wrappers around 'bytes', explicitly specifying the bytes' read/write modifiers.
+	ALWAYS_INLINE ReadonlyBytes readonly_bytes() const { return bytes(); }
+	ALWAYS_INLINE WriteonlyBytes writeonly_bytes() { return bytes(); }
+	ALWAYS_INLINE ReadWriteBytes read_write_bytes() { return bytes(); }
 
-	// Wrapper around bytes() and bytes_count().
-	ALWAYS_INLINE NODISCARD Span<uint8_t> bytes_span() const { return Span<uint8_t>(bytes(), bytes_count()); }
+	ALWAYS_INLINE size_t bytes_count() const { return m_view.bytes_count(); }
+
+	// The read/write modifiers of the bytes are given by the const-ness of the function.
+	ALWAYS_INLINE Span<ReadonlyByte> bytes_span() const { return Span<ReadonlyByte>(bytes(), bytes_count()); }
+	ALWAYS_INLINE Span<ReadWriteByte> bytes_span() { return Span<ReadWriteByte>(bytes(), bytes_count()); }
+
+	// Wrappers around 'bytes_span', explicitly specifying the bytes' read/write modifiers.
+    ALWAYS_INLINE Span<ReadonlyByte> readonly_bytes_span() const { return bytes_span(); }
+    ALWAYS_INLINE Span<WriteonlyByte> writeonly_byte_spans() { return bytes_span(); }
+    ALWAYS_INLINE Span<ReadWriteByte> read_write_byt_spanes() { return bytes_span(); }
 
 public:
 	ALWAYS_INLINE NODISCARD Span<const char> to_span() const
