@@ -20,6 +20,14 @@ namespace HC
 using float32_t = float;
 using float64_t = double;
 
+using ReadonlyByte = const uint8_t;
+using WriteonlyByte = uint8_t;
+using ReadWriteByte = uint8_t;
+
+using ReadonlyBytes = ReadonlyByte*;
+using WriteonlyBytes = WriteonlyByte*;
+using ReadWriteBytes = ReadWriteByte*;
+
 /**
  *----------------------------------------------------------------
  * Hiccup Types Utilities.
