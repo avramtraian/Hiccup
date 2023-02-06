@@ -21,22 +21,22 @@ template<typename T>
 struct Matrix3T
 {
 public:
-	union
-	{
-		T           data[3 * 3];
-		T           m[3][3];
-		Vector3T<T> rows[3];
-	};
+    union
+    {
+        T           data[3 * 3];
+        T           m[3][3];
+        Vector3T<T> rows[3];
+    };
 
 public:
-	/**
-	 * Default constructor.
-	 */
-	ALWAYS_INLINE Matrix3T();
+    /**
+     * Default constructor.
+     */
+    ALWAYS_INLINE Matrix3T();
 
 public:
-	/** @return An identity matrix. */
-	ALWAYS_INLINE static Matrix3T<T> identity();
+    /** @return An identity matrix. */
+    ALWAYS_INLINE static Matrix3T<T> identity();
 };
 
 using Matrix3f  = Matrix3T<float32_t>;
@@ -60,22 +60,22 @@ template<typename T>
 struct Matrix4T
 {
 public:
-	union
-	{
-		T           data[4 * 4];
-		T           m[4][4];
-		Vector4T<T> rows[4];
-	};
+    union
+    {
+        T           data[4 * 4];
+        T           m[4][4];
+        Vector4T<T> rows[4];
+    };
 
 public:
-	/**
-	 * Default constructor.
-	 */
-	ALWAYS_INLINE Matrix4T();
+    /**
+     * Default constructor.
+     */
+    ALWAYS_INLINE Matrix4T();
 
 public:
-	/** @return An identity matrix. */
-	ALWAYS_INLINE static Matrix4T<T> identity();
+    /** @return An identity matrix. */
+    ALWAYS_INLINE static Matrix4T<T> identity();
 };
 
 using Matrix4f  = Matrix4T<float32_t>;
@@ -92,18 +92,18 @@ using Matrix4   = Matrix4f;
 
 template<typename T>
 ALWAYS_INLINE Matrix3T<T>::Matrix3T()
-	: data{}
+    : data{}
 {}
 
 template<typename T>
 ALWAYS_INLINE Matrix3T<T> Matrix3T<T>::identity()
 {
-	return Matrix3T<T>
-	(
-		T(1), T(0), T(0),
-		T(0), T(1), T(0),
-		T(0), T(0), T(1)
-	);
+    return Matrix3T<T>
+    (
+        T(1), T(0), T(0),
+        T(0), T(1), T(0),
+        T(0), T(0), T(1)
+    );
 }
 
 // Matrix3 Implementation
@@ -113,19 +113,19 @@ ALWAYS_INLINE Matrix3T<T> Matrix3T<T>::identity()
 
 template<typename T>
 ALWAYS_INLINE Matrix4T<T>::Matrix4T()
-	: Data{}
+    : Data{}
 {}
 
 template<typename T>
 ALWAYS_INLINE Matrix4T<T> Matrix4T<T>::identity()
 {
-	return Matrix4T<T>
-	(
-		T(1), T(0), T(0), T(0),
-		T(0), T(1), T(0), T(0),
-		T(0), T(0), T(1), T(0),
-		T(0), T(0), T(0), T(1)
-	);
+    return Matrix4T<T>
+    (
+        T(1), T(0), T(0), T(0),
+        T(0), T(1), T(0), T(0),
+        T(0), T(0), T(1), T(0),
+        T(0), T(0), T(0), T(1)
+    );
 }
 
 // Matrix4 Implementation

@@ -9,7 +9,7 @@ namespace HC
 
 enum class MouseButton : uint8_t
 {
-	Left, Right, Middle
+    Left, Right, Middle
 };
 
 enum class KeyCode : uint16_t

@@ -13,37 +13,37 @@ namespace HC
 class KeyPressedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
+    ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
 
 public:
-	KeyPressedEvent(KeyCode key)
-		: Event(get_static_type())
-		, m_key(key)
-	{}
+    KeyPressedEvent(KeyCode key)
+        : Event(get_static_type())
+        , m_key(key)
+    {}
 
 public:
-	ALWAYS_INLINE KeyCode get_key() const { return m_key; }
+    ALWAYS_INLINE KeyCode get_key() const { return m_key; }
 
 private:
-	KeyCode m_key;
+    KeyCode m_key;
 };
 
 class KeyReleasedEvent : public Event
 {
 public:
-	ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
+    ALWAYS_INLINE constexpr static EventType get_static_type() { return EventType::KeyPressed; }
 
 public:
-	KeyReleasedEvent(KeyCode key)
-		: Event(get_static_type())
-		, m_key(key)
-	{}
+    KeyReleasedEvent(KeyCode key)
+        : Event(get_static_type())
+        , m_key(key)
+    {}
 
 public:
-	ALWAYS_INLINE KeyCode get_key() const { return m_key; }
+    ALWAYS_INLINE KeyCode get_key() const { return m_key; }
 
 private:
-	KeyCode m_key;
+    KeyCode m_key;
 };
 
 } // namespace HC

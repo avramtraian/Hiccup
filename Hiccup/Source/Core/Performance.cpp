@@ -12,64 +12,64 @@ namespace HC
 
 struct ProfilerData
 {
-	ProfilerDescription   description;
-	uint64_t                frame_index;
-	bool                  is_in_frame;
+    ProfilerDescription   description;
+    uint64_t                frame_index;
+    bool                  is_in_frame;
 };
 static_internal ProfilerData* s_profiler_data = nullptr;
 
 bool Profiler::initialize(const ProfilerDescription& description)
 {
-	s_profiler_data = hc_new ProfilerData();
+    s_profiler_data = hc_new ProfilerData();
 
-	s_profiler_data->description = description;
-	s_profiler_data->frame_index = 0;
-	s_profiler_data->is_in_frame = false;
+    s_profiler_data->description = description;
+    s_profiler_data->frame_index = 0;
+    s_profiler_data->is_in_frame = false;
 
-	return true;
+    return true;
 }
 
 void Profiler::shutdown()
 {
-	hc_delete s_profiler_data;
-	s_profiler_data = nullptr;
+    hc_delete s_profiler_data;
+    s_profiler_data = nullptr;
 }
 
 void Profiler::begin_frame()
 {
-	if (s_profiler_data->is_in_frame)
-	{
-		HC_LOG_WARN("Profiler::BeginFrame - Trying to begin a new frame, while another one is in flight!");
-		return;
-	}
+    if (s_profiler_data->is_in_frame)
+    {
+        HC_LOG_WARN("Profiler::BeginFrame - Trying to begin a new frame, while another one is in flight!");
+        return;
+    }
 
-	s_profiler_data->is_in_frame = true;
+    s_profiler_data->is_in_frame = true;
 }
 
 void Profiler::end_frame()
 {
-	if (!s_profiler_data->is_in_frame)
-	{
-		HC_LOG_WARN("Profiler::EndFrame - No frame is in flight.");
-		return;
-	}
+    if (!s_profiler_data->is_in_frame)
+    {
+        HC_LOG_WARN("Profiler::EndFrame - No frame is in flight.");
+        return;
+    }
 
-	s_profiler_data->is_in_frame = false;
-	s_profiler_data->frame_index++;
+    s_profiler_data->is_in_frame = false;
+    s_profiler_data->frame_index++;
 }
 
 Profiler::ScopedTimer::ScopedTimer(const char* scope_name)
-	: m_name(scope_name)
+    : m_name(scope_name)
 {
-	m_entering_time = Platform::get_nanoseconds_since_initialization();
+    m_entering_time = Platform::get_nanoseconds_since_initialization();
 }
 
 Profiler::ScopedTimer::~ScopedTimer()
 {
-	const uint64_t exitingTime = Platform::get_nanoseconds_since_initialization();
-	const uint64_t scopeTime = exitingTime - m_entering_time;
+    const uint64_t exitingTime = Platform::get_nanoseconds_since_initialization();
+    const uint64_t scopeTime = exitingTime - m_entering_time;
 
-	// s_ProfilerData->ScopedTimerRecords[m_Name] += scopeTime;
+    // s_ProfilerData->ScopedTimerRecords[m_Name] += scopeTime;
 }
 
 #endif // HC_ENABLE_PROFILING

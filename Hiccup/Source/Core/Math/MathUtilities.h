@@ -63,134 +63,134 @@ namespace HC
 struct Math
 {
 public:
-	// Calculates the absolute value.
-	template<typename T>
-	ALWAYS_INLINE static T abs(T x)
-	{
-		return (x < 0) ? -x : x;
-	}
+    // Calculates the absolute value.
+    template<typename T>
+    ALWAYS_INLINE static T abs(T x)
+    {
+        return (x < 0) ? -x : x;
+    }
 
-	// Gets the maximum value between two numbers.
-	template<typename T>
-	ALWAYS_INLINE static T max(T a, T b)
-	{
-		return (a > b) ? a : b;
-	}
+    // Gets the maximum value between two numbers.
+    template<typename T>
+    ALWAYS_INLINE static T max(T a, T b)
+    {
+        return (a > b) ? a : b;
+    }
 
-	// Gets the maximum absolute value between two numbers.
-	template<typename T>
-	ALWAYS_INLINE static T abs_max(T a, T b)
-	{
-		return Math::max<T>(Math::abs<T>(a), Math::abs<T>(b));
-	}
+    // Gets the maximum absolute value between two numbers.
+    template<typename T>
+    ALWAYS_INLINE static T abs_max(T a, T b)
+    {
+        return Math::max<T>(Math::abs<T>(a), Math::abs<T>(b));
+    }
 
-	// Gets the minimum value between two numbers.
-	template<typename T>
-	ALWAYS_INLINE static T min(T a, T b)
-	{
-		return (a < b) ? a : b;
-	}
+    // Gets the minimum value between two numbers.
+    template<typename T>
+    ALWAYS_INLINE static T min(T a, T b)
+    {
+        return (a < b) ? a : b;
+    }
 
-	// Gets the minimum absolute value between two numbers.
-	template<typename T>
-	ALWAYS_INLINE static T abs_min(T a, T b)
-	{
-		return Math::min<T>(Math::abs<T>(a), Math::abs<T>(b));
-	}
+    // Gets the minimum absolute value between two numbers.
+    template<typename T>
+    ALWAYS_INLINE static T abs_min(T a, T b)
+    {
+        return Math::min<T>(Math::abs<T>(a), Math::abs<T>(b));
+    }
 
-	// Clamps a value between two numbers.
-	template<typename T>
-	ALWAYS_INLINE static T clamp(T x, T in_min, T in_max)
-	{
-		return Math::min<T>(Math::max<T>(x, in_min), in_max);
-	}
+    // Clamps a value between two numbers.
+    template<typename T>
+    ALWAYS_INLINE static T clamp(T x, T in_min, T in_max)
+    {
+        return Math::min<T>(Math::max<T>(x, in_min), in_max);
+    }
 
-	// Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
-	template<typename T>
-	ALWAYS_INLINE static bool are_nearly_equal(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
-	{
-		return Math::abs<T>(a - b) <= tolerance;
-	}
-
-public:
-	// Converts from degrees to radians.
-	template<typename T>
-	ALWAYS_INLINE static T to_rad(T degrees)
-	{
-		return degrees / T(180) * T(DOUBLE_PI);
-	}
-
-	// Converts from radians to degrees.
-	template<typename T>
-	ALWAYS_INLINE static T to_deg(T radians)
-	{
-		return radians / T(DOUBLE_PI) * T(180);
-	}
+    // Whether or not the values are almost equal. This is used to dismiss floating point precision issues.
+    template<typename T>
+    ALWAYS_INLINE static bool are_nearly_equal(T a, T b, T tolerance = T(KINDA_SMALL_NUMBER))
+    {
+        return Math::abs<T>(a - b) <= tolerance;
+    }
 
 public:
-	/** @return The square root. */
-	HC_API static float32_t sqrt(float32_t x);
-	HC_API static float64_t sqrt(float64_t x);
+    // Converts from degrees to radians.
+    template<typename T>
+    ALWAYS_INLINE static T to_rad(T degrees)
+    {
+        return degrees / T(180) * T(DOUBLE_PI);
+    }
 
-	/**
-	 * Calculates the sine of an angle.
-	 * 
-	 * @param x The angle, expressed in radians.
-	 * 
-	 * @return The sine of the angle.
-	 */
-	HC_API static float32_t sin(float32_t x);
-	HC_API static float64_t sin(float64_t x);
+    // Converts from radians to degrees.
+    template<typename T>
+    ALWAYS_INLINE static T to_deg(T radians)
+    {
+        return radians / T(DOUBLE_PI) * T(180);
+    }
 
-	/**
-	 * Calculates the cosine of an angle.
-	 *
-	 * @param x The angle, expressed in radians.
-	 *
-	 * @return The cosine of the angle.
-	 */
-	HC_API static float32_t cos(float32_t x);
-	HC_API static float64_t cos(float64_t x);
+public:
+    /** @return The square root. */
+    HC_API static float32_t sqrt(float32_t x);
+    HC_API static float64_t sqrt(float64_t x);
 
-	/**
-	 * Calculates the tangent of an angle.
-	 *
-	 * @param x The angle, expressed in radians.
-	 *
-	 * @return The tangent of the angle.
-	 */
-	HC_API static float32_t tan(float32_t x);
-	HC_API static float64_t tan(float64_t x);
+    /**
+     * Calculates the sine of an angle.
+     * 
+     * @param x The angle, expressed in radians.
+     * 
+     * @return The sine of the angle.
+     */
+    HC_API static float32_t sin(float32_t x);
+    HC_API static float64_t sin(float64_t x);
 
-	/**
-	 * Calculates the arcsine of an value.
-	 *
-	 * @param x The value.
-	 *
-	 * @return The arcsine of the value, expressed in radians.
-	 */
-	HC_API static float32_t asin(float32_t x);
-	HC_API static float64_t asin(float64_t x);
+    /**
+     * Calculates the cosine of an angle.
+     *
+     * @param x The angle, expressed in radians.
+     *
+     * @return The cosine of the angle.
+     */
+    HC_API static float32_t cos(float32_t x);
+    HC_API static float64_t cos(float64_t x);
 
-	/**
-	 * Calculates the arccosine of an value.
-	 *
-	 * @param x The value.
-	 *
-	 * @return The arccosine of the value, expressed in radians.
-	 */
-	HC_API static float32_t acos(float32_t x);
-	HC_API static float64_t acos(float64_t x);
+    /**
+     * Calculates the tangent of an angle.
+     *
+     * @param x The angle, expressed in radians.
+     *
+     * @return The tangent of the angle.
+     */
+    HC_API static float32_t tan(float32_t x);
+    HC_API static float64_t tan(float64_t x);
 
-	/**
-	 * Calculates the arctangent of an value.
-	 *
-	 * @param x The value.
-	 *
-	 * @return The arctangent of the value, expressed in radians.
-	 */
-	HC_API static float32_t atan(float32_t x);
-	HC_API static float64_t atan(float64_t x);
+    /**
+     * Calculates the arcsine of an value.
+     *
+     * @param x The value.
+     *
+     * @return The arcsine of the value, expressed in radians.
+     */
+    HC_API static float32_t asin(float32_t x);
+    HC_API static float64_t asin(float64_t x);
+
+    /**
+     * Calculates the arccosine of an value.
+     *
+     * @param x The value.
+     *
+     * @return The arccosine of the value, expressed in radians.
+     */
+    HC_API static float32_t acos(float32_t x);
+    HC_API static float64_t acos(float64_t x);
+
+    /**
+     * Calculates the arctangent of an value.
+     *
+     * @param x The value.
+     *
+     * @return The arctangent of the value, expressed in radians.
+     */
+    HC_API static float32_t atan(float32_t x);
+    HC_API static float64_t atan(float64_t x);
 };
 
 // Converts kilobytes to bytes.

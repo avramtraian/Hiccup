@@ -9,59 +9,59 @@ namespace HC
 
 enum class EventType : uint16_t
 {
-	WindowClosed,
-	WindowResized,
-	WindowMoved,
+    WindowClosed,
+    WindowResized,
+    WindowMoved,
 
-	MouseMoved,
-	MouseButtonPressed,
-	MouseButtonReleased,
-	MouseWheelScrolled,
+    MouseMoved,
+    MouseButtonPressed,
+    MouseButtonReleased,
+    MouseWheelScrolled,
 
-	KeyPressed,
-	KeyReleased
+    KeyPressed,
+    KeyReleased
 };
 
 class Event
 {
 protected:
-	Event(EventType event_type)
-		: m_event_type(event_type)
-		, m_is_handled(false)
-	{}
+    Event(EventType event_type)
+        : m_event_type(event_type)
+        , m_is_handled(false)
+    {}
 
 public:
-	ALWAYS_INLINE EventType get_type() const { return m_event_type; }
+    ALWAYS_INLINE EventType get_type() const { return m_event_type; }
 
 private:
-	EventType m_event_type;
-	bool m_is_handled;
+    EventType m_event_type;
+    bool m_is_handled;
 
 private:
-	friend class EventDispatcher;
+    friend class EventDispatcher;
 };
 
 class EventDispatcher
 {
 public:
-	EventDispatcher(Event& e)
-		: m_event(e)
-	{}
+    EventDispatcher(Event& e)
+        : m_event(e)
+    {}
 
 public:
-	template<typename EventType>
-	ALWAYS_INLINE bool Dispatch(bool(*callback)(const EventType&))
-	{
-		if ((m_event.get_type() == EventType::get_static_type()) && (!m_event.m_is_handled))
-		{
-			m_event.m_is_handled = callback((const EventType&)m_event);
-		}
+    template<typename EventType>
+    ALWAYS_INLINE bool Dispatch(bool(*callback)(const EventType&))
+    {
+        if ((m_event.get_type() == EventType::get_static_type()) && (!m_event.m_is_handled))
+        {
+            m_event.m_is_handled = callback((const EventType&)m_event);
+        }
 
-		return m_event.m_is_handled;
-	}
+        return m_event.m_is_handled;
+    }
 
 private:
-	Event& m_event;
+    Event& m_event;
 };
 
 } // namespace HC

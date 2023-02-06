@@ -25,22 +25,22 @@ static_internal std::uniform_int_distribution<uint64_t> s_DistInt64;
 
 float32_t Random::float_32()
 {
-	return s_DistFloat32(s_GenFloat32);
+    return s_DistFloat32(s_GenFloat32);
 }
 
 float64_t Random::float_64()
 {
-	return s_DistFloat64(s_GenFloat64);
+    return s_DistFloat64(s_GenFloat64);
 }
 
 uint32_t Random::uint_32()
 {
-	return s_DistInt32(s_GenInt32);
+    return s_DistInt32(s_GenInt32);
 }
 
 uint64_t Random::uint_64()
 {
-	return s_DistInt64(s_GenInt64);
+    return s_DistInt64(s_GenInt64);
 }
 
 } // namespace HC

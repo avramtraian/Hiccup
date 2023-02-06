@@ -20,86 +20,86 @@ namespace HC
 struct HC_API Buffer
 {
 public:
-	// Pointer the buffer's memory block.
-	uint8_t* data;
+    // Pointer the buffer's memory block.
+    uint8_t* data;
 
-	// The number of bytes the buffer can store.
-	size_t size;
-
-public:
-	// Default constructor.
-	ALWAYS_INLINE Buffer()
-		: data(nullptr)
-		, size(0)
-	{}
-
-	/**
-	 * Constructs a buffer that can store 'size' bytes.
-	 *
-	 * @param size The number of bytes the buffer can store.
-	 */
-	ALWAYS_INLINE Buffer(size_t in_size)
-		: data(nullptr)
-		, size(0)
-	{
-		allocate(in_size);
-	}
-
-	/**
-	* It performs a shallow copy. For a deep copy, use
-	*   'Buffer::copy'.
-	*/
-	ALWAYS_INLINE Buffer(const Buffer& other) = default;
+    // The number of bytes the buffer can store.
+    size_t size;
 
 public:
-	/** @return Pointer to the buffer's memory block, casted to the given type. */
-	template<typename T>
-	ALWAYS_INLINE T* as() { return (T*)data; }
+    // Default constructor.
+    ALWAYS_INLINE Buffer()
+        : data(nullptr)
+        , size(0)
+    {}
 
-	/** @return Pointer to the buffer's memory block, casted to the given type. */
-	template<typename T>
-	ALWAYS_INLINE const T* as() const { return (const T*)data; }
+    /**
+     * Constructs a buffer that can store 'size' bytes.
+     *
+     * @param size The number of bytes the buffer can store.
+     */
+    ALWAYS_INLINE Buffer(size_t in_size)
+        : data(nullptr)
+        , size(0)
+    {
+        allocate(in_size);
+    }
 
-	/**
-	 * Copies a buffer, performing a deep copy.
-	 * 
-	 * @param source The buffer to copy.
-	 * 
-	 * @return The newly created buffer.
-	 */
-	ALWAYS_INLINE static Buffer copy(Buffer source)
-	{
-		Buffer destination = Buffer(source.size);
-		Memory::copy(destination.data, source.data, source.size);
-		return destination;
-	}
+    /**
+    * It performs a shallow copy. For a deep copy, use
+    *   'Buffer::copy'.
+    */
+    ALWAYS_INLINE Buffer(const Buffer& other) = default;
 
 public:
-	/**
-	 * Allocates the buffer's memory block.
-	 * 
-	 * @param size The number of bytes the buffer can store.
-	 */
-	ALWAYS_INLINE void allocate(size_t in_size)
-	{
-		if (data)
-		{
-			release();
-		}
+    /** @return Pointer to the buffer's memory block, casted to the given type. */
+    template<typename T>
+    ALWAYS_INLINE T* as() { return (T*)data; }
 
-		data = hc_new uint8_t[in_size];
-		size = in_size;
-	}
+    /** @return Pointer to the buffer's memory block, casted to the given type. */
+    template<typename T>
+    ALWAYS_INLINE const T* as() const { return (const T*)data; }
 
-	/**
-	 * Releases the buffer's memory block.
-	 */
-	ALWAYS_INLINE void release()
-	{
-		hc_delete[] data;
-		data = nullptr;
-		size = 0;
-	}
+    /**
+     * Copies a buffer, performing a deep copy.
+     * 
+     * @param source The buffer to copy.
+     * 
+     * @return The newly created buffer.
+     */
+    ALWAYS_INLINE static Buffer copy(Buffer source)
+    {
+        Buffer destination = Buffer(source.size);
+        Memory::copy(destination.data, source.data, source.size);
+        return destination;
+    }
+
+public:
+    /**
+     * Allocates the buffer's memory block.
+     * 
+     * @param size The number of bytes the buffer can store.
+     */
+    ALWAYS_INLINE void allocate(size_t in_size)
+    {
+        if (data)
+        {
+            release();
+        }
+
+        data = hc_new uint8_t[in_size];
+        size = in_size;
+    }
+
+    /**
+     * Releases the buffer's memory block.
+     */
+    ALWAYS_INLINE void release()
+    {
+        hc_delete[] data;
+        data = nullptr;
+        size = 0;
+    }
 };
 
 } // namespace HC
